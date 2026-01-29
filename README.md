@@ -1,35 +1,185 @@
-This is a Kotlin Multiplatform project targeting Android, iOS.
+# Alice - Car Brands App
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-    folder is the appropriate location.
+A Kotlin Multiplatform application for exploring car brands and models, built with Clean Architecture and modern Android/iOS development practices.
 
-* [/iosApp](./iosApp/iosApp) contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## 📱 Features
 
-### Build and Run Android Application
-
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:assembleDebug
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:assembleDebug
-  ```
-
-### Build and Run iOS Application
-
-To build and run the development version of the iOS app, use the run configuration from the run widget
-in your IDE’s toolbar or open the [/iosApp](./iosApp) directory in Xcode and run it from there.
+- **Browse Car Brands** - Explore manufacturers with logos, country info, and model counts
+- **View Models** - Detailed model information with specs, pricing, and images
+- **Search & Filter** - Find cars by brand, category, engine type, and more
+- **Favorites** - Save your favorite models for quick access
+- **Dark/Light Theme** - Full theme support with system preference detection
+- **Localization** - English and Arabic (RTL) support
 
 ---
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+## 🏗 Project Architecture
+
+```
+alice/
+├── composeApp/                    # Main app entry point
+│   ├── src/commonMain/           # Shared app code
+│   └── src/androidMain/          # Android-specific code
+│
+├── core/                          # Core modules
+│   ├── designsystem/             # Colors, typography, dimensions, components
+│   ├── common/                   # Base classes, utilities, extensions
+│   ├── network/                  # Ktor HTTP client, API configuration
+│   ├── data/                     # Repositories, DTOs, mappers, DataStore
+│   ├── domain/                   # Entities, use cases, repository interfaces
+│   └── ui/                       # Shared UI utilities, navigation
+│
+├── feature/                       # Feature modules
+│   ├── home/                     # Brands list screen
+│   ├── search/                   # Search functionality
+│   └── favorites/                # Favorites management
+│
+├── iosApp/                        # iOS app entry point
+└── gradle/                        # Gradle configuration
+```
+
+---
+
+## 🧱 Module Dependencies
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                       composeApp                            │
+│  (Android/iOS entry, Koin setup, Navigation)                │
+└───────────────────────────┬─────────────────────────────────┘
+                            │
+        ┌───────────────────┼───────────────────┐
+        ▼                   ▼                   ▼
+┌───────────────┐   ┌───────────────┐   ┌───────────────┐
+│ feature:home  │   │feature:search │   │feature:favs   │
+└───────┬───────┘   └───────┬───────┘   └───────┬───────┘
+        │                   │                   │
+        └───────────────────┼───────────────────┘
+                            │
+        ┌───────────────────┼───────────────────┐
+        ▼                   ▼                   ▼
+┌───────────────┐   ┌───────────────┐   ┌───────────────┐
+│   core:ui     │   │ core:domain   │   │core:designsys │
+└───────┬───────┘   └───────┬───────┘   └───────────────┘
+        │                   │
+        │           ┌───────┴───────┐
+        │           ▼               ▼
+        │   ┌───────────────┐   ┌───────────────┐
+        │   │  core:data    │   │ core:common   │
+        │   └───────┬───────┘   └───────────────┘
+        │           │
+        │           ▼
+        │   ┌───────────────┐
+        └──▶│ core:network  │
+            └───────────────┘
+```
+
+---
+
+## 🛠 Technology Stack
+
+| Category | Technology |
+|----------|------------|
+| **Language** | Kotlin 2.3.0 |
+| **UI Framework** | Compose Multiplatform 1.10.0 |
+| **Architecture** | Clean Architecture + MVI |
+| **Networking** | Ktor 3.1.0 |
+| **DI** | Koin 4.0.0 |
+| **Navigation** | Compose Navigation 2.9.6 |
+| **Image Loading** | Coil 3.1.0 |
+| **Local Storage** | DataStore 1.1.1 |
+| **Serialization** | KotlinX Serialization 1.8.0 |
+
+---
+
+## 🎨 Design System
+
+### Colors
+Centralized in `AliceColors.kt` - supports light/dark themes with semantic naming.
+
+### Typography
+Defined in `AliceTypography.kt` - follows Material3 type scale.
+
+### Dimensions
+All spacing and sizes in `AliceDimensions.kt` - uses 4dp grid system.
+
+### Components
+Reusable components in `core:designsystem/components/`:
+- `AliceButtons.kt` - Primary, Outlined, Text buttons
+- `AliceCards.kt` - Card and Surface containers
+- `AliceInputFields.kt` - TextField and SearchField
+- `ShimmerEffect.kt` - Loading skeleton animations
+
+---
+
+## 📍 Key Patterns
+
+### MVI (Model-View-Intent)
+```kotlin
+class MyViewModel : BaseViewModel<MyState, MyIntent, MyEffect>(MyState()) {
+    override fun handleIntent(intent: MyIntent) {
+        // Handle user actions
+    }
+}
+```
+
+### Safe API Calls
+```kotlin
+suspend fun getData(): Result<Data> = safeApiCall {
+    apiService.fetchData()
+}
+```
+
+### Repository Pattern
+- Interfaces in `core:domain`
+- Implementations in `core:data`
+- DI wiring via Koin modules
+
+---
+
+## 🌐 Localization
+
+| Language | File |
+|----------|------|
+| English | `values/strings.xml` |
+| Arabic (RTL) | `values-ar/strings.xml` |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Android Studio Hedgehog or later
+- Xcode 15+ (for iOS)
+- JDK 11+
+
+### Build Android
+```bash
+./gradlew :composeApp:assembleDebug
+```
+
+### Build iOS
+Open `iosApp/iosApp.xcodeproj` in Xcode and run.
+
+### Run Tests
+```bash
+./gradlew test
+```
+
+---
+
+## 📋 SOLID Principles Applied
+
+| Principle | Implementation |
+|-----------|---------------|
+| **Single Responsibility** | Each class/module has one purpose |
+| **Open/Closed** | Interfaces allow extension without modification |
+| **Liskov Substitution** | Repository interfaces work with any implementation |
+| **Interface Segregation** | Small, focused interfaces |
+| **Dependency Inversion** | Domain doesn't depend on data/network |
+
+---
+
+## 📄 License
+
+MIT License - see LICENSE file for details.

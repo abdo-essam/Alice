@@ -1,49 +1,59 @@
 package com.ae.alice
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import org.jetbrains.compose.resources.painterResource
+import androidx.navigation.compose.rememberNavController
+import com.ae.alice.core.designsystem.theme.AliceTheme
+import com.ae.alice.core.ui.navigation.AliceNavHost
 
-import alice.composeapp.generated.resources.Res
-import alice.composeapp.generated.resources.compose_multiplatform
-
+/**
+ * Main App composable - entry point for the Alice app
+ */
 @Composable
-@Preview
 fun App() {
-    MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .safeContentPadding()
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+    AliceTheme {
+        val navController = rememberNavController()
+        
+        Scaffold { paddingValues ->
+            AliceNavHost(
+                navController = navController,
+                homeScreen = {
+                    PlaceholderScreen("Home - Brands")
+                },
+                brandDetailsScreen = { brandId, brandName ->
+                    PlaceholderScreen("Brand Details: $brandName")
+                },
+                modelDetailsScreen = { modelId ->
+                    PlaceholderScreen("Model Details: $modelId")
+                },
+                searchScreen = {
+                    PlaceholderScreen("Search")
+                },
+                favoritesScreen = {
+                    PlaceholderScreen("Favorites")
+                },
+                settingsScreen = {
+                    PlaceholderScreen("Settings")
                 }
-            }
+            )
         }
+    }
+}
+
+/**
+ * Temporary placeholder screen for development
+ */
+@Composable
+private fun PlaceholderScreen(title: String) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = title)
     }
 }

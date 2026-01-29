@@ -12,6 +12,7 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
 
@@ -25,7 +26,22 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
 
+// Main App
 include(":composeApp")
+
+// Core Modules
+include(":core:designsystem")
+include(":core:common")
+include(":core:network")
+include(":core:data")
+include(":core:domain")
+include(":core:ui")
+
+// Feature Modules
+include(":feature:home")
+include(":feature:search")
+include(":feature:favorites")

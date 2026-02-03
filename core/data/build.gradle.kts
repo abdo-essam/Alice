@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinxSerialization)
 }
 
 kotlin {
@@ -25,24 +24,13 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.core.common)
-            implementation(projects.core.domain)
-            implementation(projects.core.network)
-            
-            // DataStore
-            implementation(libs.androidx.datastore.preferences.core)
-            
-            // Serialization
-            implementation(libs.kotlinx.serialization.json)
+            implementation(project(":core:domain"))
             
             // Coroutines
             implementation(libs.kotlinx.coroutines.core)
             
             // Koin
             implementation(libs.koin.core)
-            
-            // Ktor (for API service)
-            implementation(libs.ktor.client.core)
         }
     }
 }

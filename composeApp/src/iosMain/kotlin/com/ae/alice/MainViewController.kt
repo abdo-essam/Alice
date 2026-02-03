@@ -1,5 +1,15 @@
 package com.ae.alice
 
 import androidx.compose.ui.window.ComposeUIViewController
+import com.ae.alice.di.initKoin
 
-fun MainViewController() = ComposeUIViewController { App() }
+/**
+ * iOS view controller factory.
+ */
+fun MainViewController() = ComposeUIViewController(
+    configure = {
+        initKoin()
+    }
+) { 
+    App() 
+}

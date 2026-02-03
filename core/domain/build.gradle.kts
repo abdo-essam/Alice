@@ -6,11 +6,7 @@ plugins {
 }
 
 kotlin {
-    androidTarget {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
+    androidTarget()
 
     listOf(
         iosArm64(),
@@ -24,9 +20,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.core.common)
             implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.koin.core)
         }
     }
 }

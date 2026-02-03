@@ -5,11 +5,12 @@ import org.koin.core.module.Module
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 import com.ae.alice.core.data.di.dataModule
-import com.ae.alice.core.domain.di.domainModule
-import com.ae.alice.core.network.di.networkModule
+import com.ae.alice.screens.brands.BrandsViewModel
+import com.ae.alice.screens.models.ModelsViewModel
+import org.koin.core.module.dsl.viewModel
 
 /**
- * Initialize Koin dependency injection
+ * Initialize Koin dependency injection.
  */
 fun initKoin(
     platformModules: List<Module> = emptyList(),
@@ -18,17 +19,17 @@ fun initKoin(
     startKoin {
         appDeclaration()
         modules(
-            networkModule,
             dataModule,
-            domainModule,
+            appModule,
             *platformModules.toTypedArray()
         )
     }
 }
 
 /**
- * Common app module for shared dependencies
+ * App module with ViewModels.
  */
 val appModule = module {
-    // App-level dependencies can be added here
+    viewModel { BrandsViewModel(get()) }
+    viewModel { ModelsViewModel(get()) }
 }

@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import com.ae.alice.core.common.result.ErrorState
 import com.ae.alice.core.common.result.Result
+import com.ae.alice.core.common.result.toErrorState
 
 /**
  * Base ViewModel implementing MVI (Model-View-Intent) pattern.
@@ -121,7 +122,7 @@ abstract class BaseViewModel<S : UiState, I : UiIntent, E : UiEffect>(
      * Override this to provide custom exception to ErrorState mapping
      */
     protected open fun mapToErrorState(exception: Throwable): ErrorState {
-        return mapException(exception as Exception)
+        return exception.toErrorState()
     }
     
     /**

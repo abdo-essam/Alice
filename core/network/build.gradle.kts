@@ -7,12 +7,8 @@ plugins {
 }
 
 kotlin {
-    androidTarget {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
-
+    androidTarget()
+    
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -25,7 +21,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.core.common)
+            implementation(project(":core:common"))
             
             // Ktor
             implementation(libs.ktor.client.core)

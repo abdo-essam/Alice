@@ -1,0 +1,92 @@
+[
+    {
+        "id": "1",
+        "name": "BMW",
+        "logo_url": "https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg",
+        "country": "Germany",
+        "founded_year": 1916,
+        "description": "Bayerische Motoren Werke AG, commonly known as BMW, is a German multinational company which produces luxury vehicles and motorcycles.",
+        "models_count": 12
+    },
+    {
+        "id": "2",
+        "name": "Mercedes-Benz",
+        "logo_url": "https://upload.wikimedia.org/wikipedia/commons/9/90/Mercedes-Logo.svg",
+        "country": "Germany",
+        "founded_year": 1926,
+        "description": "Mercedes-Benz is a German luxury and commercial vehicle automotive brand established in 1926.",
+        "models_count": 15
+    },
+    {
+        "id": "3",
+        "name": "Audi",
+        "logo_url": "https://upload.wikimedia.org/wikipedia/commons/9/92/Audi-Logo_2016.svg",
+        "country": "Germany",
+        "founded_year": 1909,
+        "description": "Audi AG is a German automotive manufacturer of luxury vehicles.",
+        "models_count": 10
+    },
+    {
+        "id": "4",
+        "name": "Toyota",
+        "logo_url": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Toyota_carance_logo.svg",
+        "country": "Japan",
+        "founded_year": 1937,
+        "description": "Toyota Motor Corporation is a Japanese multinational automotive manufacturer.",
+        "models_count": 18
+    },
+    {
+        "id": "5",
+        "name": "Honda",
+        "logo_url": "https://upload.wikimedia.org/wikipedia/commons/3/38/Honda.svg",
+        "country": "Japan",
+        "founded_year": 1948,
+        "description": "Honda Motor Company, Ltd. is a Japanese public multinational conglomerate manufacturer of automobiles.",
+        "models_count": 14
+    },
+    {
+        "id": "6",
+        "name": "Ford",
+        "logo_url": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Ford_logo_flat.svg",
+        "country": "USA",
+        "founded_year": 1903,
+        "description": "Ford Motor Company is an American multinational automobile manufacturer.",
+        "models_count": 16
+    },
+    {
+        "id": "7",
+        "name": "Porsche",
+        "logo_url": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Porsche_logo.svg",
+        "country": "Germany",
+        "founded_year": 1931,
+        "description": "Dr. Ing. h.c. F. Porsche AG is a German automobile manufacturer specializing in sports cars, SUVs and sedans.",
+        "models_count": 8
+    },
+    {
+        "id": "8",
+        "name": "Ferrari",
+        "logo_url": "https://upload.wikimedia.org/wikipedia/commons/d/d7/Ferrari-Logo.svg",
+        "country": "Italy",
+        "founded_year": 1939,
+        "description": "Ferrari S.p.A. is an Italian luxury sports car manufacturer.",
+        "models_count": 6
+    },
+    {
+        "id": "9",
+        "name": "Lamborghini",
+        "logo_url": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Lamborghini_Logo.svg",
+        "country": "Italy",
+        "founded_year": 1963,
+        "description": "Automobili Lamborghini S.p.A. is an Italian manufacturer of luxury sports cars and SUVs.",
+        "models_count": 5
+    },
+    {
+        "id": "10",
+        "name": "Tesla",
+        "logo_url": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Tesla_logo.png",
+        "country": "USA",
+        "founded_year": 2003,
+        "description": "Tesla, Inc. is an American electric vehicle and clean energy company.",
+        "models_count": 4
+    }
+]

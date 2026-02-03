@@ -9,11 +9,7 @@ plugins {
 }
 
 kotlin {
-    androidTarget {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
+    androidTarget()
     
     listOf(
         iosArm64(),
@@ -22,42 +18,30 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
-            
-            // Export required modules for iOS
-            export(projects.core.designsystem)
-            export(projects.core.common)
-            export(projects.core.domain)
-            export(projects.core.ui)
         }
     }
     
     sourceSets {
         androidMain.dependencies {
-            implementation(libs.compose.uiToolingPreview)
+            implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.ktor.client.okhttp)
             implementation(libs.koin.android)
             implementation(libs.kotlinx.coroutines.android)
         }
         
         commonMain.dependencies {
             // Core Modules
-            implementation(projects.core.designsystem)
-            implementation(projects.core.common)
-            implementation(projects.core.network)
-            implementation(projects.core.data)
-            implementation(projects.core.domain)
-            implementation(projects.core.ui)
-            
-            // Feature Modules
-            implementation(projects.feature.home)
-            implementation(projects.feature.search)
-            implementation(projects.feature.favorites)
+            implementation(project(":core:designsystem"))
+            implementation(project(":core:common"))
+            implementation(project(":core:domain"))
+            implementation(project(":core:data"))
             
             // Compose
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
+            implementation(compose.material)
+            implementation(compose.materialIconsExtended)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
@@ -73,30 +57,20 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
-            implementation(libs.koin.compose.viewmodel.navigation)
             
             // Coil
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
             
-            // Ktor
-            implementation(libs.ktor.client.core)
-            implementation(libs.ktor.client.content.negotiation)
-            implementation(libs.ktor.serialization.kotlinx.json)
-            
             // Serialization
             implementation(libs.kotlinx.serialization.json)
             
-            // DataStore
-            implementation(libs.androidx.datastore.preferences.core)
+            // Coroutines
+            implementation(libs.kotlinx.coroutines.core)
         }
         
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
-        }
-        
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
         }
     }
 }
@@ -136,5 +110,5 @@ android {
 }
 
 dependencies {
-    debugImplementation(libs.compose.uiTooling)
+    debugImplementation(compose.uiTooling)
 }

@@ -1,0 +1,192 @@
+{
+    "1": [
+        {
+            "id": "bmw-1",
+            "name": "3 Series",
+            "brand_id": "1",
+            "brand_name": "BMW",
+            "image_url": "https://www.bmw.com/content/dam/bmw/common/all-models/3-series/sedan/2022/navigation/bmw-3-series-sedan-lci-modelfinder.png",
+            "year": 2024,
+            "category": "Sedan",
+            "engine_type": "Gasoline",
+            "transmission": "Automatic",
+            "horsepower": 255,
+            "price": 45000,
+            "currency": "USD",
+            "description": "The BMW 3 Series is a compact executive car manufactured by BMW since 1975."
+        },
+        {
+            "id": "bmw-2",
+            "name": "5 Series",
+            "brand_id": "1",
+            "brand_name": "BMW",
+            "image_url": "https://www.bmw.com/content/dam/bmw/common/all-models/5-series/sedan/2023/navigation/bmw-5-series-sedan-modelfinder.png",
+            "year": 2024,
+            "category": "Sedan",
+            "engine_type": "Hybrid",
+            "transmission": "Automatic",
+            "horsepower": 335,
+            "price": 58000,
+            "currency": "USD",
+            "description": "The BMW 5 Series is an executive car manufactured by BMW since 1972."
+        },
+        {
+            "id": "bmw-3",
+            "name": "X5",
+            "brand_id": "1",
+            "brand_name": "BMW",
+            "image_url": "https://www.bmw.com/content/dam/bmw/common/all-models/x-series/x5/2023/navigation/bmw-x5-modelfinder.png",
+            "year": 2024,
+            "category": "SUV",
+            "engine_type": "Gasoline",
+            "transmission": "Automatic",
+            "horsepower": 335,
+            "price": 65000,
+            "currency": "USD",
+            "description": "The BMW X5 is a mid-size luxury SUV produced by BMW."
+        }
+    ],
+    "2": [
+        {
+            "id": "merc-1",
+            "name": "C-Class",
+            "brand_id": "2",
+            "brand_name": "Mercedes-Benz",
+            "image_url": "https://www.mercedes-benz.com/content/dam/mercedes-benz/vehicles/passenger-cars/c-class/c-class-sedan.png",
+            "year": 2024,
+            "category": "Sedan",
+            "engine_type": "Gasoline",
+            "transmission": "Automatic",
+            "horsepower": 255,
+            "price": 48000,
+            "currency": "USD",
+            "description": "The Mercedes-Benz C-Class is a line of compact executive cars."
+        },
+        {
+            "id": "merc-2",
+            "name": "E-Class",
+            "brand_id": "2",
+            "brand_name": "Mercedes-Benz",
+            "image_url": "https://www.mercedes-benz.com/content/dam/mercedes-benz/vehicles/passenger-cars/e-class/e-class-sedan.png",
+            "year": 2024,
+            "category": "Sedan",
+            "engine_type": "Hybrid",
+            "transmission": "Automatic",
+            "horsepower": 375,
+            "price": 62000,
+            "currency": "USD",
+            "description": "The Mercedes-Benz E-Class is a range of executive cars."
+        },
+        {
+            "id": "merc-3",
+            "name": "S-Class",
+            "brand_id": "2",
+            "brand_name": "Mercedes-Benz",
+            "image_url": "https://www.mercedes-benz.com/content/dam/mercedes-benz/vehicles/passenger-cars/s-class/s-class-sedan.png",
+            "year": 2024,
+            "category": "Luxury",
+            "engine_type": "Hybrid",
+            "transmission": "Automatic",
+            "horsepower": 496,
+            "price": 115000,
+            "currency": "USD",
+            "description": "The Mercedes-Benz S-Class is a series of full-size luxury sedans."
+        }
+    ],
+    "3": [
+        {
+            "id": "audi-1",
+            "name": "A4",
+            "brand_id": "3",
+            "brand_name": "Audi",
+            "image_url": "https://www.audi.com/content/dam/audi/production/models/a4/a4-sedan.png",
+            "year": 2024,
+            "category": "Sedan",
+            "engine_type": "Gasoline",
+            "transmission": "Automatic",
+            "horsepower": 201,
+            "price": 43000,
+            "currency": "USD",
+            "description": "The Audi A4 is a line of compact executive cars."
+        },
+        {
+            "id": "audi-2",
+            "name": "Q5",
+            "brand_id": "3",
+            "brand_name": "Audi",
+            "image_url": "https://www.audi.com/content/dam/audi/production/models/q5/q5-suv.png",
+            "year": 2024,
+            "category": "SUV",
+            "engine_type": "Gasoline",
+            "transmission": "Automatic",
+            "horsepower": 261,
+            "price": 52000,
+            "currency": "USD",
+            "description": "The Audi Q5 is a compact luxury crossover SUV."
+        }
+    ],
+    "4": [
+        {
+            "id": "toyota-1",
+            "name": "Camry",
+            "brand_id": "4",
+            "brand_name": "Toyota",
+            "image_url": "https://www.toyota.com/content/dam/toyota/vehicles/camry/camry.png",
+            "year": 2024,
+            "category": "Sedan",
+            "engine_type": "Hybrid",
+            "transmission": "Automatic",
+            "horsepower": 225,
+            "price": 28000,
+            "currency": "USD",
+            "description": "The Toyota Camry is an automobile sold internationally by the Japanese manufacturer Toyota."
+        },
+        {
+            "id": "toyota-2",
+            "name": "RAV4",
+            "brand_id": "4",
+            "brand_name": "Toyota",
+            "image_url": "https://www.toyota.com/content/dam/toyota/vehicles/rav4/rav4.png",
+            "year": 2024,
+            "category": "SUV",
+            "engine_type": "Hybrid",
+            "transmission": "Automatic",
+            "horsepower": 219,
+            "price": 32000,
+            "currency": "USD",
+            "description": "The Toyota RAV4 is a compact crossover SUV produced by the Japanese automobile manufacturer Toyota."
+        }
+    ],
+    "10": [
+        {
+            "id": "tesla-1",
+            "name": "Model 3",
+            "brand_id": "10",
+            "brand_name": "Tesla",
+            "image_url": "https://www.tesla.com/content/dam/tesla/vehicles/model-3/model-3.png",
+            "year": 2024,
+            "category": "Electric",
+            "engine_type": "Electric",
+            "transmission": "Automatic",
+            "horsepower": 283,
+            "price": 42000,
+            "currency": "USD",
+            "description": "The Tesla Model 3 is a battery electric compact executive sedan."
+        },
+        {
+            "id": "tesla-2",
+            "name": "Model Y",
+            "brand_id": "10",
+            "brand_name": "Tesla",
+            "image_url": "https://www.tesla.com/content/dam/tesla/vehicles/model-y/model-y.png",
+            "year": 2024,
+            "category": "Electric",
+            "engine_type": "Electric",
+            "transmission": "Automatic",
+            "horsepower": 384,
+            "price": 52000,
+            "currency": "USD",
+            "description": "The Tesla Model Y is a battery electric compact crossover utility vehicle."
+        }
+    ]
+}

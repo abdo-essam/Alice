@@ -10,6 +10,28 @@
     <string name="nav_account">الحساب</string>
     <string name="nav_settings">الإعدادات</string>
     
+    <!-- Country/Emirate Selector -->
+    <string name="selector_country">اختر الدولة</string>
+    <string name="selector_emirate">اختر الامارة</string>
+    <string name="country_uae">الامارات العربية المتحدة</string>
+    <string name="country_saudi">المملكة العربية السعودية</string>
+    <string name="country_kuwait">الكويت</string>
+    <string name="country_bahrain">البحرين</string>
+    <string name="country_qatar">قطر</string>
+    <string name="country_oman">عُمان</string>
+    <string name="emirate_abu_dhabi">أبو ظبي</string>
+    <string name="emirate_dubai">دبي</string>
+    <string name="emirate_sharjah">الشارقة</string>
+    <string name="emirate_ajman">عجمان</string>
+    <string name="emirate_ras_al_khaimah">رأس الخيمة</string>
+    <string name="emirate_fujairah">الفجيرة</string>
+    <string name="emirate_umm_al_quwain">أم القيوين</string>
+    
+    <!-- Brands Screen -->
+    <string name="brands_search_placeholder">ابحث عن الماركات...</string>
+    <string name="brands_empty">لا توجد ماركات</string>
+    <string name="models_empty">لا توجد موديلات متاحة</string>
+    
     <!-- Home Screen -->
     <string name="home_title">ماركات السيارات</string>
     <string name="home_subtitle">استكشف شركات تصنيع السيارات</string>

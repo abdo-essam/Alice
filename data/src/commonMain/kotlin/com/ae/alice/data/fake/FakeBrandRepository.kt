@@ -24,7 +24,7 @@ class FakeBrandRepository : BrandRepository {
         Brand(
             id = "2",
             name = "Mercedes-Benz",
-            logoUrl = "https://www.carlogos.org/car-logos/mercedes-benz-logo-2011.png",
+            logoUrl = "https://www.carlogos.org/logo/Mercedes-Benz-logo-2011-640x369.jpg",
             country = "Germany",
             foundedYear = 1926,
             description = "Mercedes-Benz is a German luxury and commercial vehicle automotive brand established in 1926.",
@@ -42,7 +42,7 @@ class FakeBrandRepository : BrandRepository {
         Brand(
             id = "4",
             name = "Toyota",
-            logoUrl = "https://www.carlogos.org/car-logos/toyota-logo-2019-europe.png",
+            logoUrl = "https://www.carlogos.org/car-logos/toyota-logo-2020-europe-640.png",
             country = "Japan",
             foundedYear = 1937,
             description = "Toyota Motor Corporation is a Japanese multinational automotive manufacturer.",

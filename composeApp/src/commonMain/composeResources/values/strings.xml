@@ -10,6 +10,28 @@
     <string name="nav_account">Account</string>
     <string name="nav_settings">Settings</string>
     
+    <!-- Country/Emirate Selector -->
+    <string name="selector_country">Select Country</string>
+    <string name="selector_emirate">Select Emirate</string>
+    <string name="country_uae">United Arab Emirates</string>
+    <string name="country_saudi">Saudi Arabia</string>
+    <string name="country_kuwait">Kuwait</string>
+    <string name="country_bahrain">Bahrain</string>
+    <string name="country_qatar">Qatar</string>
+    <string name="country_oman">Oman</string>
+    <string name="emirate_abu_dhabi">Abu Dhabi</string>
+    <string name="emirate_dubai">Dubai</string>
+    <string name="emirate_sharjah">Sharjah</string>
+    <string name="emirate_ajman">Ajman</string>
+    <string name="emirate_ras_al_khaimah">Ras Al Khaimah</string>
+    <string name="emirate_fujairah">Fujairah</string>
+    <string name="emirate_umm_al_quwain">Umm Al Quwain</string>
+    
+    <!-- Brands Screen -->
+    <string name="brands_search_placeholder">Search brands...</string>
+    <string name="brands_empty">No brands found</string>
+    <string name="models_empty">No models available</string>
+    
     <!-- Home Screen -->
     <string name="home_title">Car Brands</string>
     <string name="home_subtitle">Explore car manufacturers</string>

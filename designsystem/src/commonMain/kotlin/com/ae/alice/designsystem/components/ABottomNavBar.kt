@@ -1,15 +1,19 @@
 package com.ae.alice.designsystem.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -28,12 +32,13 @@ import com.ae.alice.designsystem.theme.AColors
  */
 data class ABottomNavItem(
     val icon: ImageVector,
+    val selectedIcon: ImageVector,
     val label: String,
     val selected: Boolean = false
 )
 
 /**
- * Bottom navigation bar component.
+ * Modern bottom navigation bar component with proper insets handling.
  */
 @Composable
 fun ABottomNavBar(
@@ -43,10 +48,9 @@ fun ABottomNavBar(
 ) {
     NavigationBar(
         modifier = modifier
-            .fillMaxWidth()
-            .height(64.dp),
+            .fillMaxWidth(),
         containerColor = AColors.Light.Surface,
-        tonalElevation = 8.dp
+        tonalElevation = 0.dp
     ) {
         items.forEachIndexed { index, item ->
             NavigationBarItem(
@@ -54,14 +58,15 @@ fun ABottomNavBar(
                 onClick = { onItemClick(index) },
                 icon = {
                     Icon(
-                        imageVector = item.icon,
-                        contentDescription = item.label
+                        imageVector = if (item.selected) item.selectedIcon else item.icon,
+                        contentDescription = item.label,
+                        modifier = Modifier.size(24.dp)
                     )
                 },
                 label = {
                     Text(
                         text = item.label,
-                        fontSize = 10.sp
+                        fontSize = 11.sp
                     )
                 },
                 colors = NavigationBarItemDefaults.colors(
@@ -69,7 +74,7 @@ fun ABottomNavBar(
                     selectedTextColor = AColors.Primary,
                     unselectedIconColor = AColors.Light.TextSecondary,
                     unselectedTextColor = AColors.Light.TextSecondary,
-                    indicatorColor = AColors.Primary.copy(alpha = 0.1f)
+                    indicatorColor = AColors.Primary.copy(alpha = 0.12f)
                 )
             )
         }
@@ -77,18 +82,35 @@ fun ABottomNavBar(
 }
 
 /**
- * Default navigation items.
+ * Default navigation items matching app purpose:
+ * Home (browse brands), Search, Favorites, Account.
  */
 object ANavItems {
-    val Home = ABottomNavItem(Icons.Default.Home, "Home")
-    val Messages = ABottomNavItem(Icons.Default.Email, "Messages")
-    val Archive = ABottomNavItem(Icons.Default.Folder, "Archive")
-    val Account = ABottomNavItem(Icons.Default.AccountCircle, "Account")
+    val Home = ABottomNavItem(
+        icon = Icons.Outlined.Home,
+        selectedIcon = Icons.Filled.Home,
+        label = "Home"
+    )
+    val Search = ABottomNavItem(
+        icon = Icons.Outlined.Search,
+        selectedIcon = Icons.Filled.Search,
+        label = "Search"
+    )
+    val Favorites = ABottomNavItem(
+        icon = Icons.Outlined.FavoriteBorder,
+        selectedIcon = Icons.Filled.FavoriteBorder,
+        label = "Favorites"
+    )
+    val Account = ABottomNavItem(
+        icon = Icons.Outlined.AccountCircle,
+        selectedIcon = Icons.Filled.AccountCircle,
+        label = "Account"
+    )
     
     fun default(selectedIndex: Int = 0) = listOf(
         Home.copy(selected = selectedIndex == 0),
-        Messages.copy(selected = selectedIndex == 1),
-        Archive.copy(selected = selectedIndex == 2),
+        Search.copy(selected = selectedIndex == 1),
+        Favorites.copy(selected = selectedIndex == 2),
         Account.copy(selected = selectedIndex == 3)
     )
 }

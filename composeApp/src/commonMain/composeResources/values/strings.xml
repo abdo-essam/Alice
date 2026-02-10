@@ -7,6 +7,7 @@
     <string name="nav_home">Home</string>
     <string name="nav_search">Search</string>
     <string name="nav_favorites">Favorites</string>
+    <string name="nav_account">Account</string>
     <string name="nav_settings">Settings</string>
     
     <!-- Home Screen -->

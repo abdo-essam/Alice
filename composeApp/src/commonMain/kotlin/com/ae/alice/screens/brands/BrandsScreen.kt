@@ -28,6 +28,8 @@ import com.ae.alice.designsystem.components.ANavItems
 import com.ae.alice.designsystem.components.ASearchField
 import com.ae.alice.designsystem.theme.AColors
 import com.ae.alice.domain.entity.Brand
+import com.ae.alice.presentation.screens.brands.BrandsIntent
+import com.ae.alice.presentation.screens.brands.BrandsViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
@@ -43,12 +45,7 @@ fun BrandsScreen(
     Scaffold(
         containerColor = AColors.Light.Background,
         topBar = {
-            Column {
-                AHeader(
-                    cartCount = 0,
-                    notificationCount = 0
-                )
-            }
+            AHeader()
         },
         bottomBar = {
             ABottomNavBar(

@@ -8,17 +8,19 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.ae.alice.designsystem.theme.AColors
 import com.ae.alice.designsystem.theme.ADimensions
 
 /**
- * Search field component.
+ * Search field component with warm color palette styling.
  */
 @Composable
 fun ASearchField(
@@ -37,14 +39,15 @@ fun ASearchField(
         placeholder = {
             Text(
                 text = placeholder,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = AColors.Light.TextHint,
+                fontSize = 14.sp
             )
         },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Filled.Search,
                 contentDescription = "Search",
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                tint = AColors.Light.TextSecondary
             )
         },
         trailingIcon = {
@@ -53,7 +56,7 @@ fun ASearchField(
                     Icon(
                         imageVector = Icons.Filled.Clear,
                         contentDescription = "Clear",
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        tint = AColors.Light.TextSecondary
                     )
                 }
             }
@@ -61,10 +64,13 @@ fun ASearchField(
         singleLine = true,
         shape = RoundedCornerShape(ADimensions.RadiusFull),
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+            focusedContainerColor = AColors.Light.SurfaceVariant,
+            unfocusedContainerColor = AColors.Light.SurfaceVariant,
             focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent
+            unfocusedIndicatorColor = Color.Transparent,
+            cursorColor = AColors.Primary,
+            focusedTextColor = AColors.Light.TextPrimary,
+            unfocusedTextColor = AColors.Light.TextPrimary
         )
     )
 }

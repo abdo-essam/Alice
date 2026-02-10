@@ -7,6 +7,7 @@
     <string name="nav_home">الرئيسية</string>
     <string name="nav_search">البحث</string>
     <string name="nav_favorites">المفضلة</string>
+    <string name="nav_account">الحساب</string>
     <string name="nav_settings">الإعدادات</string>
     
     <!-- Home Screen -->

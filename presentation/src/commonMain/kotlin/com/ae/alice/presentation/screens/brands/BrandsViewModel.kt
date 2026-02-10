@@ -1,4 +1,4 @@
-package com.ae.alice.screens.brands
+package com.ae.alice.presentation.screens.brands
 
 import com.ae.alice.domain.entity.Brand
 import com.ae.alice.domain.repository.BrandRepository

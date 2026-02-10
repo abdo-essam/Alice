@@ -41,6 +41,8 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.ae.alice.designsystem.theme.AColors
 import com.ae.alice.domain.entity.CarModel
+import com.ae.alice.presentation.screens.models.ModelsIntent
+import com.ae.alice.presentation.screens.models.ModelsViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 /**

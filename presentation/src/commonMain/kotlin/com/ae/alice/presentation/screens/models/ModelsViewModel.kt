@@ -1,4 +1,4 @@
-package com.ae.alice.screens.models
+package com.ae.alice.presentation.screens.models
 
 import com.ae.alice.domain.entity.CarModel
 import com.ae.alice.domain.repository.CarModelRepository

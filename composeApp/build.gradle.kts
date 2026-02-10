@@ -30,11 +30,11 @@ kotlin {
         }
         
         commonMain.dependencies {
-            // Core Modules
-            implementation(project(":core:designsystem"))
-            implementation(project(":core:common"))
-            implementation(project(":core:domain"))
-            implementation(project(":core:data"))
+            // Modules
+            implementation(project(":presentation"))
+            implementation(project(":domain"))
+            implementation(project(":data"))
+            implementation(project(":designsystem"))
             
             // Compose
             implementation(compose.runtime)

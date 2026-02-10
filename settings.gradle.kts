@@ -1,3 +1,6 @@
+rootProject.name = "Alice"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     repositories {
         google {
@@ -27,14 +30,10 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Alice"
-
-// App
 include(":composeApp")
-
-// Core Modules
-include(":core:designsystem")
-include(":core:common")
-include(":core:network")
-include(":core:data")
-include(":core:domain")
+include(":presentation")
+include(":domain")
+include(":data")
+include(":designsystem")
+include(":network")
+include(":common")

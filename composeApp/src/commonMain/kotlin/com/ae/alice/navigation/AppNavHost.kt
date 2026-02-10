@@ -21,8 +21,8 @@ fun AppNavHost(
     ) {
         composable<Routes.Brands> {
             BrandsScreen(
-                onBrandClick = { brandId, brandName ->
-                    navController.navigate(Routes.Models(brandId, brandName))
+                onBrandClick = { brand ->
+                    navController.navigate(Routes.Models(brand.id, brand.name))
                 }
             )
         }

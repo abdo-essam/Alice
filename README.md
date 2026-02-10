@@ -1,185 +1,114 @@
-# Alice - Car Brands App
+# Alice 🐺
 
-A Kotlin Multiplatform application for exploring car brands and models, built with Clean Architecture and modern Android/iOS development practices.
+A Kotlin Multiplatform Mobile (KMM) application for browsing car brands and models.
 
-## 📱 Features
+## 📱 Screenshots
 
-- **Browse Car Brands** - Explore manufacturers with logos, country info, and model counts
-- **View Models** - Detailed model information with specs, pricing, and images
-- **Search & Filter** - Find cars by brand, category, engine type, and more
-- **Favorites** - Save your favorite models for quick access
-- **Dark/Light Theme** - Full theme support with system preference detection
-- **Localization** - English and Arabic (RTL) support
+*Run the app on an emulator to see the new UI!*
 
----
+## 🏗️ Architecture
 
-## 🏗 Project Architecture
+The project follows **Clean Architecture** with the following modules:
 
 ```
-alice/
-├── composeApp/                    # Main app entry point
-│   ├── src/commonMain/           # Shared app code
-│   └── src/androidMain/          # Android-specific code
-│
-├── core/                          # Core modules
-│   ├── designsystem/             # Colors, typography, dimensions, components
-│   ├── common/                   # Base classes, utilities, extensions
-│   ├── network/                  # Ktor HTTP client, API configuration
-│   ├── data/                     # Repositories, DTOs, mappers, DataStore
-│   ├── domain/                   # Entities, use cases, repository interfaces
-│   └── ui/                       # Shared UI utilities, navigation
-│
-├── feature/                       # Feature modules
-│   ├── home/                     # Brands list screen
-│   ├── search/                   # Search functionality
-│   └── favorites/                # Favorites management
-│
-├── iosApp/                        # iOS app entry point
-└── gradle/                        # Gradle configuration
+Alice/
+├── composeApp/          # App entry point, screens, navigation
+├── presentation/        # BaseViewModel, MVI interfaces (UiState, UiIntent, UiEffect)
+├── domain/              # Pure Kotlin entities & repository interfaces
+├── data/                # Repository implementations, fake data
+├── designsystem/        # UI components, theme, colors
+├── network/             # Ktor client, API services
+└── common/              # Shared utilities (Result, ErrorState)
 ```
 
----
+### Module Dependencies
 
-## 🧱 Module Dependencies
-
+```mermaid
+graph TD
+    composeApp --> presentation
+    composeApp --> domain
+    composeApp --> data
+    composeApp --> designsystem
+    data --> domain
+    network --> common
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                       composeApp                            │
-│  (Android/iOS entry, Koin setup, Navigation)                │
-└───────────────────────────┬─────────────────────────────────┘
-                            │
-        ┌───────────────────┼───────────────────┐
-        ▼                   ▼                   ▼
-┌───────────────┐   ┌───────────────┐   ┌───────────────┐
-│ feature:home  │   │feature:search │   │feature:favs   │
-└───────┬───────┘   └───────┬───────┘   └───────┬───────┘
-        │                   │                   │
-        └───────────────────┼───────────────────┘
-                            │
-        ┌───────────────────┼───────────────────┐
-        ▼                   ▼                   ▼
-┌───────────────┐   ┌───────────────┐   ┌───────────────┐
-│   core:ui     │   │ core:domain   │   │core:designsys │
-└───────┬───────┘   └───────┬───────┘   └───────────────┘
-        │                   │
-        │           ┌───────┴───────┐
-        │           ▼               ▼
-        │   ┌───────────────┐   ┌───────────────┐
-        │   │  core:data    │   │ core:common   │
-        │   └───────┬───────┘   └───────────────┘
-        │           │
-        │           ▼
-        │   ┌───────────────┐
-        └──▶│ core:network  │
-            └───────────────┘
-```
-
----
-
-## 🛠 Technology Stack
-
-| Category | Technology |
-|----------|------------|
-| **Language** | Kotlin 2.3.0 |
-| **UI Framework** | Compose Multiplatform 1.10.0 |
-| **Architecture** | Clean Architecture + MVI |
-| **Networking** | Ktor 3.1.0 |
-| **DI** | Koin 4.0.0 |
-| **Navigation** | Compose Navigation 2.9.6 |
-| **Image Loading** | Coil 3.1.0 |
-| **Local Storage** | DataStore 1.1.1 |
-| **Serialization** | KotlinX Serialization 1.8.0 |
-
----
 
 ## 🎨 Design System
 
-### Colors
-Centralized in `AliceColors.kt` - supports light/dark themes with semantic naming.
-
-### Typography
-Defined in `AliceTypography.kt` - follows Material3 type scale.
-
-### Dimensions
-All spacing and sizes in `AliceDimensions.kt` - uses 4dp grid system.
+### Colors (Alice Branding)
+| Name | Hex | Usage |
+|------|-----|-------|
+| Primary (Copper) | `#C4956A` | Buttons, accents |
+| Secondary (Dark Brown) | `#4A3C31` | Text, icons |
+| Light Tan | `#D4A574` | Secondary accents |
+| Background | `#FAFAFA` | Screen background |
 
 ### Components
-Reusable components in `core:designsystem/components/`:
-- `AliceButtons.kt` - Primary, Outlined, Text buttons
-- `AliceCards.kt` - Card and Surface containers
-- `AliceInputFields.kt` - TextField and SearchField
-- `ShimmerEffect.kt` - Loading skeleton animations
+- `AHeader` - App header with logo and action icons
+- `ASearchField` - Search input with clear button
+- `AGridCard` - Image + title card for grid displays
+- `ABottomNavBar` - Bottom navigation with 4 tabs
+- `APrimaryButton`, `AOutlinedButton`, `ATextButton` - Button variants
+- `ACard`, `ATextField` - Common UI elements
 
----
+## 🔧 Tech Stack
 
-## 📍 Key Patterns
-
-### MVI (Model-View-Intent)
-```kotlin
-class MyViewModel : BaseViewModel<MyState, MyIntent, MyEffect>(MyState()) {
-    override fun handleIntent(intent: MyIntent) {
-        // Handle user actions
-    }
-}
-```
-
-### Safe API Calls
-```kotlin
-suspend fun getData(): Result<Data> = safeApiCall {
-    apiService.fetchData()
-}
-```
-
-### Repository Pattern
-- Interfaces in `core:domain`
-- Implementations in `core:data`
-- DI wiring via Koin modules
-
----
-
-## 🌐 Localization
-
-| Language | File |
-|----------|------|
-| English | `values/strings.xml` |
-| Arabic (RTL) | `values-ar/strings.xml` |
-
----
+- **Kotlin Multiplatform** - Shared code for Android & iOS
+- **Compose Multiplatform** - Declarative UI
+- **Koin** - Dependency Injection
+- **Coil 3** - Image loading
+- **Ktor** - Networking (prepared for future API)
+- **Navigation Compose** - Type-safe navigation
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Android Studio Hedgehog or later
+- Android Studio Ladybug or later
 - Xcode 15+ (for iOS)
 - JDK 11+
 
-### Build Android
+### Build & Run
+
 ```bash
+# Android
 ./gradlew :composeApp:assembleDebug
+
+# iOS (via Xcode)
+open iosApp/iosApp.xcodeproj
 ```
 
-### Build iOS
-Open `iosApp/iosApp.xcodeproj` in Xcode and run.
+### Running Tests
 
-### Run Tests
 ```bash
 ./gradlew test
 ```
 
+## 📁 Project Structure
+
+### Screens
+- **BrandsScreen** - 2-column grid of car brands
+- **ModelsScreen** - List of car models for selected brand
+
+### ViewModels (MVI Pattern)
+```kotlin
+class BrandsViewModel(
+    private val brandRepository: BrandRepository
+) : BaseViewModel<BrandsState, BrandsIntent, BrandsEffect>(BrandsState()) {
+    override fun handleIntent(intent: BrandsIntent) { ... }
+}
+```
+
+### Navigation
+Type-safe navigation using Kotlin serialization:
+```kotlin
+@Serializable data object Brands : Routes
+@Serializable data class Models(val brandId: String, val brandName: String) : Routes
+```
+
+## 📝 License
+
+MIT License - see [LICENSE](LICENSE) for details.
+
 ---
 
-## 📋 SOLID Principles Applied
-
-| Principle | Implementation |
-|-----------|---------------|
-| **Single Responsibility** | Each class/module has one purpose |
-| **Open/Closed** | Interfaces allow extension without modification |
-| **Liskov Substitution** | Repository interfaces work with any implementation |
-| **Interface Segregation** | Small, focused interfaces |
-| **Dependency Inversion** | Domain doesn't depend on data/network |
-
----
-
-## 📄 License
-
-MIT License - see LICENSE file for details.
+Built with ❤️ using Kotlin Multiplatform

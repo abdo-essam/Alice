@@ -1,38 +1,44 @@
 package com.ae.alice.screens.models
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import com.ae.alice.core.domain.entity.CarModel
-import com.ae.alice.core.domain.repository.CarModelRepository
+import com.ae.alice.domain.entity.CarModel
+import com.ae.alice.domain.repository.CarModelRepository
+import com.ae.alice.presentation.base.BaseViewModel
+import com.ae.alice.presentation.base.UiEffect
+import com.ae.alice.presentation.base.UiIntent
+import com.ae.alice.presentation.base.UiState
 
 /**
- * ViewModel for ModelsScreen.
+ * ViewModel for ModelsScreen using MVI pattern.
  */
 class ModelsViewModel(
     private val carModelRepository: CarModelRepository
-) : ViewModel() {
+) : BaseViewModel<ModelsState, ModelsIntent, ModelsEffect>(ModelsState()) {
     
-    private val _uiState = MutableStateFlow(ModelsUiState())
-    val uiState: StateFlow<ModelsUiState> = _uiState.asStateFlow()
+    override fun handleIntent(intent: ModelsIntent) {
+        when (intent) {
+            is ModelsIntent.LoadModels -> loadModels(intent.brandId)
+            is ModelsIntent.ModelClicked -> { /* Handled by UI */ }
+        }
+    }
     
-    fun loadModels(brandId: String) {
-        viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true, error = null)
+    private fun loadModels(brandId: String) {
+        launch {
+            updateState { copy(isLoading = true, error = null) }
             try {
                 val models = carModelRepository.getModelsByBrand(brandId)
-                _uiState.value = _uiState.value.copy(
-                    isLoading = false,
-                    models = models
-                )
+                updateState { 
+                    copy(
+                        isLoading = false,
+                        models = models
+                    ) 
+                }
             } catch (e: Exception) {
-                _uiState.value = _uiState.value.copy(
-                    isLoading = false,
-                    error = e.message ?: "Failed to load models"
-                )
+                updateState { 
+                    copy(
+                        isLoading = false,
+                        error = e.message ?: "Failed to load models"
+                    ) 
+                }
             }
         }
     }
@@ -41,8 +47,21 @@ class ModelsViewModel(
 /**
  * UI State for ModelsScreen.
  */
-data class ModelsUiState(
+data class ModelsState(
     val isLoading: Boolean = false,
     val models: List<CarModel> = emptyList(),
     val error: String? = null
-)
+) : UiState
+
+/**
+ * Intents for ModelsScreen.
+ */
+sealed interface ModelsIntent : UiIntent {
+    data class LoadModels(val brandId: String) : ModelsIntent
+    data class ModelClicked(val model: CarModel) : ModelsIntent
+}
+
+/**
+ * Effects for ModelsScreen.
+ */
+sealed interface ModelsEffect : UiEffect

@@ -4,51 +4,55 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.style.TextOverflow
-import coil3.compose.AsyncImage
+import androidx.compose.ui.unit.dp
+import com.ae.alice.designsystem.components.ABottomNavBar
+import com.ae.alice.designsystem.components.AGridCard
+import com.ae.alice.designsystem.components.AHeader
+import com.ae.alice.designsystem.components.ANavItems
+import com.ae.alice.designsystem.components.ASearchField
+import com.ae.alice.designsystem.theme.AColors
+import com.ae.alice.domain.entity.Brand
 import org.koin.compose.viewmodel.koinViewModel
-import com.ae.alice.core.designsystem.components.ACard
-import com.ae.alice.core.designsystem.components.ASearchField
-import com.ae.alice.core.designsystem.components.APrimaryButton
-import com.ae.alice.core.designsystem.theme.ADimensions
-import com.ae.alice.core.domain.entity.Brand
 
-@OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Brands screen displaying car manufacturers in a grid layout.
+ */
 @Composable
 fun BrandsScreen(
-    onBrandClick: (brandId: String, brandName: String) -> Unit,
+    onBrandClick: (Brand) -> Unit,
     viewModel: BrandsViewModel = koinViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val state by viewModel.state.collectAsState()
     
     Scaffold(
+        containerColor = AColors.Light.Background,
         topBar = {
-            TopAppBar(
-                title = { Text("Car Brands") }
+            Column {
+                AHeader(
+                    cartCount = 0,
+                    notificationCount = 0
+                )
+            }
+        },
+        bottomBar = {
+            ABottomNavBar(
+                items = ANavItems.default(selectedIndex = 0)
             )
         }
     ) { paddingValues ->
@@ -57,77 +61,32 @@ fun BrandsScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            // Search field
+            // Search bar
             ASearchField(
-                value = uiState.searchQuery,
-                onValueChange = viewModel::onSearchQueryChange,
-                placeholder = "Search brands...",
-                onClear = viewModel::clearSearch,
+                value = state.searchQuery,
+                onValueChange = { viewModel.processIntent(BrandsIntent.Search(it)) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = ADimensions.ScreenPaddingHorizontal)
-                    .padding(bottom = ADimensions.SpacingMd)
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                placeholder = "Search brands...",
+                onClear = { viewModel.processIntent(BrandsIntent.Search("")) }
             )
             
+            Spacer(modifier = Modifier.height(8.dp))
+            
+            // Content
             when {
-                uiState.isLoading -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator()
-                    }
+                state.isLoading -> {
+                    LoadingContent()
                 }
-                
-                uiState.error != null -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(
-                                text = uiState.error ?: "Error",
-                                color = MaterialTheme.colorScheme.error
-                            )
-                            Spacer(modifier = Modifier.height(ADimensions.SpacingMd))
-                            APrimaryButton(
-                                text = "Retry",
-                                onClick = viewModel::loadBrands
-                            )
-                        }
-                    }
+                state.error != null -> {
+                    ErrorContent(message = state.error ?: "An error occurred")
                 }
-                
-                uiState.filteredBrands.isEmpty() -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = if (uiState.searchQuery.isBlank()) "No brands found" else "No results for \"${uiState.searchQuery}\"",
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-                
                 else -> {
-                    LazyColumn(
-                        contentPadding = PaddingValues(
-                            horizontal = ADimensions.ScreenPaddingHorizontal,
-                            vertical = ADimensions.SpacingSm
-                        ),
-                        verticalArrangement = Arrangement.spacedBy(ADimensions.SpacingSm)
-                    ) {
-                        items(
-                            items = uiState.filteredBrands,
-                            key = { it.id }
-                        ) { brand ->
-                            BrandItem(
-                                brand = brand,
-                                onClick = { onBrandClick(brand.id, brand.name) }
-                            )
-                        }
-                    }
+                    BrandsGrid(
+                        brands = state.filteredBrands,
+                        onBrandClick = onBrandClick
+                    )
                 }
             }
         }
@@ -135,77 +94,66 @@ fun BrandsScreen(
 }
 
 @Composable
-private fun BrandItem(
-    brand: Brand,
-    onClick: () -> Unit
+private fun BrandsGrid(
+    brands: List<Brand>,
+    onBrandClick: (Brand) -> Unit
 ) {
-    ACard(
-        modifier = Modifier.fillMaxWidth(),
-        onClick = onClick
+    if (brands.isEmpty()) {
+        EmptyContent()
+        return
+    }
+    
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        contentPadding = PaddingValues(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(ADimensions.CardPadding),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // Brand logo
-            AsyncImage(
-                model = brand.logoUrl,
-                contentDescription = brand.name,
-                modifier = Modifier
-                    .size(ADimensions.BrandLogoSize)
-                    .clip(CircleShape),
-                contentScale = ContentScale.Fit
+        items(
+            items = brands,
+            key = { it.id }
+        ) { brand ->
+            AGridCard(
+                imageUrl = brand.logoUrl ?: "",
+                title = brand.name,
+                onClick = { onBrandClick(brand) }
             )
-            
-            Spacer(modifier = Modifier.width(ADimensions.SpacingMd))
-            
-            // Brand info
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = brand.name,
-                    style = MaterialTheme.typography.titleMedium,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                
-                Spacer(modifier = Modifier.height(ADimensions.SpacingXs))
-                
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    brand.country?.let {
-                        Text(
-                            text = it,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                    
-                    if (brand.country != null && brand.foundedYear != null) {
-                        Text(
-                            text = " • ",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                    
-                    brand.foundedYear?.let {
-                        Text(
-                            text = "Est. $it",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-                
-                Spacer(modifier = Modifier.height(ADimensions.SpacingXs))
-                
-                Text(
-                    text = "${brand.modelsCount} models",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
         }
+    }
+}
+
+@Composable
+private fun LoadingContent() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator(color = AColors.Primary)
+    }
+}
+
+@Composable
+private fun ErrorContent(message: String) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = message,
+            color = AColors.Error
+        )
+    }
+}
+
+@Composable
+private fun EmptyContent() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "No brands found",
+            color = AColors.Light.TextSecondary
+        )
     }
 }

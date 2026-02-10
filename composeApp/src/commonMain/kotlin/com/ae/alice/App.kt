@@ -2,7 +2,7 @@ package com.ae.alice
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
-import com.ae.alice.core.designsystem.theme.ATheme
+import com.ae.alice.designsystem.theme.ATheme
 import com.ae.alice.navigation.AppNavHost
 
 /**

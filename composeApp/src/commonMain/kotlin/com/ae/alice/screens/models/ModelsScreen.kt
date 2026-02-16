@@ -202,34 +202,6 @@ private fun ModelGridCard(model: CarModel) {
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
-
-            // Year & category
-            if (model.year != null || model.category != null) {
-                Text(
-                    text = listOfNotNull(
-                        model.year?.toString(),
-                        model.category
-                    ).joinToString(" • "),
-                    fontSize = 12.sp,
-                    color = AColors.Light.TextSecondary,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-
-            // Price
-            model.formattedPrice?.let { price ->
-                Text(
-                    text = price,
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = AColors.Primary,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
         }
     }
 }

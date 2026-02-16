@@ -35,6 +35,9 @@ koin = "4.0.0"
 # Image Loading
 coil = "3.1.0"
 
+# Compose Unstyled
+composeunstyled = "1.49.6"
+
 # Coroutines
 kotlinx-coroutines = "1.10.1"
 
@@ -103,6 +106,9 @@ koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 # Coil Image Loading
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
+
+# Compose Unstyled
+composeunstyled = { module = "com.composables:composeunstyled", version.ref = "composeunstyled" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

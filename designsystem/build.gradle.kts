@@ -33,6 +33,9 @@ kotlin {
             // Image loading
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
+            
+            // Compose Unstyled
+            implementation(libs.composeunstyled)
         }
     }
 }

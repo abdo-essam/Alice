@@ -15,21 +15,21 @@ class FakeCarModelRepository : CarModelRepository {
         "1" to listOf(  // BMW
             CarModel(
                 id = "bmw-1", name = "3 Series", brandId = "1", brandName = "BMW",
-                imageUrl = "https://picsum.photos/seed/bmw3/400/300",
+                imageUrl = "https://imgd.aeplcdn.com/1920x1080/n/cw/ec/198567/3-series-exterior-right-front-three-quarter-10.png",
                 year = 2024, category = "Sedan", engineType = "Gasoline", transmission = "Automatic",
                 horsepower = 255, priceAmount = 45000.0, priceCurrency = "USD",
                 description = "The BMW 3 Series is a compact executive car manufactured by BMW since 1975."
             ),
             CarModel(
                 id = "bmw-2", name = "5 Series", brandId = "1", brandName = "BMW",
-                imageUrl = "https://picsum.photos/seed/bmw5/400/300",
+                imageUrl = "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcT6hdpM9QakC_9bL2bO_f8lCzbGgu6-RbDHInNeingRInTrlkGS",
                 year = 2024, category = "Sedan", engineType = "Hybrid", transmission = "Automatic",
                 horsepower = 335, priceAmount = 58000.0, priceCurrency = "USD",
                 description = "The BMW 5 Series is an executive car manufactured by BMW since 1972."
             ),
             CarModel(
                 id = "bmw-3", name = "X5", brandId = "1", brandName = "BMW",
-                imageUrl = "https://picsum.photos/seed/bmwx5/400/300",
+                imageUrl = "https://larte-design.com/storage/app/media/kits/bmw/x5-lci/renders/brooklyn-grey/bmw-x5-g-05-lci-2023-carbon-front-side-brooklyn-grey.webp",
                 year = 2024, category = "SUV", engineType = "Gasoline", transmission = "Automatic",
                 horsepower = 335, priceAmount = 65000.0, priceCurrency = "USD",
                 description = "The BMW X5 is a mid-size luxury SUV produced by BMW."

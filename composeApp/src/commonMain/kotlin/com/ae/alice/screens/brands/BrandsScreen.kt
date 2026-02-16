@@ -13,15 +13,22 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ae.alice.designsystem.components.ABottomNavBar
+import com.ae.alice.designsystem.components.ADrawerContent
+import com.ae.alice.designsystem.components.ADrawerItems
 import com.ae.alice.designsystem.components.AGridCard
 import com.ae.alice.designsystem.components.AHeader
 import com.ae.alice.designsystem.components.ANavItems
@@ -30,10 +37,12 @@ import com.ae.alice.designsystem.theme.AColors
 import com.ae.alice.domain.entity.Brand
 import com.ae.alice.presentation.screens.brands.BrandsIntent
 import com.ae.alice.presentation.screens.brands.BrandsViewModel
+import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
- * Brands screen displaying car manufacturers in a grid layout.
+ * Brands screen displaying car manufacturers in a grid layout
+ * with a hamburger menu drawer.
  */
 @Composable
 fun BrandsScreen(
@@ -41,49 +50,70 @@ fun BrandsScreen(
     viewModel: BrandsViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsState()
-    
-    Scaffold(
-        containerColor = AColors.Light.Background,
-        topBar = {
-            AHeader()
-        },
-        bottomBar = {
-            ABottomNavBar(
-                items = ANavItems.default(selectedIndex = 0)
-            )
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet {
+                ADrawerContent(
+                    items = ADrawerItems.default(selectedIndex = 0),
+                    onItemClick = {
+                        scope.launch { drawerState.close() }
+                    }
+                )
+            }
         }
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            // Search bar
-            ASearchField(
-                value = state.searchQuery,
-                onValueChange = { viewModel.processIntent(BrandsIntent.Search(it)) },
+    ) {
+        Scaffold(
+            containerColor = AColors.Light.Background,
+            topBar = {
+                AHeader(
+                    showMenuIcon = true,
+                    onMenuClick = {
+                        scope.launch { drawerState.open() }
+                    }
+                )
+            },
+            bottomBar = {
+                ABottomNavBar(
+                    items = ANavItems.default(selectedIndex = 0)
+                )
+            }
+        ) { paddingValues ->
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                placeholder = "Search brands...",
-                onClear = { viewModel.processIntent(BrandsIntent.Search("")) }
-            )
-            
-            Spacer(modifier = Modifier.height(8.dp))
-            
-            // Content
-            when {
-                state.isLoading -> {
-                    LoadingContent()
-                }
-                state.error != null -> {
-                    ErrorContent(message = state.error ?: "An error occurred")
-                }
-                else -> {
-                    BrandsGrid(
-                        brands = state.filteredBrands,
-                        onBrandClick = onBrandClick
-                    )
+                    .fillMaxSize()
+                    .padding(paddingValues)
+            ) {
+                // Search bar
+                ASearchField(
+                    value = state.searchQuery,
+                    onValueChange = { viewModel.processIntent(BrandsIntent.Search(it)) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    placeholder = "Search brands...",
+                    onClear = { viewModel.processIntent(BrandsIntent.Search("")) }
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Content
+                when {
+                    state.isLoading -> {
+                        LoadingContent()
+                    }
+                    state.error != null -> {
+                        ErrorContent(message = state.error ?: "An error occurred")
+                    }
+                    else -> {
+                        BrandsGrid(
+                            brands = state.filteredBrands,
+                            onBrandClick = onBrandClick
+                        )
+                    }
                 }
             }
         }
@@ -99,7 +129,7 @@ private fun BrandsGrid(
         EmptyContent()
         return
     }
-    
+
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(16.dp),

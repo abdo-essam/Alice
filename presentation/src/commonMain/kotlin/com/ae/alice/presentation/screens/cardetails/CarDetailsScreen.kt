@@ -143,7 +143,7 @@ private fun CarDetailsContent(
 
         Spacer(modifier = Modifier.height(ATheme.dimens.ScreenPaddingVertical))
 
-        // Brand & year badge
+      /*  // Brand & year badge
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -187,7 +187,7 @@ private fun CarDetailsContent(
         Spacer(modifier = Modifier.height(ATheme.dimens.SpacingXl))
 
         // Specs grid
-        SpecsSection(model = model)
+        SpecsSection(model = model)*/
 
         // Description
         model.description?.let { desc ->

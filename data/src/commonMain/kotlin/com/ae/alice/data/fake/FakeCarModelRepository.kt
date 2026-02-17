@@ -18,21 +18,21 @@ class FakeCarModelRepository : CarModelRepository {
                 imageUrl = "https://imgd.aeplcdn.com/1920x1080/n/cw/ec/198567/3-series-exterior-right-front-three-quarter-10.png",
                 year = 2024, category = "Sedan", engineType = "Gasoline", transmission = "Automatic",
                 horsepower = 255, priceAmount = 45000.0, priceCurrency = "USD",
-                description = "The BMW 3 Series is a compact executive car manufactured by BMW since 1975."
+                description = "The BMW 3 Series is a benchmark compact luxury sedan known for its dynamic driving experience, precise handling, and premium interior. It combines sporty performance with everyday practicality, advanced driver assistance systems, and cutting-edge infotainment, making it a favorite among driving enthusiasts."
             ),
             CarModel(
                 id = "bmw-2", name = "5 Series", brandId = "1", brandName = "BMW",
                 imageUrl = "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcT6hdpM9QakC_9bL2bO_f8lCzbGgu6-RbDHInNeingRInTrlkGS",
                 year = 2024, category = "Sedan", engineType = "Hybrid", transmission = "Automatic",
                 horsepower = 335, priceAmount = 58000.0, priceCurrency = "USD",
-                description = "The BMW 5 Series is an executive car manufactured by BMW since 1972."
+                description = "The BMW 5 Series delivers a perfect balance of comfort, performance, and technology. With a refined cabin, smooth ride quality, and powerful hybrid options, it is designed for executives who want luxury, innovation, and engaging driving dynamics in one package."
             ),
             CarModel(
                 id = "bmw-3", name = "X5", brandId = "1", brandName = "BMW",
                 imageUrl = "https://larte-design.com/storage/app/media/kits/bmw/x5-lci/renders/brooklyn-grey/bmw-x5-g-05-lci-2023-carbon-front-side-brooklyn-grey.webp",
                 year = 2024, category = "SUV", engineType = "Gasoline", transmission = "Automatic",
                 horsepower = 335, priceAmount = 65000.0, priceCurrency = "USD",
-                description = "The BMW X5 is a mid-size luxury SUV produced by BMW."
+                description = "The BMW X5 is a versatile luxury SUV offering strong performance, spacious seating, and advanced safety features. It blends off-road capability with premium comfort, making it ideal for families and long-distance travel while maintaining BMW’s signature driving feel."
             )
         ),
         "2" to listOf(  // Mercedes-Benz

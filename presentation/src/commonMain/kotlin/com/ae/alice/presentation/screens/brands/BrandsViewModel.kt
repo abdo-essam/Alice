@@ -1,11 +1,7 @@
 package com.ae.alice.presentation.screens.brands
 
-import com.ae.alice.domain.entity.Brand
 import com.ae.alice.domain.repository.BrandRepository
 import com.ae.alice.presentation.base.BaseViewModel
-import com.ae.alice.presentation.base.UiEffect
-import com.ae.alice.presentation.base.UiIntent
-import com.ae.alice.presentation.base.UiState
 
 /**
  * ViewModel for BrandsScreen using MVI pattern.
@@ -28,10 +24,10 @@ class BrandsViewModel(
     }
     
     private fun loadBrands() {
-        launch {
-            updateState { copy(isLoading = true, error = null) }
-            try {
-                val brands = brandRepository.getBrands()
+        updateState { copy(isLoading = true, error = null) }
+        tryExecute(
+            call = { brandRepository.getBrands() },
+            onSuccess = { brands ->
                 updateState { 
                     copy(
                         isLoading = false,
@@ -39,7 +35,8 @@ class BrandsViewModel(
                         filteredBrands = brands
                     ) 
                 }
-            } catch (e: Exception) {
+            },
+            onError = { e ->
                 updateState { 
                     copy(
                         isLoading = false,
@@ -47,7 +44,7 @@ class BrandsViewModel(
                     ) 
                 }
             }
-        }
+        )
     }
     
     private fun onSearch(query: String) {
@@ -75,32 +72,4 @@ class BrandsViewModel(
             ) 
         }
     }
-}
-
-/**
- * UI State for BrandsScreen.
- */
-data class BrandsState(
-    val isLoading: Boolean = false,
-    val brands: List<Brand> = emptyList(),
-    val filteredBrands: List<Brand> = emptyList(),
-    val searchQuery: String = "",
-    val error: String? = null
-) : UiState
-
-/**
- * Intents for BrandsScreen.
- */
-sealed interface BrandsIntent : UiIntent {
-    data object LoadBrands : BrandsIntent
-    data class Search(val query: String) : BrandsIntent
-    data object ClearSearch : BrandsIntent
-    data class BrandClicked(val brand: Brand) : BrandsIntent
-}
-
-/**
- * Effects for BrandsScreen.
- */
-sealed interface BrandsEffect : UiEffect {
-    data class NavigateToModels(val brand: Brand) : BrandsEffect
 }

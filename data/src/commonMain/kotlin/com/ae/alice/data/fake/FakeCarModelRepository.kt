@@ -38,21 +38,21 @@ class FakeCarModelRepository : CarModelRepository {
         "2" to listOf(  // Mercedes-Benz
             CarModel(
                 id = "merc-1", name = "C-Class", brandId = "2", brandName = "Mercedes-Benz",
-                imageUrl = "https://picsum.photos/seed/mercc/400/300",
+                imageUrl = "https://media.oneweb.mercedes-benz.com/images/dynamic/europe/EG/206041/806_056/iris.png",
                 year = 2024, category = "Sedan", engineType = "Gasoline", transmission = "Automatic",
                 horsepower = 255, priceAmount = 48000.0, priceCurrency = "USD",
                 description = "The Mercedes-Benz C-Class is a line of compact executive cars."
             ),
             CarModel(
                 id = "merc-2", name = "E-Class", brandId = "2", brandName = "Mercedes-Benz",
-                imageUrl = "https://picsum.photos/seed/merce/400/300",
+                imageUrl = "https://www.mercedes-benz.com.eg/content/dam/hq/passengercars/cars/e-class/e-class-saloon-w214-pi/overview/highlights/02-2023/images/mercedes-benz-e-class-w214-highlights-videostill-3302x1858-02-2023.jpg",
                 year = 2024, category = "Sedan", engineType = "Hybrid", transmission = "Automatic",
                 horsepower = 375, priceAmount = 62000.0, priceCurrency = "USD",
                 description = "The Mercedes-Benz E-Class is a range of executive cars."
             ),
             CarModel(
                 id = "merc-3", name = "S-Class", brandId = "2", brandName = "Mercedes-Benz",
-                imageUrl = "https://picsum.photos/seed/mercs/400/300",
+                imageUrl = "https://images.hgmsites.net/lrg/2025-mercedes-benz-s-class-s-500-4matic-sedan-angular-front-exterior-view_100960081_l.webp",
                 year = 2024, category = "Luxury", engineType = "Hybrid", transmission = "Automatic",
                 horsepower = 496, priceAmount = 115000.0, priceCurrency = "USD",
                 description = "The Mercedes-Benz S-Class is a series of full-size luxury sedans."
@@ -61,14 +61,14 @@ class FakeCarModelRepository : CarModelRepository {
         "3" to listOf(  // Audi
             CarModel(
                 id = "audi-1", name = "A4", brandId = "3", brandName = "Audi",
-                imageUrl = "https://picsum.photos/seed/audia4/400/300",
+                imageUrl = "https://legion-images.hatla2ee.com/original_image/7ce90c9e-6199-4f66-be2c-3aaafdbc908b/medium.png",
                 year = 2024, category = "Sedan", engineType = "Gasoline", transmission = "Automatic",
                 horsepower = 201, priceAmount = 43000.0, priceCurrency = "USD",
                 description = "The Audi A4 is a line of compact executive cars."
             ),
             CarModel(
                 id = "audi-2", name = "Q5", brandId = "3", brandName = "Audi",
-                imageUrl = "https://picsum.photos/seed/audiq5/400/300",
+                imageUrl = "https://www.ccarprice.com/products/Audi_Q5_Sportback_2025.jpg",
                 year = 2024, category = "SUV", engineType = "Gasoline", transmission = "Automatic",
                 horsepower = 261, priceAmount = 52000.0, priceCurrency = "USD",
                 description = "The Audi Q5 is a compact luxury crossover SUV."

@@ -1,11 +1,7 @@
 package com.ae.alice.presentation.screens.models
 
-import com.ae.alice.domain.entity.CarModel
 import com.ae.alice.domain.repository.CarModelRepository
 import com.ae.alice.presentation.base.BaseViewModel
-import com.ae.alice.presentation.base.UiEffect
-import com.ae.alice.presentation.base.UiIntent
-import com.ae.alice.presentation.base.UiState
 
 /**
  * ViewModel for ModelsScreen using MVI pattern.
@@ -23,10 +19,10 @@ class ModelsViewModel(
     }
 
     private fun loadModels(brandId: String) {
-        launch {
-            updateState { copy(isLoading = true, error = null) }
-            try {
-                val models = carModelRepository.getModelsByBrand(brandId)
+        updateState { copy(isLoading = true, error = null) }
+        tryExecute(
+            call = { carModelRepository.getModelsByBrand(brandId) },
+            onSuccess = { models ->
                 updateState {
                     copy(
                         isLoading = false,
@@ -34,7 +30,8 @@ class ModelsViewModel(
                         filteredModels = models
                     )
                 }
-            } catch (e: Exception) {
+            },
+            onError = { e ->
                 updateState {
                     copy(
                         isLoading = false,
@@ -42,7 +39,7 @@ class ModelsViewModel(
                     )
                 }
             }
-        }
+        )
     }
 
     private fun onSearch(query: String) {
@@ -62,28 +59,3 @@ class ModelsViewModel(
         updateState { copy(filteredModels = filtered) }
     }
 }
-
-/**
- * UI State for ModelsScreen.
- */
-data class ModelsState(
-    val isLoading: Boolean = false,
-    val models: List<CarModel> = emptyList(),
-    val filteredModels: List<CarModel> = emptyList(),
-    val searchQuery: String = "",
-    val error: String? = null
-) : UiState
-
-/**
- * Intents for ModelsScreen.
- */
-sealed interface ModelsIntent : UiIntent {
-    data class LoadModels(val brandId: String) : ModelsIntent
-    data class Search(val query: String) : ModelsIntent
-    data class ModelClicked(val model: CarModel) : ModelsIntent
-}
-
-/**
- * Effects for ModelsScreen.
- */
-sealed interface ModelsEffect : UiEffect

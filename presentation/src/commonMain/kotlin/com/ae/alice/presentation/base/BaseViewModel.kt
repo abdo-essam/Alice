@@ -72,6 +72,25 @@ abstract class BaseViewModel<S : UiState, I : UiIntent, E : UiEffect>(
     ): Job {
         return viewModelScope.launch(dispatcher, block = block)
     }
+    
+    /**
+     * Execute a suspending call with centralized try/catch.
+     * Eliminates repetitive try/catch boilerplate in ViewModels.
+     */
+    protected fun <T> tryExecute(
+        call: suspend () -> T,
+        onSuccess: (T) -> Unit,
+        onError: (Exception) -> Unit
+    ) {
+        launch {
+            try {
+                val result = call()
+                onSuccess(result)
+            } catch (e: Exception) {
+                onError(e)
+            }
+        }
+    }
 }
 
 /**

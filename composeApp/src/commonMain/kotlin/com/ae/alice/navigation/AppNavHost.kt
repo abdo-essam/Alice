@@ -5,8 +5,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.ae.alice.screens.brands.BrandsScreen
-import com.ae.alice.screens.models.ModelsScreen
+import com.ae.alice.presentation.screens.brands.BrandsScreen
+import com.ae.alice.presentation.screens.cardetails.CarDetailsScreen
+import com.ae.alice.presentation.screens.models.ModelsScreen
 
 /**
  * App navigation host.
@@ -32,6 +33,18 @@ fun AppNavHost(
             ModelsScreen(
                 brandId = args.brandId,
                 brandName = args.brandName,
+                onBackClick = { navController.popBackStack() },
+                onModelClick = { model ->
+                    navController.navigate(Routes.CarDetails(model.id, model.name))
+                }
+            )
+        }
+        
+        composable<Routes.CarDetails> { backStackEntry ->
+            val args: Routes.CarDetails = backStackEntry.toRoute()
+            CarDetailsScreen(
+                modelId = args.modelId,
+                modelName = args.modelName,
                 onBackClick = { navController.popBackStack() }
             )
         }

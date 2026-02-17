@@ -25,32 +25,10 @@ object AColors {
     val AccentLight = Color(0xFFE4C5A4)
     
     // Light Theme
-    object Light {
-        val Background = Color(0xFFFAFAFA)
-        val Surface = Color(0xFFFFFFFF)
-        val SurfaceVariant = Color(0xFFF5F0EB)
-        val Card = Color(0xFFFFFFFF)
-        val Divider = Color(0xFFE8E0D8)
-        
-        val TextPrimary = Color(0xFF4A3C31)
-        val TextSecondary = Color(0xFF7A6C61)
-        val TextDisabled = Color(0xFFB0A090)
-        val TextHint = Color(0xFF9E9090)
-    }
+    val Light = AliceLightColors
     
     // Dark Theme
-    object Dark {
-        val Background = Color(0xFF1A1512)
-        val Surface = Color(0xFF2A2520)
-        val SurfaceVariant = Color(0xFF3A3530)
-        val Card = Color(0xFF302B26)
-        val Divider = Color(0xFF4A4540)
-        
-        val TextPrimary = Color(0xFFFFFFFF)
-        val TextSecondary = Color(0xFFD0C0B0)
-        val TextDisabled = Color(0xFF7A7060)
-        val TextHint = Color(0xFF908070)
-    }
+    val Dark = AliceDarkColors
     
     // Semantic
     val Success = Color(0xFF4CAF50)
@@ -67,4 +45,30 @@ object AColors {
     val ShimmerHighlight = Color(0xFFF5F0EB)
     val ShimmerBaseDark = Color(0xFF3A3530)
     val ShimmerHighlightDark = Color(0xFF4A4540)
+}
+
+object AliceLightColors {
+    val Background = Color(0xFFFAFAFA)
+    val Surface = Color(0xFFFFFFFF)
+    val SurfaceVariant = Color(0xFFF5F0EB)
+    val Card = Color(0xFFFFFFFF)
+    val Divider = Color(0xFFE8E0D8)
+    
+    val TextPrimary = Color(0xFF4A3C31)
+    val TextSecondary = Color(0xFF7A6C61)
+    val TextDisabled = Color(0xFFB0A090)
+    val TextHint = Color(0xFF9E9090)
+}
+
+object AliceDarkColors {
+    val Background = Color(0xFF1A1512)
+    val Surface = Color(0xFF2A2520)
+    val SurfaceVariant = Color(0xFF3A3530)
+    val Card = Color(0xFF302B26)
+    val Divider = Color(0xFF4A4540)
+    
+    val TextPrimary = Color(0xFFFFFFFF)
+    val TextSecondary = Color(0xFFD0C0B0)
+    val TextDisabled = Color(0xFF7A7060)
+    val TextHint = Color(0xFF908070)
 }

@@ -4,7 +4,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
-import com.ae.alice.common.result.ErrorState
 import com.ae.alice.common.result.Result
 import com.ae.alice.common.result.toErrorState
 

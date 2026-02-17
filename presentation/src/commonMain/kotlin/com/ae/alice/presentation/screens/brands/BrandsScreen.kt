@@ -1,4 +1,4 @@
-package com.ae.alice.screens.brands
+package com.ae.alice.presentation.screens.brands
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,10 +33,8 @@ import com.ae.alice.designsystem.components.AGridCard
 import com.ae.alice.designsystem.components.AHeader
 import com.ae.alice.designsystem.components.ANavItems
 import com.ae.alice.designsystem.components.ASearchField
-import com.ae.alice.designsystem.theme.AColors
+import com.ae.alice.designsystem.theme.ATheme
 import com.ae.alice.domain.entity.Brand
-import com.ae.alice.presentation.screens.brands.BrandsIntent
-import com.ae.alice.presentation.screens.brands.BrandsViewModel
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -67,7 +65,7 @@ fun BrandsScreen(
         }
     ) {
         Scaffold(
-            containerColor = AColors.Light.Background,
+            containerColor = ATheme.colors.Light.Background,
             topBar = {
                 AHeader(
                     showMenuIcon = true,
@@ -93,12 +91,15 @@ fun BrandsScreen(
                     onValueChange = { viewModel.processIntent(BrandsIntent.Search(it)) },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                        .padding(
+                            horizontal = ATheme.dimens.ScreenPaddingHorizontal,
+                            vertical = ATheme.dimens.SpacingSm
+                        ),
                     placeholder = "Search brands...",
                     onClear = { viewModel.processIntent(BrandsIntent.Search("")) }
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(ATheme.dimens.SpacingSm))
 
                 // Content
                 when {
@@ -132,9 +133,9 @@ private fun BrandsGrid(
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        contentPadding = PaddingValues(ATheme.dimens.ScreenPaddingHorizontal),
+        horizontalArrangement = Arrangement.spacedBy(ATheme.dimens.SpacingMd),
+        verticalArrangement = Arrangement.spacedBy(ATheme.dimens.SpacingMd)
     ) {
         items(
             items = brands,
@@ -155,7 +156,7 @@ private fun LoadingContent() {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        CircularProgressIndicator(color = AColors.Primary)
+        CircularProgressIndicator(color = ATheme.colors.Primary)
     }
 }
 
@@ -167,7 +168,7 @@ private fun ErrorContent(message: String) {
     ) {
         Text(
             text = message,
-            color = AColors.Error
+            color = ATheme.colors.Error
         )
     }
 }
@@ -180,7 +181,7 @@ private fun EmptyContent() {
     ) {
         Text(
             text = "No brands found",
-            color = AColors.Light.TextSecondary
+            color = ATheme.colors.Light.TextSecondary
         )
     }
 }

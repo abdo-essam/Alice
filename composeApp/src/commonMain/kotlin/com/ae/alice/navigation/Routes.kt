@@ -15,4 +15,10 @@ object Routes {
         val brandId: String,
         val brandName: String
     )
+    
+    @Serializable
+    data class CarDetails(
+        val modelId: String,
+        val modelName: String
+    )
 }

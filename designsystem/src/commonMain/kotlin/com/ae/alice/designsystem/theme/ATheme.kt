@@ -9,6 +9,7 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 
 /**
@@ -91,10 +92,10 @@ private val Shapes = Shapes(
 )
 
 /**
- * Alice app theme.
+ * Alice app theme (MENA-style with CompositionLocal providers).
  */
 @Composable
-fun ATheme(
+fun AliceTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
@@ -112,10 +113,17 @@ fun ATheme(
 }
 
 /**
- * Access extended colors.
+ * Access design system tokens via ATheme — MENA-style accessors.
+ * Usage: ATheme.colors.Primary, ATheme.colors.Light.Background,
+ *        ATheme.typography.TitleMedium, ATheme.dimens.SpacingMd
  */
 object ATheme {
+    val colors: AColors = AColors
+    val typography: ATypography = ATypography
+    val dimens: ADimensions = ADimensions
+    
     val extendedColors: ExtendedColors
         @Composable
+        @ReadOnlyComposable
         get() = LocalExtendedColors.current
 }

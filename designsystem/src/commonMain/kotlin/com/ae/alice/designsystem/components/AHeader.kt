@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,7 +28,11 @@ import androidx.compose.ui.unit.sp
 import com.ae.alice.designsystem.theme.AColors
 import alice.designsystem.generated.resources.Res
 import alice.designsystem.generated.resources.alice_logo
+import alice.designsystem.generated.resources.back_content_description
+import alice.designsystem.generated.resources.logo_content_description
+import alice.designsystem.generated.resources.menu_content_description
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * App header component with hamburger menu icon and Alice logo.
@@ -37,7 +42,9 @@ fun AHeader(
     modifier: Modifier = Modifier,
     title: String = "ALICE",
     showMenuIcon: Boolean = false,
-    onMenuClick: () -> Unit = {}
+    showBackIcon: Boolean = false,
+    onMenuClick: () -> Unit = {},
+    onBackClick: () -> Unit = {}
 ) {
     Row(
         modifier = modifier
@@ -50,7 +57,16 @@ fun AHeader(
             IconButton(onClick = onMenuClick) {
                 Icon(
                     imageVector = Icons.Filled.Menu,
-                    contentDescription = "Menu",
+                    contentDescription = stringResource(Res.string.menu_content_description),
+                    tint = AColors.Secondary,
+                    modifier = Modifier.size(28.dp)
+                )
+            }
+        } else if (showBackIcon) {
+            IconButton(onClick = onBackClick) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack, // or Icons.Filled.ArrowBack if AutoMirrored not avail
+                    contentDescription = stringResource(Res.string.back_content_description), // Need resource
                     tint = AColors.Secondary,
                     modifier = Modifier.size(28.dp)
                 )
@@ -62,7 +78,7 @@ fun AHeader(
         // Alice logo
         Image(
             painter = painterResource(Res.drawable.alice_logo),
-            contentDescription = "Alice Logo",
+            contentDescription = stringResource(Res.string.logo_content_description),
             modifier = Modifier
                 .size(40.dp)
                 .clip(CircleShape),

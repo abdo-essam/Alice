@@ -1,4 +1,5 @@
 package com.ae.alice.navigation
+import com.ae.alice.presentation.screens.settings.SettingsScreen
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -24,6 +25,9 @@ fun AppNavHost(
             BrandsScreen(
                 onBrandClick = { brand ->
                     navController.navigate(Routes.Models(brand.id, brand.name))
+                },
+                onSettingsClick = {
+                    navController.navigate(Routes.Settings)
                 }
             )
         }
@@ -45,6 +49,12 @@ fun AppNavHost(
             CarDetailsScreen(
                 modelId = args.modelId,
                 modelName = args.modelName,
+                onBackClick = { navController.popBackStack() }
+            )
+        }
+
+        composable<Routes.Settings> {
+            com.ae.alice.presentation.screens.settings.SettingsScreen(
                 onBackClick = { navController.popBackStack() }
             )
         }

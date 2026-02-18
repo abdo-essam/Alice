@@ -1,0 +1,19 @@
+<resources>
+    <string name="menu_content_description">القائمة</string>
+    <string name="back_content_description">رجوع</string>
+    <string name="logo_content_description">شعار أليس</string>
+    <string name="home_title">الرئيسية</string>
+    <string name="search_title">بحث</string>
+    <string name="favorites_title">المفضلة</string>
+    <string name="account_title">الحساب</string>
+    <string name="settings_title">الإعدادات</string>
+    <string name="theme_title">المظهر</string>
+    <string name="theme_light">فاتح</string>
+    <string name="theme_dark">داكن</string>
+    <string name="theme_system">النظام</string>
+    <string name="language_title">اللغة</string>
+    <string name="language_english">الإنجليزية</string>
+    <string name="language_arabic">العربية</string>
+    <string name="search_brands_placeholder">ابحث عن العلامات التجارية...</string>
+    <string name="no_brands_found">لم يتم العثور على علامات تجارية</string>
+</resources>

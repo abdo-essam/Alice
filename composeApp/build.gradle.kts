@@ -53,6 +53,9 @@ kotlin {
             // Navigation
             implementation(libs.androidx.navigation.compose)
             
+            // DataStore
+            implementation(libs.androidx.datastore.preferences.core)
+            
             // Koin
             implementation(libs.koin.core)
             implementation(libs.koin.compose)

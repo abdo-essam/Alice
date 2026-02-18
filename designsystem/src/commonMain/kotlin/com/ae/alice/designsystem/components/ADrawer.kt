@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -38,12 +39,20 @@ import alice.designsystem.generated.resources.alice_logo
 import com.ae.alice.designsystem.theme.AColors
 import org.jetbrains.compose.resources.painterResource
 
+import alice.designsystem.generated.resources.account_title
+import alice.designsystem.generated.resources.favorites_title
+import alice.designsystem.generated.resources.home_title
+import alice.designsystem.generated.resources.search_title
+import alice.designsystem.generated.resources.settings_title
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
+
 /**
  * Data for a single drawer item.
  */
 data class ADrawerItem(
     val icon: ImageVector,
-    val label: String,
+    val label: StringResource,
     val selected: Boolean = false
 )
 
@@ -52,10 +61,11 @@ data class ADrawerItem(
  */
 object ADrawerItems {
     fun default(selectedIndex: Int = 0) = listOf(
-        ADrawerItem(Icons.Filled.Home, "Home", selectedIndex == 0),
-        ADrawerItem(Icons.Filled.Search, "Search", selectedIndex == 1),
-        ADrawerItem(Icons.Filled.FavoriteBorder, "Favorites", selectedIndex == 2),
-        ADrawerItem(Icons.Filled.AccountCircle, "Account", selectedIndex == 3)
+        ADrawerItem(Icons.Filled.Home, Res.string.home_title, selectedIndex == 0),
+        ADrawerItem(Icons.Filled.Search, Res.string.search_title, selectedIndex == 1),
+        ADrawerItem(Icons.Filled.FavoriteBorder, Res.string.favorites_title, selectedIndex == 2),
+        ADrawerItem(Icons.Filled.AccountCircle, Res.string.account_title, selectedIndex == 3),
+        ADrawerItem(Icons.Filled.Settings, Res.string.settings_title, selectedIndex == 4)
     )
 }
 
@@ -158,7 +168,7 @@ private fun DrawerMenuItem(
     ) {
         Icon(
             imageVector = item.icon,
-            contentDescription = item.label,
+            contentDescription = stringResource(item.label),
             tint = contentColor,
             modifier = Modifier.size(24.dp)
         )
@@ -166,7 +176,7 @@ private fun DrawerMenuItem(
         Spacer(modifier = Modifier.width(16.dp))
 
         Text(
-            text = item.label,
+            text = stringResource(item.label),
             fontSize = 15.sp,
             fontWeight = if (item.selected) FontWeight.SemiBold else FontWeight.Normal,
             color = contentColor

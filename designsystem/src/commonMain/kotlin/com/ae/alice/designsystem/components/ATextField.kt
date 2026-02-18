@@ -1,53 +1,67 @@
 package com.ae.alice.designsystem.components
 
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.text.input.VisualTransformation
+import com.ae.alice.designsystem.components.textfield.ABasicTextField
 import com.ae.alice.designsystem.theme.ADimensions
+import androidx.compose.material3.MaterialTheme
 
 /**
- * Standard text field.
+ * Standard text field — convenience wrapper around [ABasicTextField].
  */
 @Composable
 fun ATextField(
     value: String,
-    onValueChange: (String) -> Unit,
+    hint: String,
+    onValueChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
-    label: String? = null,
-    placeholder: String? = null,
-    leadingIcon: @Composable (() -> Unit)? = null,
-    trailingIcon: @Composable (() -> Unit)? = null,
-    isError: Boolean = false,
-    errorMessage: String? = null,
+    leadingIcon: Painter? = null,
+    trailingIcon: Painter? = null,
+    title: String? = null,
+    leadingIconTint: Color = MaterialTheme.colorScheme.onSurface,
     enabled: Boolean = true,
-    singleLine: Boolean = true,
-    keyboardType: KeyboardType = KeyboardType.Text
+    readOnly: Boolean = false,
+    isError: Boolean = false,
+    showTrailingDivider: Boolean = true,
+    errorMessage: String? = null,
+    shape: Shape = RoundedCornerShape(ADimensions.RadiusMd),
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    focusRequester: FocusRequester = FocusRequester(),
+    onFocusChanged: (Boolean) -> Unit = {},
+    onTrailingIconClick: (() -> Unit)? = null,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    maxCharacters: Int = Int.MAX_VALUE,
 ) {
-    OutlinedTextField(
+    ABasicTextField(
         value = value,
-        onValueChange = onValueChange,
+        hint = hint,
+        onValueChanged = onValueChanged,
         modifier = modifier,
-        label = label?.let { { Text(it) } },
-        placeholder = placeholder?.let { { Text(it) } },
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
-        isError = isError,
-        supportingText = if (isError && errorMessage != null) {
-            { Text(errorMessage, color = MaterialTheme.colorScheme.error) }
-        } else null,
+        title = title,
+        leadingIconTint = leadingIconTint,
         enabled = enabled,
-        singleLine = singleLine,
-        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
-        shape = RoundedCornerShape(ADimensions.RadiusMd),
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = MaterialTheme.colorScheme.primary,
-            unfocusedBorderColor = MaterialTheme.colorScheme.outline
-        )
+        readOnly = readOnly,
+        isError = isError,
+        showTrailingDivider = showTrailingDivider,
+        errorMessage = errorMessage,
+        shape = shape,
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
+        focusRequester = focusRequester,
+        onFocusChanged = onFocusChanged,
+        onTrailingIconClick = onTrailingIconClick,
+        visualTransformation = visualTransformation,
+        maxCharacters = maxCharacters,
     )
 }

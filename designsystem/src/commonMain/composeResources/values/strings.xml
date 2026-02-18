@@ -1,0 +1,19 @@
+<resources>
+    <string name="menu_content_description">Menu</string>
+    <string name="back_content_description">Back</string>
+    <string name="logo_content_description">Alice Logo</string>
+    <string name="home_title">Home</string>
+    <string name="search_title">Search</string>
+    <string name="favorites_title">Favorites</string>
+    <string name="account_title">Account</string>
+    <string name="settings_title">Settings</string>
+    <string name="theme_title">Theme</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_system">System</string>
+    <string name="language_title">Language</string>
+    <string name="language_english">English</string>
+    <string name="language_arabic">Arabic</string>
+    <string name="search_brands_placeholder">Search brands...</string>
+    <string name="no_brands_found">No brands found</string>
+</resources>

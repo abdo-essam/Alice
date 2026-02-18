@@ -1,18 +1,62 @@
 package com.ae.alice.designsystem.components
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import com.ae.alice.designsystem.components.button.ABaseButtonContent
+import com.ae.alice.designsystem.components.button.AButton
 import com.ae.alice.designsystem.theme.ADimensions
 
 /**
- * Primary filled button.
+ * Primary filled button with loading and icon support.
+ */
+@Composable
+fun APrimaryButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    trailingIcon: Painter? = null,
+    iconSize: Dp = 20.dp,
+    iconStartPadding: Dp = 8.dp,
+    isEnabled: Boolean = true,
+    isLoading: Boolean = false,
+    containerColor: Color = MaterialTheme.colorScheme.primary,
+    contentColor: Color = MaterialTheme.colorScheme.onPrimary,
+    contentPadding: PaddingValues = PaddingValues(
+        horizontal = ADimensions.SpacingLg,
+        vertical = 13.dp
+    ),
+    shape: Shape = RoundedCornerShape(ADimensions.RadiusMd),
+) {
+    AButton(
+        onClick = onClick,
+        isEnabled = isEnabled,
+        isLoading = isLoading,
+        containerColor = containerColor,
+        contentColor = contentColor,
+        contentPadding = contentPadding,
+        shape = shape,
+        modifier = modifier,
+    ) {
+        ABaseButtonContent(
+            text = text,
+            trailingIcon = trailingIcon,
+            iconSize = iconSize,
+            iconStartPadding = iconStartPadding,
+            contentColor = it,
+        )
+    }
+}
+
+/**
+ * Primary button with custom content.
  */
 @Composable
 fun APrimaryButton(
@@ -25,36 +69,12 @@ fun APrimaryButton(
     ),
     content: @Composable () -> Unit
 ) {
-    Button(
-        onClick = onClick,
-        modifier = modifier.height(ADimensions.ButtonHeight),
-        enabled = enabled,
-        shape = RoundedCornerShape(ADimensions.RadiusMd),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary
-        ),
-        contentPadding = contentPadding
-    ) {
-        content()
-    }
-}
-
-/**
- * Primary button with text.
- */
-@Composable
-fun APrimaryButton(
-    text: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true
-) {
-    APrimaryButton(
+    AButton(
         onClick = onClick,
         modifier = modifier,
-        enabled = enabled
+        isEnabled = enabled,
+        contentPadding = contentPadding,
     ) {
-        Text(text = text)
+        content()
     }
 }

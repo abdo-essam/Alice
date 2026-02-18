@@ -23,6 +23,7 @@ kotlin {
             implementation(project(":domain"))
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.koin.core)
+            implementation(libs.androidx.datastore.preferences.core)
         }
     }
 }

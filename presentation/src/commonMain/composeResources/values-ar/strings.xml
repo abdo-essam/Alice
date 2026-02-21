@@ -4,6 +4,7 @@
     <string name="car_details_about">حول</string>
     <string name="car_details_get_car">احصل على هذه السيارة</string>
     <string name="car_details_error_default">حدث خطأ</string>
+    <string name="car_details_retry">إعادة المحاولة</string>
     <string name="car_details_back">رجوع</string>
 
     <!-- Models Screen -->

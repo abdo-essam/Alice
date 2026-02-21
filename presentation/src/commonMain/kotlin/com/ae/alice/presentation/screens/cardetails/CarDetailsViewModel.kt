@@ -10,10 +10,16 @@ class CarDetailsViewModel(
     private val carModelRepository: CarModelRepository
 ) : BaseViewModel<CarDetailsState, CarDetailsIntent, CarDetailsEffect>(CarDetailsState()) {
 
+    private var currentModelId: String? = null
+
     override fun handleIntent(intent: CarDetailsIntent) {
         when (intent) {
-            is CarDetailsIntent.LoadModel -> loadModel(intent.modelId)
+            is CarDetailsIntent.LoadModel -> {
+                currentModelId = intent.modelId
+                loadModel(intent.modelId)
+            }
             is CarDetailsIntent.GetCar -> getCar()
+            is CarDetailsIntent.Retry -> currentModelId?.let { loadModel(it) }
         }
     }
 

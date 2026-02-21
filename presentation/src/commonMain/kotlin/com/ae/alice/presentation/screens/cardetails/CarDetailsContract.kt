@@ -12,7 +12,10 @@ data class CarDetailsState(
     val isLoading: Boolean = false,
     val model: CarModel? = null,
     val error: String? = null
-) : UiState
+) : UiState {
+    val isContentReady: Boolean get() = model != null && !isLoading && error == null
+    val hasError: Boolean get() = error != null && !isLoading
+}
 
 /**
  * Intents for CarDetailsScreen.
@@ -20,6 +23,7 @@ data class CarDetailsState(
 sealed interface CarDetailsIntent : UiIntent {
     data class LoadModel(val modelId: String) : CarDetailsIntent
     data object GetCar : CarDetailsIntent
+    data object Retry : CarDetailsIntent
 }
 
 /**

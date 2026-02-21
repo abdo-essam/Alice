@@ -4,6 +4,7 @@
     <string name="car_details_about">About</string>
     <string name="car_details_get_car">Get This Car</string>
     <string name="car_details_error_default">An error occurred</string>
+    <string name="car_details_retry">Retry</string>
     <string name="car_details_back">Back</string>
 
     <!-- Models Screen -->

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Car Details Screen -->
+    <string name="car_details_about">About</string>
+    <string name="car_details_get_car">Get This Car</string>
+    <string name="car_details_error_default">An error occurred</string>
+    <string name="car_details_back">Back</string>
+
+    <!-- Models Screen -->
+    <string name="models_search_placeholder">Search models...</string>
+    <string name="models_empty">No models available</string>
+    <string name="models_error_default">An error occurred</string>
+    <string name="models_back">Back</string>
+
+    <!-- Brands Screen -->
+    <string name="brands_search_placeholder">Search brands...</string>
+    <string name="brands_empty">No brands found</string>
+    <string name="brands_error_default">An error occurred</string>
+
+    <!-- Drawer -->
+    <string name="drawer_home">Home</string>
+    <string name="drawer_search">Search</string>
+    <string name="drawer_favorites">Favorites</string>
+    <string name="drawer_account">Account</string>
+    <string name="drawer_app_name">ALICE</string>
+    <string name="drawer_subtitle">Car Discovery</string>
+    <string name="drawer_logo_desc">Alice Logo</string>
+
+    <!-- Bottom Nav -->
+    <string name="nav_home">Home</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_favorites">Favorites</string>
+    <string name="nav_account">Account</string>
+
+    <!-- Header -->
+    <string name="header_menu">Menu</string>
+    <string name="header_logo_desc">Alice Logo</string>
+    <string name="header_title">ALICE</string>
+
+    <!-- Language -->
+    <string name="language_english">English</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_switch">Switch Language</string>
+</resources>

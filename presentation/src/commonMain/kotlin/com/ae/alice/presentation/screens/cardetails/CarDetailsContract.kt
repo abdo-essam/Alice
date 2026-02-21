@@ -19,9 +19,13 @@ data class CarDetailsState(
  */
 sealed interface CarDetailsIntent : UiIntent {
     data class LoadModel(val modelId: String) : CarDetailsIntent
+    data object GetCar : CarDetailsIntent
 }
 
 /**
  * Effects for CarDetailsScreen.
  */
-sealed interface CarDetailsEffect : UiEffect
+sealed interface CarDetailsEffect : UiEffect {
+    data class NavigateToGetCar(val modelId: String, val modelName: String) : CarDetailsEffect
+}
+

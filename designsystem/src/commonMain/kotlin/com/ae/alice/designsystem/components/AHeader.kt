@@ -27,7 +27,10 @@ import androidx.compose.ui.unit.sp
 import com.ae.alice.designsystem.theme.AColors
 import alice.designsystem.generated.resources.Res
 import alice.designsystem.generated.resources.alice_logo
+import alice.designsystem.generated.resources.header_menu
+import alice.designsystem.generated.resources.header_logo_desc
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * App header component with hamburger menu icon and Alice logo.
@@ -50,7 +53,7 @@ fun AHeader(
             IconButton(onClick = onMenuClick) {
                 Icon(
                     imageVector = Icons.Filled.Menu,
-                    contentDescription = "Menu",
+                    contentDescription = stringResource(Res.string.header_menu),
                     tint = AColors.Secondary,
                     modifier = Modifier.size(28.dp)
                 )
@@ -62,7 +65,7 @@ fun AHeader(
         // Alice logo
         Image(
             painter = painterResource(Res.drawable.alice_logo),
-            contentDescription = "Alice Logo",
+            contentDescription = stringResource(Res.string.header_logo_desc),
             modifier = Modifier
                 .size(40.dp)
                 .clip(CircleShape),

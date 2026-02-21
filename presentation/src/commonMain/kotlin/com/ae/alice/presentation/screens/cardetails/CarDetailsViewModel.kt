@@ -13,7 +13,13 @@ class CarDetailsViewModel(
     override fun handleIntent(intent: CarDetailsIntent) {
         when (intent) {
             is CarDetailsIntent.LoadModel -> loadModel(intent.modelId)
+            is CarDetailsIntent.GetCar -> getCar()
         }
+    }
+
+    private fun getCar() {
+        val model = currentState.model ?: return
+        emitEffect(CarDetailsEffect.NavigateToGetCar(model.id, model.name))
     }
 
     private fun loadModel(modelId: String) {

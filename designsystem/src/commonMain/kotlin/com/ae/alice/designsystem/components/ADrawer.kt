@@ -19,10 +19,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import com.ae.alice.designsystem.locale.LocalAppLocale
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,8 +37,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import alice.designsystem.generated.resources.Res
 import alice.designsystem.generated.resources.alice_logo
+import alice.designsystem.generated.resources.drawer_home
+import alice.designsystem.generated.resources.drawer_search
+import alice.designsystem.generated.resources.drawer_favorites
+import alice.designsystem.generated.resources.drawer_account
+import alice.designsystem.generated.resources.drawer_app_name
+import alice.designsystem.generated.resources.drawer_subtitle
+import alice.designsystem.generated.resources.drawer_logo_desc
 import com.ae.alice.designsystem.theme.AColors
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Data for a single drawer item.
@@ -51,11 +61,12 @@ data class ADrawerItem(
  * Default drawer items matching app navigation.
  */
 object ADrawerItems {
+    @Composable
     fun default(selectedIndex: Int = 0) = listOf(
-        ADrawerItem(Icons.Filled.Home, "Home", selectedIndex == 0),
-        ADrawerItem(Icons.Filled.Search, "Search", selectedIndex == 1),
-        ADrawerItem(Icons.Filled.FavoriteBorder, "Favorites", selectedIndex == 2),
-        ADrawerItem(Icons.Filled.AccountCircle, "Account", selectedIndex == 3)
+        ADrawerItem(Icons.Filled.Home, stringResource(Res.string.drawer_home), selectedIndex == 0),
+        ADrawerItem(Icons.Filled.Search, stringResource(Res.string.drawer_search), selectedIndex == 1),
+        ADrawerItem(Icons.Filled.FavoriteBorder, stringResource(Res.string.drawer_favorites), selectedIndex == 2),
+        ADrawerItem(Icons.Filled.AccountCircle, stringResource(Res.string.drawer_account), selectedIndex == 3)
     )
 }
 
@@ -68,6 +79,8 @@ fun ADrawerContent(
     onItemClick: (Int) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+    val localeState = LocalAppLocale.current
+    
     Column(
         modifier = modifier
             .fillMaxHeight()
@@ -88,6 +101,20 @@ fun ADrawerContent(
                 onClick = { onItemClick(index) }
             )
         }
+        
+        Spacer(modifier = Modifier.weight(1f))
+        
+        HorizontalDivider(color = AColors.Light.Divider, thickness = 1.dp)
+        
+        DrawerMenuItem(
+            item = ADrawerItem(
+                icon = Icons.Filled.Language,
+                label = if (localeState.language.code == "ar") "English" else "العربية"
+            ),
+            onClick = { localeState.switchLanguage() }
+        )
+        
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
@@ -111,7 +138,7 @@ private fun DrawerHeader() {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
                 painter = painterResource(Res.drawable.alice_logo),
-                contentDescription = "Alice Logo",
+                contentDescription = stringResource(Res.string.drawer_logo_desc),
                 modifier = Modifier
                     .size(56.dp)
                     .clip(CircleShape),
@@ -122,14 +149,14 @@ private fun DrawerHeader() {
 
             Column {
                 Text(
-                    text = "ALICE",
+                    text = stringResource(Res.string.drawer_app_name),
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     color = AColors.OnSecondary,
                     letterSpacing = 2.sp
                 )
                 Text(
-                    text = "Car Discovery",
+                    text = stringResource(Res.string.drawer_subtitle),
                     fontSize = 13.sp,
                     color = AColors.OnSecondary.copy(alpha = 0.7f)
                 )
@@ -173,3 +200,4 @@ private fun DrawerMenuItem(
         )
     }
 }
+

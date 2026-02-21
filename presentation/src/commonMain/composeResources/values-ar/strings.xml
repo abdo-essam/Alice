@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Car Details Screen -->
+    <string name="car_details_about">حول</string>
+    <string name="car_details_get_car">احصل على هذه السيارة</string>
+    <string name="car_details_error_default">حدث خطأ</string>
+    <string name="car_details_back">رجوع</string>
+
+    <!-- Models Screen -->
+    <string name="models_search_placeholder">ابحث عن الموديلات...</string>
+    <string name="models_empty">لا توجد موديلات متاحة</string>
+    <string name="models_error_default">حدث خطأ</string>
+    <string name="models_back">رجوع</string>
+
+    <!-- Brands Screen -->
+    <string name="brands_search_placeholder">ابحث عن الماركات...</string>
+    <string name="brands_empty">لا توجد ماركات</string>
+    <string name="brands_error_default">حدث خطأ</string>
+
+    <!-- Drawer -->
+    <string name="drawer_home">الرئيسية</string>
+    <string name="drawer_search">البحث</string>
+    <string name="drawer_favorites">المفضلة</string>
+    <string name="drawer_account">الحساب</string>
+    <string name="drawer_app_name">أليس</string>
+    <string name="drawer_subtitle">اكتشف السيارات</string>
+    <string name="drawer_logo_desc">شعار أليس</string>
+
+    <!-- Bottom Nav -->
+    <string name="nav_home">الرئيسية</string>
+    <string name="nav_search">البحث</string>
+    <string name="nav_favorites">المفضلة</string>
+    <string name="nav_account">الحساب</string>
+
+    <!-- Header -->
+    <string name="header_menu">القائمة</string>
+    <string name="header_logo_desc">شعار أليس</string>
+    <string name="header_title">أليس</string>
+
+    <!-- Language -->
+    <string name="language_english">English</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_switch">تغيير اللغة</string>
+</resources>

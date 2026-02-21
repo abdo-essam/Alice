@@ -35,6 +35,11 @@ import com.ae.alice.designsystem.components.ANavItems
 import com.ae.alice.designsystem.components.ASearchField
 import com.ae.alice.designsystem.theme.ATheme
 import com.ae.alice.domain.entity.Brand
+import alice.presentation.generated.resources.Res
+import alice.presentation.generated.resources.brands_search_placeholder
+import alice.presentation.generated.resources.brands_empty
+import alice.presentation.generated.resources.brands_error_default
+import org.jetbrains.compose.resources.stringResource
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -95,7 +100,7 @@ fun BrandsScreen(
                             horizontal = ATheme.dimens.ScreenPaddingHorizontal,
                             vertical = ATheme.dimens.SpacingSm
                         ),
-                    placeholder = "Search brands...",
+                    placeholder = stringResource(Res.string.brands_search_placeholder),
                     onClear = { viewModel.processIntent(BrandsIntent.Search("")) }
                 )
 
@@ -107,7 +112,7 @@ fun BrandsScreen(
                         LoadingContent()
                     }
                     state.error != null -> {
-                        ErrorContent(message = state.error ?: "An error occurred")
+                        ErrorContent(message = state.error ?: stringResource(Res.string.brands_error_default))
                     }
                     else -> {
                         BrandsGrid(
@@ -180,7 +185,7 @@ private fun EmptyContent() {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "No brands found",
+            text = stringResource(Res.string.brands_empty),
             color = ATheme.colors.Light.TextSecondary
         )
     }

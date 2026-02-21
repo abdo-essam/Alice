@@ -25,7 +25,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import alice.designsystem.generated.resources.Res
+import alice.designsystem.generated.resources.nav_home
+import alice.designsystem.generated.resources.nav_search
+import alice.designsystem.generated.resources.nav_favorites
+import alice.designsystem.generated.resources.nav_account
 import com.ae.alice.designsystem.theme.AColors
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Bottom navigation item data.
@@ -86,31 +92,40 @@ fun ABottomNavBar(
  * Home (browse brands), Search, Favorites, Account.
  */
 object ANavItems {
-    val Home = ABottomNavItem(
+    @Composable
+    fun homeItem() = ABottomNavItem(
         icon = Icons.Outlined.Home,
         selectedIcon = Icons.Filled.Home,
-        label = "Home"
+        label = stringResource(Res.string.nav_home)
     )
-    val Search = ABottomNavItem(
+
+    @Composable
+    fun searchItem() = ABottomNavItem(
         icon = Icons.Outlined.Search,
         selectedIcon = Icons.Filled.Search,
-        label = "Search"
+        label = stringResource(Res.string.nav_search)
     )
-    val Favorites = ABottomNavItem(
+
+    @Composable
+    fun favoritesItem() = ABottomNavItem(
         icon = Icons.Outlined.FavoriteBorder,
         selectedIcon = Icons.Filled.FavoriteBorder,
-        label = "Favorites"
+        label = stringResource(Res.string.nav_favorites)
     )
-    val Account = ABottomNavItem(
+
+    @Composable
+    fun accountItem() = ABottomNavItem(
         icon = Icons.Outlined.AccountCircle,
         selectedIcon = Icons.Filled.AccountCircle,
-        label = "Account"
+        label = stringResource(Res.string.nav_account)
     )
-    
+
+    @Composable
     fun default(selectedIndex: Int = 0) = listOf(
-        Home.copy(selected = selectedIndex == 0),
-        Search.copy(selected = selectedIndex == 1),
-        Favorites.copy(selected = selectedIndex == 2),
-        Account.copy(selected = selectedIndex == 3)
+        homeItem().copy(selected = selectedIndex == 0),
+        searchItem().copy(selected = selectedIndex == 1),
+        favoritesItem().copy(selected = selectedIndex == 2),
+        accountItem().copy(selected = selectedIndex == 3)
     )
 }
+

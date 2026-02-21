@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Drawer -->
+    <string name="drawer_home">Home</string>
+    <string name="drawer_search">Search</string>
+    <string name="drawer_favorites">Favorites</string>
+    <string name="drawer_account">Account</string>
+    <string name="drawer_app_name">ALICE</string>
+    <string name="drawer_subtitle">Car Discovery</string>
+    <string name="drawer_logo_desc">Alice Logo</string>
+
+    <!-- Bottom Nav -->
+    <string name="nav_home">Home</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_favorites">Favorites</string>
+    <string name="nav_account">Account</string>
+
+    <!-- Header -->
+    <string name="header_menu">Menu</string>
+    <string name="header_logo_desc">Alice Logo</string>
+    <string name="header_title">ALICE</string>
+</resources>

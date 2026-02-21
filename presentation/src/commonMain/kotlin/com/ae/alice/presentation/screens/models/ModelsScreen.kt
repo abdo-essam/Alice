@@ -44,6 +44,12 @@ import coil3.compose.SubcomposeAsyncImage
 import com.ae.alice.designsystem.components.ASearchField
 import com.ae.alice.designsystem.theme.ATheme
 import com.ae.alice.domain.entity.CarModel
+import alice.presentation.generated.resources.Res
+import alice.presentation.generated.resources.models_search_placeholder
+import alice.presentation.generated.resources.models_empty
+import alice.presentation.generated.resources.models_error_default
+import alice.presentation.generated.resources.models_back
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
@@ -79,7 +85,7 @@ fun ModelsScreen(
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = stringResource(Res.string.models_back)
                         )
                     }
                 },
@@ -106,7 +112,7 @@ fun ModelsScreen(
                         horizontal = ATheme.dimens.ScreenPaddingHorizontal,
                         vertical = ATheme.dimens.SpacingSm
                     ),
-                placeholder = "Search models...",
+                placeholder = stringResource(Res.string.models_search_placeholder),
                 onClear = { viewModel.processIntent(ModelsIntent.Search("")) }
             )
 
@@ -118,7 +124,7 @@ fun ModelsScreen(
                     LoadingContent()
                 }
                 state.error != null -> {
-                    ErrorContent(message = state.error ?: "An error occurred")
+                    ErrorContent(message = state.error ?: stringResource(Res.string.models_error_default))
                 }
                 state.filteredModels.isEmpty() -> {
                     EmptyContent()
@@ -248,7 +254,7 @@ private fun EmptyContent() {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "No models available",
+            text = stringResource(Res.string.models_empty),
             color = ATheme.colors.Light.TextSecondary
         )
     }

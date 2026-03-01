@@ -1,16 +1,15 @@
 package com.ae.alice.designsystem.components
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.ae.alice.designsystem.theme.ADimensions
+import com.ae.alice.designsystem.theme.Theme
 
 /**
- * Text button.
+ * Text button — uses brand color from the current theme.
  */
 @Composable
 fun ATextButton(
@@ -18,8 +17,8 @@ fun ATextButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     contentPadding: PaddingValues = PaddingValues(
-        horizontal = ADimensions.SpacingSm,
-        vertical = ADimensions.SpacingXs
+        horizontal = Theme.spacing._8,
+        vertical = Theme.spacing._4
     ),
     content: @Composable () -> Unit
 ) {
@@ -28,7 +27,7 @@ fun ATextButton(
         modifier = modifier,
         enabled = enabled,
         colors = ButtonDefaults.textButtonColors(
-            contentColor = MaterialTheme.colorScheme.primary
+            contentColor = Theme.colorScheme.brand.brand
         ),
         contentPadding = contentPadding
     ) {
@@ -37,7 +36,7 @@ fun ATextButton(
 }
 
 /**
- * Text button with text.
+ * Text button convenience overload with text.
  */
 @Composable
 fun ATextButton(

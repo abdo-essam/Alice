@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -25,11 +24,10 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ae.alice.designsystem.theme.ADimensions
-import com.ae.alice.designsystem.theme.ATheme
+import com.ae.alice.designsystem.theme.Theme
 
 /**
- * Creates animated shimmer brush.
+ * Creates an animated shimmer brush using theme shimmer colors.
  */
 @Composable
 fun shimmerBrush(): Brush {
@@ -43,13 +41,13 @@ fun shimmerBrush(): Brush {
         ),
         label = "shimmer_translate"
     )
-    
+
     val colors = listOf(
-        ATheme.extendedColors.shimmerBase,
-        ATheme.extendedColors.shimmerHighlight,
-        ATheme.extendedColors.shimmerBase
+        Theme.colorScheme.shimmerBase,
+        Theme.colorScheme.shimmerHighlight,
+        Theme.colorScheme.shimmerBase
     )
-    
+
     return Brush.linearGradient(
         colors = colors,
         start = Offset(translateAnimation.value - 500f, translateAnimation.value - 500f),
@@ -63,8 +61,8 @@ fun shimmerBrush(): Brush {
 @Composable
 fun AShimmerBox(
     modifier: Modifier = Modifier,
-    height: Dp = ADimensions.BrandCardHeight,
-    cornerRadius: Dp = ADimensions.RadiusMd
+    height: Dp = 120.dp,
+    cornerRadius: Dp = Theme.radius.md
 ) {
     Box(
         modifier = modifier
@@ -84,36 +82,36 @@ fun AShimmerListItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(ADimensions.SpacingMd)
+            .height(64.dp)
     ) {
         // Avatar placeholder
         Box(
             modifier = Modifier
-                .size(ADimensions.BrandLogoSize)
+                .size(64.dp)
                 .clip(CircleShape)
                 .background(shimmerBrush())
         )
-        
-        Spacer(modifier = Modifier.width(ADimensions.SpacingMd))
-        
+
+        Spacer(modifier = Modifier.width(Theme.spacing._12))
+
         Column(modifier = Modifier.weight(1f)) {
             // Title placeholder
             Box(
                 modifier = Modifier
                     .fillMaxWidth(0.7f)
                     .height(20.dp)
-                    .clip(RoundedCornerShape(ADimensions.RadiusXs))
+                    .clip(RoundedCornerShape(Theme.radius.xs))
                     .background(shimmerBrush())
             )
-            
-            Spacer(modifier = Modifier.height(ADimensions.SpacingSm))
-            
+
+            Spacer(modifier = Modifier.height(Theme.spacing._8))
+
             // Subtitle placeholder
             Box(
                 modifier = Modifier
                     .fillMaxWidth(0.5f)
                     .height(16.dp)
-                    .clip(RoundedCornerShape(ADimensions.RadiusXs))
+                    .clip(RoundedCornerShape(Theme.radius.xs))
                     .background(shimmerBrush())
             )
         }

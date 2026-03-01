@@ -1,10 +1,7 @@
 package com.ae.alice.designsystem.components
 
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -21,7 +18,6 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,7 +26,7 @@ import alice.designsystem.generated.resources.nav_home
 import alice.designsystem.generated.resources.nav_search
 import alice.designsystem.generated.resources.nav_favorites
 import alice.designsystem.generated.resources.nav_account
-import com.ae.alice.designsystem.theme.AColors
+import com.ae.alice.designsystem.theme.Theme
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -44,7 +40,7 @@ data class ABottomNavItem(
 )
 
 /**
- * Modern bottom navigation bar component with proper insets handling.
+ * Bottom navigation bar — fully theme-aware.
  */
 @Composable
 fun ABottomNavBar(
@@ -53,9 +49,8 @@ fun ABottomNavBar(
     onItemClick: (Int) -> Unit = {}
 ) {
     NavigationBar(
-        modifier = modifier
-            .fillMaxWidth(),
-        containerColor = AColors.Light.Surface,
+        modifier = modifier.fillMaxWidth(),
+        containerColor = Theme.colorScheme.background.surface,
         tonalElevation = 0.dp
     ) {
         items.forEachIndexed { index, item ->
@@ -76,11 +71,11 @@ fun ABottomNavBar(
                     )
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = AColors.Primary,
-                    selectedTextColor = AColors.Primary,
-                    unselectedIconColor = AColors.Light.TextSecondary,
-                    unselectedTextColor = AColors.Light.TextSecondary,
-                    indicatorColor = AColors.Primary.copy(alpha = 0.12f)
+                    selectedIconColor = Theme.colorScheme.brand.brand,
+                    selectedTextColor = Theme.colorScheme.brand.brand,
+                    unselectedIconColor = Theme.colorScheme.shadeSecondary,
+                    unselectedTextColor = Theme.colorScheme.shadeSecondary,
+                    indicatorColor = Theme.colorScheme.brand.brand.copy(alpha = 0.12f)
                 )
             )
         }
@@ -88,8 +83,7 @@ fun ABottomNavBar(
 }
 
 /**
- * Default navigation items matching app purpose:
- * Home (browse brands), Search, Favorites, Account.
+ * Default navigation items matching app purpose.
  */
 object ANavItems {
     @Composable
@@ -128,4 +122,3 @@ object ANavItems {
         accountItem().copy(selected = selectedIndex == 3)
     )
 }
-

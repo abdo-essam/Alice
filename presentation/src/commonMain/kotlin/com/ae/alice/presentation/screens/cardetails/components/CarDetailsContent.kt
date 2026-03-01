@@ -8,7 +8,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.ae.alice.designsystem.theme.ATheme
+import com.ae.alice.designsystem.theme.Theme
 import com.ae.alice.domain.entity.CarModel
 
 @Composable
@@ -26,19 +26,18 @@ fun CarDetailsContent(
             contentDescription = model.name
         )
 
-        Spacer(modifier = Modifier.height(ATheme.dimens.ScreenPaddingVertical))
+        Spacer(modifier = Modifier.height(Theme.spacing._16))
 
         model.description?.let { description ->
-            Spacer(modifier = Modifier.height(ATheme.dimens.SpacingXl))
+            Spacer(modifier = Modifier.height(Theme.spacing._20))
 
             SectionDivider()
 
-            Spacer(modifier = Modifier.height(ATheme.dimens.SpacingXl))
+            Spacer(modifier = Modifier.height(Theme.spacing._20))
 
             DescriptionSection(description = description)
         }
 
-        // Extra spacing at the bottom so content doesn't hide behind bottom bar
-        Spacer(modifier = Modifier.height(ATheme.dimens.Spacing4xl))
+        Spacer(modifier = Modifier.height(Theme.spacing._40))
     }
 }

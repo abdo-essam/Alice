@@ -5,14 +5,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.ae.alice.designsystem.theme.ADimensions
+import androidx.compose.ui.unit.dp
+import com.ae.alice.designsystem.theme.Theme
 
 /**
- * Primary filled button.
+ * Primary filled button — uses brand color from the current theme.
  */
 @Composable
 fun APrimaryButton(
@@ -20,19 +20,19 @@ fun APrimaryButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     contentPadding: PaddingValues = PaddingValues(
-        horizontal = ADimensions.SpacingLg,
-        vertical = ADimensions.SpacingSm
+        horizontal = Theme.spacing._16,
+        vertical = Theme.spacing._8
     ),
     content: @Composable () -> Unit
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier.height(ADimensions.ButtonHeight),
+        modifier = modifier.height(48.dp),
         enabled = enabled,
-        shape = RoundedCornerShape(ADimensions.RadiusMd),
+        shape = RoundedCornerShape(Theme.radius.md),
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary
+            containerColor = Theme.colorScheme.brand.brand,
+            contentColor = Theme.colorScheme.brand.onBrand
         ),
         contentPadding = contentPadding
     ) {
@@ -41,7 +41,7 @@ fun APrimaryButton(
 }
 
 /**
- * Primary button with text.
+ * Primary button convenience overload with text.
  */
 @Composable
 fun APrimaryButton(

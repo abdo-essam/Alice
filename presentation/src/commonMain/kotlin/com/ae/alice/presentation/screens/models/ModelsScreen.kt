@@ -35,14 +35,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil3.compose.SubcomposeAsyncImage
 import com.ae.alice.designsystem.components.ASearchField
-import com.ae.alice.designsystem.theme.ATheme
+import com.ae.alice.designsystem.theme.Theme
 import com.ae.alice.domain.entity.CarModel
 import alice.presentation.generated.resources.Res
 import alice.presentation.generated.resources.models_search_placeholder
@@ -53,8 +51,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
- * Models screen displaying car models for a specific brand
- * with title, search bar, and grid layout.
+ * Models screen displaying car models for a specific brand.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -72,13 +69,13 @@ fun ModelsScreen(
     }
 
     Scaffold(
-        containerColor = ATheme.colors.Light.Background,
+        containerColor = Theme.colorScheme.background.surfaceLow,
         topBar = {
             TopAppBar(
                 title = {
                     Text(
                         text = brandName,
-                        fontWeight = FontWeight.SemiBold
+                        style = Theme.typography.title.medium
                     )
                 },
                 navigationIcon = {
@@ -90,9 +87,9 @@ fun ModelsScreen(
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = ATheme.colors.Light.Surface,
-                    titleContentColor = ATheme.colors.Light.TextPrimary,
-                    navigationIconContentColor = ATheme.colors.Secondary
+                    containerColor = Theme.colorScheme.background.surface,
+                    titleContentColor = Theme.colorScheme.shadePrimary,
+                    navigationIconContentColor = Theme.colorScheme.secondary.secondary
                 )
             )
         }
@@ -109,14 +106,14 @@ fun ModelsScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
-                        horizontal = ATheme.dimens.ScreenPaddingHorizontal,
-                        vertical = ATheme.dimens.SpacingSm
+                        horizontal = Theme.spacing._16,
+                        vertical = Theme.spacing._8
                     ),
                 placeholder = stringResource(Res.string.models_search_placeholder),
                 onClear = { viewModel.processIntent(ModelsIntent.Search("")) }
             )
 
-            Spacer(modifier = Modifier.height(ATheme.dimens.SpacingSm))
+            Spacer(modifier = Modifier.height(Theme.spacing._8))
 
             // Content
             when {
@@ -147,9 +144,9 @@ private fun ModelsGrid(
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(ATheme.dimens.ScreenPaddingHorizontal),
-        horizontalArrangement = Arrangement.spacedBy(ATheme.dimens.SpacingMd),
-        verticalArrangement = Arrangement.spacedBy(ATheme.dimens.SpacingMd)
+        contentPadding = PaddingValues(Theme.spacing._16),
+        horizontalArrangement = Arrangement.spacedBy(Theme.spacing._12),
+        verticalArrangement = Arrangement.spacedBy(Theme.spacing._12)
     ) {
         items(
             items = models,
@@ -171,9 +168,9 @@ private fun ModelGridCard(
     Card(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(ATheme.dimens.RadiusMd),
+        shape = RoundedCornerShape(Theme.radius.md),
         colors = CardDefaults.cardColors(
-            containerColor = ATheme.colors.Light.Surface
+            containerColor = Theme.colorScheme.background.surface
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 1.dp,
@@ -183,11 +180,10 @@ private fun ModelGridCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(ATheme.dimens.SpacingMd),
+                .padding(Theme.spacing._12),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(ATheme.dimens.SpacingSm)
+            verticalArrangement = Arrangement.spacedBy(Theme.spacing._8)
         ) {
-            // Model image
             SubcomposeAsyncImage(
                 model = model.imageUrl ?: "",
                 contentDescription = model.name,
@@ -198,7 +194,7 @@ private fun ModelGridCard(
                 loading = {
                     CircularProgressIndicator(
                         modifier = Modifier.size(24.dp),
-                        color = ATheme.colors.Primary,
+                        color = Theme.colorScheme.brand.brand,
                         strokeWidth = 2.dp
                     )
                 },
@@ -207,17 +203,15 @@ private fun ModelGridCard(
                         imageVector = Icons.Outlined.BrokenImage,
                         contentDescription = null,
                         modifier = Modifier.size(32.dp),
-                        tint = ATheme.colors.Light.TextDisabled
+                        tint = Theme.colorScheme.textDisabled
                     )
                 }
             )
 
-            // Model name
             Text(
                 text = model.name,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = ATheme.colors.Light.TextPrimary,
+                style = Theme.typography.label.large,
+                color = Theme.colorScheme.shadePrimary,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center,
@@ -233,7 +227,7 @@ private fun LoadingContent() {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        CircularProgressIndicator(color = ATheme.colors.Primary)
+        CircularProgressIndicator(color = Theme.colorScheme.brand.brand)
     }
 }
 
@@ -243,7 +237,7 @@ private fun ErrorContent(message: String) {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = message, color = ATheme.colors.Error)
+        Text(text = message, color = Theme.colorScheme.error)
     }
 }
 
@@ -255,7 +249,7 @@ private fun EmptyContent() {
     ) {
         Text(
             text = stringResource(Res.string.models_empty),
-            color = ATheme.colors.Light.TextSecondary
+            color = Theme.colorScheme.shadeSecondary
         )
     }
 }

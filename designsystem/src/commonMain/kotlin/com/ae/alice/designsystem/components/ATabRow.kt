@@ -17,14 +17,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.ae.alice.designsystem.theme.AColors
+import com.ae.alice.designsystem.theme.Theme
 
 /**
- * Custom styled tab row with Alice branding.
- * Two pill-shaped tabs with animated color transitions.
+ * Custom styled tab row with animated color transitions — theme-aware.
  */
 @Composable
 fun ATabRow(
@@ -36,20 +33,28 @@ fun ATabRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(1000.dp))
-            .background(AColors.Light.SurfaceVariant)
-            .padding(4.dp),
-        horizontalArrangement = Arrangement.spacedBy(4.dp)
+            .clip(RoundedCornerShape(Theme.radius.full))
+            .background(Theme.colorScheme.background.surfaceHigh)
+            .padding(Theme.spacing._4),
+        horizontalArrangement = Arrangement.spacedBy(Theme.spacing._4)
     ) {
         tabs.forEachIndexed { index, title ->
             val isSelected = index == selectedIndex
             val backgroundColor by animateColorAsState(
-                targetValue = if (isSelected) AColors.Primary else AColors.Light.SurfaceVariant,
+                targetValue = if (isSelected) {
+                    Theme.colorScheme.brand.brand
+                } else {
+                    Theme.colorScheme.background.surfaceHigh
+                },
                 animationSpec = tween(durationMillis = 250),
                 label = "tabBg"
             )
             val textColor by animateColorAsState(
-                targetValue = if (isSelected) AColors.OnPrimary else AColors.Light.TextSecondary,
+                targetValue = if (isSelected) {
+                    Theme.colorScheme.brand.onBrand
+                } else {
+                    Theme.colorScheme.shadeSecondary
+                },
                 animationSpec = tween(durationMillis = 250),
                 label = "tabText"
             )
@@ -58,15 +63,14 @@ fun ATabRow(
                 modifier = Modifier
                     .weight(1f)
                     .height(40.dp)
-                    .clip(RoundedCornerShape(1000.dp))
+                    .clip(RoundedCornerShape(Theme.radius.full))
                     .background(backgroundColor)
                     .clickable { onTabSelected(index) },
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = title,
-                    fontSize = 14.sp,
-                    fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
+                    style = Theme.typography.label.large,
                     color = textColor,
                     maxLines = 1
                 )

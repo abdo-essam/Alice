@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ae.alice.designsystem.theme.ATheme
+import com.ae.alice.designsystem.theme.Theme
 import alice.presentation.generated.resources.Res
 import alice.presentation.generated.resources.car_details_error_default
 import alice.presentation.generated.resources.car_details_retry
@@ -38,33 +38,33 @@ fun CarDetailsErrorView(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(horizontal = ATheme.dimens.ScreenPaddingHorizontal)
+            modifier = Modifier.padding(horizontal = Theme.spacing._16)
         ) {
             Icon(
                 imageVector = Icons.Outlined.ErrorOutline,
                 contentDescription = null,
                 modifier = Modifier.size(56.dp),
-                tint = ATheme.colors.Error.copy(alpha = 0.7f)
+                tint = Theme.colorScheme.error.copy(alpha = 0.7f)
             )
 
-            Spacer(modifier = Modifier.height(ATheme.dimens.SpacingMd))
+            Spacer(modifier = Modifier.height(Theme.spacing._12))
 
             Text(
                 text = errorMessage
                     ?: stringResource(Res.string.car_details_error_default),
-                style = ATheme.typography.BodyLarge,
-                color = ATheme.colors.Light.TextSecondary,
+                style = Theme.typography.body.large,
+                color = Theme.colorScheme.shadeSecondary,
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(ATheme.dimens.SpacingXl))
+            Spacer(modifier = Modifier.height(Theme.spacing._20))
 
             TextButton(onClick = onRetryClick) {
                 Text(
                     text = stringResource(Res.string.car_details_retry),
-                    style = ATheme.typography.BodyMedium,
+                    style = Theme.typography.body.medium,
                     fontWeight = FontWeight.SemiBold,
-                    color = ATheme.colors.Primary
+                    color = Theme.colorScheme.brand.brand
                 )
             }
         }

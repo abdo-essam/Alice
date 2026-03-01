@@ -33,7 +33,7 @@ import com.ae.alice.designsystem.components.APlaceCard
 import com.ae.alice.designsystem.components.ASearchField
 import com.ae.alice.designsystem.components.ASelector
 import com.ae.alice.designsystem.components.ATabRow
-import com.ae.alice.designsystem.theme.ATheme
+import com.ae.alice.designsystem.theme.Theme
 import com.ae.alice.domain.entity.ServiceTab
 import alice.presentation.generated.resources.Res
 import alice.presentation.generated.resources.places_search_placeholder
@@ -74,7 +74,7 @@ fun PlacesScreen(
         }
     ) {
         Scaffold(
-            containerColor = ATheme.colors.Light.Background,
+            containerColor = Theme.colorScheme.background.surfaceLow,
             topBar = {
                 AHeader(
                     showMenuIcon = true,
@@ -105,8 +105,8 @@ fun PlacesScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(
-                            horizontal = ATheme.dimens.ScreenPaddingHorizontal,
-                            vertical = ATheme.dimens.SpacingSm
+                            horizontal = Theme.spacing._16,
+                            vertical = Theme.spacing._8
                         )
                 )
 
@@ -116,12 +116,12 @@ fun PlacesScreen(
                     onValueChange = { viewModel.processIntent(PlacesIntent.Search(it)) },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = ATheme.dimens.ScreenPaddingHorizontal),
+                        .padding(horizontal = Theme.spacing._16),
                     placeholder = stringResource(Res.string.places_search_placeholder),
                     onClear = { viewModel.processIntent(PlacesIntent.Search("")) }
                 )
 
-                Spacer(modifier = Modifier.height(ATheme.dimens.SpacingMd))
+                Spacer(modifier = Modifier.height(Theme.spacing._12))
 
                 // ── Tabs ──
                 ATabRow(
@@ -136,10 +136,10 @@ fun PlacesScreen(
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = ATheme.dimens.ScreenPaddingHorizontal)
+                        .padding(horizontal = Theme.spacing._16)
                 )
 
-                Spacer(modifier = Modifier.height(ATheme.dimens.SpacingMd))
+                Spacer(modifier = Modifier.height(Theme.spacing._12))
 
                 // ── Category dropdown ──
                 if (state.filteredCategories.isNotEmpty()) {
@@ -155,10 +155,10 @@ fun PlacesScreen(
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = ATheme.dimens.ScreenPaddingHorizontal)
+                            .padding(horizontal = Theme.spacing._16)
                     )
 
-                    Spacer(modifier = Modifier.height(ATheme.dimens.SpacingMd))
+                    Spacer(modifier = Modifier.height(Theme.spacing._12))
                 }
 
                 // ── Content ──
@@ -168,7 +168,7 @@ fun PlacesScreen(
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center
                         ) {
-                            CircularProgressIndicator(color = ATheme.colors.Primary)
+                            CircularProgressIndicator(color = Theme.colorScheme.brand.brand)
                         }
                     }
                     state.error != null -> {
@@ -178,7 +178,7 @@ fun PlacesScreen(
                         ) {
                             Text(
                                 text = state.error ?: stringResource(Res.string.places_error_default),
-                                color = ATheme.colors.Error
+                                color = Theme.colorScheme.error
                             )
                         }
                     }
@@ -189,17 +189,17 @@ fun PlacesScreen(
                         ) {
                             Text(
                                 text = stringResource(Res.string.places_empty),
-                                color = ATheme.colors.Light.TextSecondary
+                                color = Theme.colorScheme.shadeSecondary
                             )
                         }
                     }
                     else -> {
                         LazyColumn(
                             contentPadding = PaddingValues(
-                                horizontal = ATheme.dimens.ScreenPaddingHorizontal,
-                                vertical = ATheme.dimens.SpacingSm
+                                horizontal = Theme.spacing._16,
+                                vertical = Theme.spacing._8
                             ),
-                            verticalArrangement = Arrangement.spacedBy(ATheme.dimens.SpacingMd)
+                            verticalArrangement = Arrangement.spacedBy(Theme.spacing._12)
                         ) {
                             items(
                                 items = state.places,

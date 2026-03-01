@@ -32,7 +32,7 @@ import com.ae.alice.designsystem.components.AGridCard
 import com.ae.alice.designsystem.components.AHeader
 import com.ae.alice.designsystem.components.ANavItems
 import com.ae.alice.designsystem.components.ASearchField
-import com.ae.alice.designsystem.theme.ATheme
+import com.ae.alice.designsystem.theme.Theme
 import com.ae.alice.domain.entity.Brand
 import alice.presentation.generated.resources.Res
 import alice.presentation.generated.resources.brands_search_placeholder
@@ -69,7 +69,7 @@ fun BrandsScreen(
         }
     ) {
         Scaffold(
-            containerColor = ATheme.colors.Light.Background,
+            containerColor = Theme.colorScheme.background.surfaceLow,
             topBar = {
                 AHeader(
                     showMenuIcon = true,
@@ -96,14 +96,14 @@ fun BrandsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(
-                            horizontal = ATheme.dimens.ScreenPaddingHorizontal,
-                            vertical = ATheme.dimens.SpacingSm
+                            horizontal = Theme.spacing._16,
+                            vertical = Theme.spacing._8
                         ),
                     placeholder = stringResource(Res.string.brands_search_placeholder),
                     onClear = { viewModel.processIntent(BrandsIntent.Search("")) }
                 )
 
-                Spacer(modifier = Modifier.height(ATheme.dimens.SpacingSm))
+                Spacer(modifier = Modifier.height(Theme.spacing._8))
 
                 // Content
                 when {
@@ -137,9 +137,9 @@ private fun BrandsGrid(
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(ATheme.dimens.ScreenPaddingHorizontal),
-        horizontalArrangement = Arrangement.spacedBy(ATheme.dimens.SpacingMd),
-        verticalArrangement = Arrangement.spacedBy(ATheme.dimens.SpacingMd)
+        contentPadding = PaddingValues(Theme.spacing._16),
+        horizontalArrangement = Arrangement.spacedBy(Theme.spacing._12),
+        verticalArrangement = Arrangement.spacedBy(Theme.spacing._12)
     ) {
         items(
             items = brands,
@@ -160,7 +160,7 @@ private fun LoadingContent() {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        CircularProgressIndicator(color = ATheme.colors.Primary)
+        CircularProgressIndicator(color = Theme.colorScheme.brand.brand)
     }
 }
 
@@ -172,7 +172,7 @@ private fun ErrorContent(message: String) {
     ) {
         Text(
             text = message,
-            color = ATheme.colors.Error
+            color = Theme.colorScheme.error
         )
     }
 }
@@ -185,7 +185,7 @@ private fun EmptyContent() {
     ) {
         Text(
             text = stringResource(Res.string.brands_empty),
-            color = ATheme.colors.Light.TextSecondary
+            color = Theme.colorScheme.shadeSecondary
         )
     }
 }

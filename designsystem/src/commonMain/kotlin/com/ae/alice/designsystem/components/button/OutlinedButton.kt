@@ -1,0 +1,62 @@
+package com.ae.alice.designsystem.components.button
+
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import com.ae.alice.designsystem.components.button.content.BaseButtonContent
+import com.ae.alice.designsystem.theme.Theme
+
+@Composable
+fun OutlinedButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    trailingIcon: Painter? = null,
+    iconSize: Dp = 20.dp,
+    contentDescription: String? = null,
+    iconStartPadding: Dp = Theme.spacing._8,
+    isEnabled: Boolean = true,
+    isLoading: Boolean = false,
+    contentColor: Color = Theme.colorScheme.brand.brand,
+    disabledContentColor: Color = Theme.colorScheme.textDisabled,
+    contentPadding: PaddingValues = PaddingValues(
+        horizontal = Theme.spacing._16,
+        vertical = 13.dp
+    ),
+    shape: Shape = RoundedCornerShape(Theme.radius.md)
+) {
+    Button(
+        isEnabled = isEnabled,
+        shape = shape,
+        borderStroke = BorderStroke(width = 1.dp, color = Theme.colorScheme.stroke),
+        contentColor = contentColor,
+        containerColor = Color.Transparent,
+        disabledContentColor = disabledContentColor,
+        disabledContainerColor = Color.Transparent,
+        contentPadding = contentPadding,
+        onClick = onClick,
+        isLoading = isLoading,
+        loadingColors = listOf(
+            Theme.colorScheme.stroke,
+            Theme.colorScheme.shadeTertiary,
+            Theme.colorScheme.brand.brand
+        ),
+        modifier = modifier
+    ) {
+        BaseButtonContent(
+            text = text,
+            trailingIcon = trailingIcon,
+            iconSize = iconSize,
+            iconStartPadding = iconStartPadding,
+            contentDescription = contentDescription,
+            contentColor = it
+        )
+    }
+}

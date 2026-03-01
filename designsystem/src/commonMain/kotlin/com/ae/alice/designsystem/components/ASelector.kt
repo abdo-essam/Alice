@@ -23,14 +23,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.ae.alice.designsystem.theme.AColors
+import com.ae.alice.designsystem.theme.Theme
 
 /**
- * A pill-shaped selector with a label on one side and a dropdown value on the other.
- * Matches the design: [Label | Selected Value ˅]
+ * Pill-shaped selector with a label chip and a dropdown value.
+ * Design: [Label | Selected Value ˅]
  */
 @Composable
 fun ASelector(
@@ -41,55 +39,54 @@ fun ASelector(
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
-    
+
     Box(modifier = modifier) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(1000.dp))
-                .background(AColors.Light.Surface)
+                .clip(RoundedCornerShape(Theme.radius.full))
+                .background(Theme.colorScheme.background.surface)
                 .clickable { expanded = true }
-                .padding(4.dp),
+                .padding(Theme.spacing._4),
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Label chip
             Box(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(1000.dp))
-                    .background(AColors.Light.SurfaceVariant)
-                    .padding(horizontal = 20.dp, vertical = 10.dp)
+                    .clip(RoundedCornerShape(Theme.radius.full))
+                    .background(Theme.colorScheme.background.surfaceHigh)
+                    .padding(horizontal = Theme.spacing._20, vertical = 10.dp)
             ) {
                 Text(
                     text = label,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = AColors.Secondary
+                    style = Theme.typography.label.large,
+                    color = Theme.colorScheme.secondary.secondary
                 )
             }
-            
+
             // Selected value
             Row(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(horizontal = 12.dp),
+                    .padding(horizontal = Theme.spacing._12),
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = selectedValue,
-                    fontSize = 14.sp,
-                    color = AColors.Light.TextSecondary,
-                    modifier = Modifier.padding(end = 4.dp)
+                    style = Theme.typography.body.medium,
+                    color = Theme.colorScheme.shadeSecondary,
+                    modifier = Modifier.padding(end = Theme.spacing._4)
                 )
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowDown,
                     contentDescription = null,
                     modifier = Modifier.size(20.dp),
-                    tint = AColors.Primary
+                    tint = Theme.colorScheme.brand.brand
                 )
             }
         }
-        
+
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
@@ -99,9 +96,12 @@ fun ASelector(
                     text = {
                         Text(
                             text = option,
-                            fontSize = 14.sp,
-                            color = if (option == selectedValue) AColors.Primary else AColors.Light.TextPrimary,
-                            fontWeight = if (option == selectedValue) FontWeight.SemiBold else FontWeight.Normal
+                            style = Theme.typography.body.medium,
+                            color = if (option == selectedValue) {
+                                Theme.colorScheme.brand.brand
+                            } else {
+                                Theme.colorScheme.shadePrimary
+                            }
                         )
                     },
                     onClick = {

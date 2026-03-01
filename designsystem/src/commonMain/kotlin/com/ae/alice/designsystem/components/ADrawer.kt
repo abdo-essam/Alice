@@ -24,7 +24,6 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import com.ae.alice.designsystem.locale.LocalAppLocale
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,9 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import alice.designsystem.generated.resources.Res
 import alice.designsystem.generated.resources.alice_logo
 import alice.designsystem.generated.resources.drawer_home
@@ -44,7 +41,8 @@ import alice.designsystem.generated.resources.drawer_account
 import alice.designsystem.generated.resources.drawer_app_name
 import alice.designsystem.generated.resources.drawer_subtitle
 import alice.designsystem.generated.resources.drawer_logo_desc
-import com.ae.alice.designsystem.theme.AColors
+import com.ae.alice.designsystem.locale.LocalAppLocale
+import com.ae.alice.designsystem.theme.Theme
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -71,7 +69,7 @@ object ADrawerItems {
 }
 
 /**
- * Styled drawer content with Alice branding.
+ * Styled drawer content with Alice branding — fully theme-aware.
  */
 @Composable
 fun ADrawerContent(
@@ -80,32 +78,30 @@ fun ADrawerContent(
     modifier: Modifier = Modifier
 ) {
     val localeState = LocalAppLocale.current
-    
+
     Column(
         modifier = modifier
             .fillMaxHeight()
             .width(280.dp)
-            .background(AColors.Light.Surface)
+            .background(Theme.colorScheme.background.surface)
     ) {
-        // Branded header
         DrawerHeader()
 
-        HorizontalDivider(color = AColors.Light.Divider, thickness = 1.dp)
+        HorizontalDivider(color = Theme.colorScheme.stroke, thickness = 1.dp)
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(Theme.spacing._8))
 
-        // Menu items
         items.forEachIndexed { index, item ->
             DrawerMenuItem(
                 item = item,
                 onClick = { onItemClick(index) }
             )
         }
-        
+
         Spacer(modifier = Modifier.weight(1f))
-        
-        HorizontalDivider(color = AColors.Light.Divider, thickness = 1.dp)
-        
+
+        HorizontalDivider(color = Theme.colorScheme.stroke, thickness = 1.dp)
+
         DrawerMenuItem(
             item = ADrawerItem(
                 icon = Icons.Filled.Language,
@@ -113,8 +109,8 @@ fun ADrawerContent(
             ),
             onClick = { localeState.switchLanguage() }
         )
-        
-        Spacer(modifier = Modifier.height(16.dp))
+
+        Spacer(modifier = Modifier.height(Theme.spacing._16))
     }
 }
 
@@ -127,8 +123,8 @@ private fun DrawerHeader() {
             .background(
                 Brush.verticalGradient(
                     colors = listOf(
-                        AColors.Secondary,
-                        AColors.SecondaryDark
+                        Theme.colorScheme.secondary.secondary,
+                        Theme.colorScheme.secondary.secondary.copy(alpha = 0.85f)
                     )
                 )
             )
@@ -150,15 +146,13 @@ private fun DrawerHeader() {
             Column {
                 Text(
                     text = stringResource(Res.string.drawer_app_name),
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = AColors.OnSecondary,
-                    letterSpacing = 2.sp
+                    style = Theme.typography.title.large,
+                    color = Theme.colorScheme.brand.onBrand
                 )
                 Text(
                     text = stringResource(Res.string.drawer_subtitle),
-                    fontSize = 13.sp,
-                    color = AColors.OnSecondary.copy(alpha = 0.7f)
+                    style = Theme.typography.body.small,
+                    color = Theme.colorScheme.brand.onBrand.copy(alpha = 0.7f)
                 )
             }
         }
@@ -170,17 +164,25 @@ private fun DrawerMenuItem(
     item: ADrawerItem,
     onClick: () -> Unit
 ) {
-    val bgColor = if (item.selected) AColors.Primary.copy(alpha = 0.10f) else AColors.Light.Surface
-    val contentColor = if (item.selected) AColors.Primary else AColors.Light.TextPrimary
+    val bgColor = if (item.selected) {
+        Theme.colorScheme.brand.brand.copy(alpha = 0.10f)
+    } else {
+        Theme.colorScheme.background.surface
+    }
+    val contentColor = if (item.selected) {
+        Theme.colorScheme.brand.brand
+    } else {
+        Theme.colorScheme.shadePrimary
+    }
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 12.dp, vertical = 2.dp)
-            .clip(RoundedCornerShape(12.dp))
+            .padding(horizontal = Theme.spacing._12, vertical = Theme.spacing._2)
+            .clip(RoundedCornerShape(Theme.radius.md))
             .background(bgColor)
             .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 14.dp),
+            .padding(horizontal = Theme.spacing._16, vertical = 14.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
@@ -190,14 +192,12 @@ private fun DrawerMenuItem(
             modifier = Modifier.size(24.dp)
         )
 
-        Spacer(modifier = Modifier.width(16.dp))
+        Spacer(modifier = Modifier.width(Theme.spacing._16))
 
         Text(
             text = item.label,
-            fontSize = 15.sp,
-            fontWeight = if (item.selected) FontWeight.SemiBold else FontWeight.Normal,
+            style = Theme.typography.body.medium,
             color = contentColor
         )
     }
 }
-

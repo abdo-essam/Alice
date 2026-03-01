@@ -10,9 +10,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import com.ae.alice.designsystem.theme.ATheme
+import com.ae.alice.designsystem.theme.Theme
 import alice.presentation.generated.resources.Res
 import alice.presentation.generated.resources.car_details_back
 import org.jetbrains.compose.resources.stringResource
@@ -28,7 +27,7 @@ fun CarDetailsTopBar(
         title = {
             Text(
                 text = title,
-                fontWeight = FontWeight.SemiBold,
+                style = Theme.typography.title.medium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -43,10 +42,10 @@ fun CarDetailsTopBar(
         },
         scrollBehavior = scrollBehavior,
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = ATheme.colors.Light.Surface,
-            scrolledContainerColor = ATheme.colors.Light.Surface,
-            titleContentColor = ATheme.colors.Light.TextPrimary,
-            navigationIconContentColor = ATheme.colors.Secondary
+            containerColor = Theme.colorScheme.background.surface,
+            scrolledContainerColor = Theme.colorScheme.background.surface,
+            titleContentColor = Theme.colorScheme.shadePrimary,
+            navigationIconContentColor = Theme.colorScheme.secondary.secondary
         )
     )
 }

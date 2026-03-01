@@ -2,17 +2,16 @@ package com.ae.alice.designsystem.components
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
-import com.ae.alice.designsystem.theme.ADimensions
+import com.ae.alice.designsystem.theme.Theme
 
 /**
- * Standard text field.
+ * Standard text field — all colors from theme, dark-mode aware.
  */
 @Composable
 fun ATextField(
@@ -39,15 +38,15 @@ fun ATextField(
         trailingIcon = trailingIcon,
         isError = isError,
         supportingText = if (isError && errorMessage != null) {
-            { Text(errorMessage, color = MaterialTheme.colorScheme.error) }
+            { Text(errorMessage, color = Theme.colorScheme.error) }
         } else null,
         enabled = enabled,
         singleLine = singleLine,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
-        shape = RoundedCornerShape(ADimensions.RadiusMd),
+        shape = RoundedCornerShape(Theme.radius.md),
         colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = MaterialTheme.colorScheme.primary,
-            unfocusedBorderColor = MaterialTheme.colorScheme.outline
+            focusedBorderColor = Theme.colorScheme.brand.brand,
+            unfocusedBorderColor = Theme.colorScheme.stroke
         )
     )
 }

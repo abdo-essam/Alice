@@ -16,29 +16,25 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.outlined.ImageNotSupported
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.ae.alice.designsystem.theme.AColors
-import com.ae.alice.designsystem.theme.ADimensions
+import com.ae.alice.designsystem.theme.Theme
 
 /**
- * A card component for displaying a place/service provider.
- * Shows image, place name, address, details button, and a save/bookmark toggle.
+ * A card for displaying a place/service provider — fully theme-aware.
  */
 @Composable
 fun APlaceCard(
@@ -52,26 +48,24 @@ fun APlaceCard(
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(ADimensions.RadiusMd),
+        shape = RoundedCornerShape(Theme.radius.md),
         colors = CardDefaults.cardColors(
-            containerColor = AColors.Light.Surface
+            containerColor = Theme.colorScheme.background.surface
         ),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = ADimensions.CardElevation
-        )
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(ADimensions.SpacingMd),
+                .padding(Theme.spacing._12),
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Image / placeholder
             Box(
                 modifier = Modifier
                     .size(80.dp)
-                    .clip(RoundedCornerShape(ADimensions.RadiusSm))
-                    .background(AColors.Light.SurfaceVariant),
+                    .clip(RoundedCornerShape(Theme.radius.sm))
+                    .background(Theme.colorScheme.background.surfaceHigh),
                 contentAlignment = Alignment.Center
             ) {
                 if (!imageUrl.isNullOrBlank()) {
@@ -86,53 +80,51 @@ fun APlaceCard(
                         imageVector = Icons.Outlined.ImageNotSupported,
                         contentDescription = null,
                         modifier = Modifier.size(32.dp),
-                        tint = AColors.Light.TextDisabled
+                        tint = Theme.colorScheme.textDisabled
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.width(ADimensions.SpacingMd))
+            Spacer(modifier = Modifier.width(Theme.spacing._12))
 
             // Text + actions
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(ADimensions.SpacingXs)
+                verticalArrangement = Arrangement.spacedBy(Theme.spacing._4)
             ) {
                 Text(
                     text = name,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = AColors.Secondary,
+                    style = Theme.typography.title.small,
+                    color = Theme.colorScheme.secondary.secondary,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
 
                 Text(
                     text = address,
-                    fontSize = 12.sp,
-                    color = AColors.Light.TextSecondary,
+                    style = Theme.typography.body.small,
+                    color = Theme.colorScheme.shadeSecondary,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
 
-                Spacer(modifier = Modifier.height(ADimensions.SpacingXs))
+                Spacer(modifier = Modifier.height(Theme.spacing._4))
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(ADimensions.SpacingSm)
+                    horizontalArrangement = Arrangement.spacedBy(Theme.spacing._8)
                 ) {
                     OutlinedButton(
                         onClick = onDetailsClick,
                         modifier = Modifier.height(32.dp),
-                        shape = RoundedCornerShape(ADimensions.RadiusFull),
+                        shape = RoundedCornerShape(Theme.radius.full),
                         colors = ButtonDefaults.outlinedButtonColors(
-                            contentColor = AColors.Primary
+                            contentColor = Theme.colorScheme.brand.brand
                         )
                     ) {
                         Text(
                             text = "التفاصيل",
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Medium
+                            style = Theme.typography.label.medium
                         )
                     }
 
@@ -143,7 +135,11 @@ fun APlaceCard(
                         Icon(
                             imageVector = if (isSaved) Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
                             contentDescription = null,
-                            tint = if (isSaved) AColors.Primary else AColors.Light.TextSecondary,
+                            tint = if (isSaved) {
+                                Theme.colorScheme.brand.brand
+                            } else {
+                                Theme.colorScheme.shadeSecondary
+                            },
                             modifier = Modifier.size(20.dp)
                         )
                     }

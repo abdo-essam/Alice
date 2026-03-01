@@ -21,19 +21,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ae.alice.designsystem.theme.AColors
 import alice.designsystem.generated.resources.Res
 import alice.designsystem.generated.resources.alice_logo
 import alice.designsystem.generated.resources.header_menu
 import alice.designsystem.generated.resources.header_logo_desc
+import com.ae.alice.designsystem.theme.Theme
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 /**
- * App header component with hamburger menu icon and Alice logo.
+ * App header with hamburger menu icon and Alice logo — theme-aware.
  */
 @Composable
 fun AHeader(
@@ -46,7 +45,7 @@ fun AHeader(
         modifier = modifier
             .fillMaxWidth()
             .windowInsetsPadding(WindowInsets.statusBars)
-            .padding(horizontal = 8.dp, vertical = 8.dp),
+            .padding(horizontal = Theme.spacing._8, vertical = Theme.spacing._8),
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (showMenuIcon) {
@@ -54,7 +53,7 @@ fun AHeader(
                 Icon(
                     imageVector = Icons.Filled.Menu,
                     contentDescription = stringResource(Res.string.header_menu),
-                    tint = AColors.Secondary,
+                    tint = Theme.colorScheme.secondary.secondary,
                     modifier = Modifier.size(28.dp)
                 )
             }
@@ -62,7 +61,6 @@ fun AHeader(
             Spacer(modifier = Modifier.width(12.dp))
         }
 
-        // Alice logo
         Image(
             painter = painterResource(Res.drawable.alice_logo),
             contentDescription = stringResource(Res.string.header_logo_desc),
@@ -76,9 +74,8 @@ fun AHeader(
 
         Text(
             text = title,
-            fontSize = 22.sp,
-            fontWeight = FontWeight.Bold,
-            color = AColors.Secondary,
+            style = Theme.typography.title.large,
+            color = Theme.colorScheme.secondary.secondary,
             letterSpacing = 2.sp
         )
     }

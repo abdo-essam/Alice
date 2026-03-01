@@ -11,7 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import com.ae.alice.designsystem.theme.ATheme
+import com.ae.alice.designsystem.theme.Theme
 import com.ae.alice.presentation.screens.cardetails.components.CarDetailsBottomBar
 import com.ae.alice.presentation.screens.cardetails.components.CarDetailsContent
 import com.ae.alice.presentation.screens.cardetails.components.CarDetailsErrorView
@@ -47,7 +47,7 @@ fun CarDetailsScreen(
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        containerColor = ATheme.colors.Light.Background,
+        containerColor = Theme.colorScheme.background.surfaceLow,
         topBar = {
             CarDetailsTopBar(
                 title = modelName,
@@ -104,4 +104,3 @@ private fun CarDetailsBody(
         }
     }
 }
-

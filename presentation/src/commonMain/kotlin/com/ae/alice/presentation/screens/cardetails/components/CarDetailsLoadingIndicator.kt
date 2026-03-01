@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ae.alice.designsystem.theme.ATheme
+import com.ae.alice.designsystem.theme.Theme
 
 @Composable
 fun CarDetailsLoadingIndicator(
@@ -19,7 +19,7 @@ fun CarDetailsLoadingIndicator(
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator(
-            color = ATheme.colors.Primary,
+            color = Theme.colorScheme.brand.brand,
             modifier = Modifier.size(48.dp),
             strokeWidth = 4.dp
         )

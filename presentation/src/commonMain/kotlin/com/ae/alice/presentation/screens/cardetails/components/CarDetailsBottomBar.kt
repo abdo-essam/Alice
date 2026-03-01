@@ -18,13 +18,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ae.alice.designsystem.components.APrimaryButton
-import com.ae.alice.designsystem.theme.ATheme
+import com.ae.alice.designsystem.theme.Theme
 import alice.presentation.generated.resources.Res
 import alice.presentation.generated.resources.car_details_get_car
 import org.jetbrains.compose.resources.stringResource
-
-private val ICON_SIZE = 20.dp
-private val BUTTON_FONT_SIZE = 16.sp
 
 @Composable
 fun CarDetailsBottomBar(
@@ -36,30 +33,30 @@ fun CarDetailsBottomBar(
     Surface(
         modifier = modifier.fillMaxWidth(),
         shadowElevation = 8.dp,
-        color = ATheme.colors.Light.Surface
+        color = Theme.colorScheme.background.surface
     ) {
         APrimaryButton(
             onClick = onGetCarClick,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    start = ATheme.dimens.ScreenPaddingHorizontal,
-                    end = ATheme.dimens.ScreenPaddingHorizontal,
-                    top = ATheme.dimens.SpacingMd,
-                    bottom = ATheme.dimens.SpacingMd + navigationBarPadding
+                    start = Theme.spacing._16,
+                    end = Theme.spacing._16,
+                    top = Theme.spacing._12,
+                    bottom = Theme.spacing._12 + navigationBarPadding
                         .calculateBottomPadding()
                 )
         ) {
             Icon(
                 imageVector = Icons.Filled.DirectionsCar,
                 contentDescription = null,
-                modifier = Modifier.size(ICON_SIZE)
+                modifier = Modifier.size(20.dp)
             )
-            Spacer(modifier = Modifier.size(ATheme.dimens.SpacingSm))
+            Spacer(modifier = Modifier.size(Theme.spacing._8))
             Text(
                 text = stringResource(Res.string.car_details_get_car),
                 fontWeight = FontWeight.SemiBold,
-                fontSize = BUTTON_FONT_SIZE
+                fontSize = 16.sp
             )
         }
     }

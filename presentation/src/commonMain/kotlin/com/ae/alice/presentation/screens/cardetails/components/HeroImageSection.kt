@@ -19,13 +19,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
-import com.ae.alice.designsystem.theme.ATheme
+import com.ae.alice.designsystem.theme.Theme
 
 private const val HERO_ASPECT_RATIO = 1.4f
-private val IMAGE_CORNER_RADIUS = 16.dp
-private val LOADING_INDICATOR_SIZE = 32.dp
-private val LOADING_STROKE_WIDTH = 3.dp
-private val ERROR_ICON_SIZE = 64.dp
 
 @Composable
 fun HeroImageSection(
@@ -40,8 +36,8 @@ fun HeroImageSection(
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        ATheme.colors.Light.SurfaceVariant,
-                        ATheme.colors.Light.Background
+                        Theme.colorScheme.background.surfaceHigh,
+                        Theme.colorScheme.background.surfaceLow
                     )
                 )
             ),
@@ -52,8 +48,8 @@ fun HeroImageSection(
             contentDescription = contentDescription,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(ATheme.dimens.SpacingXxl)
-                .clip(RoundedCornerShape(IMAGE_CORNER_RADIUS)),
+                .padding(Theme.spacing._24)
+                .clip(RoundedCornerShape(Theme.radius.lg)),
             contentScale = ContentScale.Fit,
             loading = { ImageLoadingPlaceholder() },
             error = { ImageErrorPlaceholder() }
@@ -64,9 +60,9 @@ fun HeroImageSection(
 @Composable
 private fun ImageLoadingPlaceholder() {
     CircularProgressIndicator(
-        modifier = Modifier.size(LOADING_INDICATOR_SIZE),
-        color = ATheme.colors.Primary,
-        strokeWidth = LOADING_STROKE_WIDTH
+        modifier = Modifier.size(32.dp),
+        color = Theme.colorScheme.brand.brand,
+        strokeWidth = 3.dp
     )
 }
 
@@ -75,7 +71,7 @@ private fun ImageErrorPlaceholder() {
     Icon(
         imageVector = Icons.Outlined.BrokenImage,
         contentDescription = null,
-        modifier = Modifier.size(ERROR_ICON_SIZE),
-        tint = ATheme.colors.Light.TextDisabled
+        modifier = Modifier.size(64.dp),
+        tint = Theme.colorScheme.textDisabled
     )
 }

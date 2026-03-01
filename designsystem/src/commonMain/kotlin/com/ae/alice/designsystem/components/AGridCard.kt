@@ -18,17 +18,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil3.compose.SubcomposeAsyncImage
-import com.ae.alice.designsystem.theme.AColors
+import com.ae.alice.designsystem.theme.Theme
 
 /**
- * Grid card component for displaying brand logos.
- * Clean white card with logo only — no colored backgrounds.
+ * Grid card for displaying brand/item logos.
+ * Clean card using semantic theme colors.
  */
 @Composable
 fun AGridCard(
@@ -40,9 +38,9 @@ fun AGridCard(
     Card(
         onClick = onClick,
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(Theme.radius.md),
         colors = CardDefaults.cardColors(
-            containerColor = AColors.Light.Surface
+            containerColor = Theme.colorScheme.background.surface
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 1.dp,
@@ -52,11 +50,10 @@ fun AGridCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(Theme.spacing._16),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(Theme.spacing._12)
         ) {
-            // Logo — clean, no background
             SubcomposeAsyncImage(
                 model = imageUrl,
                 contentDescription = title,
@@ -67,7 +64,7 @@ fun AGridCard(
                 loading = {
                     CircularProgressIndicator(
                         modifier = Modifier.size(24.dp),
-                        color = AColors.Primary,
+                        color = Theme.colorScheme.brand.brand,
                         strokeWidth = 2.dp
                     )
                 },
@@ -76,16 +73,15 @@ fun AGridCard(
                         imageVector = Icons.Outlined.BrokenImage,
                         contentDescription = null,
                         modifier = Modifier.size(32.dp),
-                        tint = AColors.Light.TextDisabled
+                        tint = Theme.colorScheme.textDisabled
                     )
                 }
             )
-            
+
             Text(
                 text = title,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Medium,
-                color = AColors.Light.TextPrimary,
+                style = Theme.typography.label.large,
+                color = Theme.colorScheme.shadePrimary,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center,

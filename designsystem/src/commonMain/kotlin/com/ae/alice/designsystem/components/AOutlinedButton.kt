@@ -4,17 +4,16 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ae.alice.designsystem.theme.ADimensions
+import com.ae.alice.designsystem.theme.Theme
 
 /**
- * Outlined button.
+ * Outlined button — uses brand color from the current theme.
  */
 @Composable
 fun AOutlinedButton(
@@ -22,19 +21,19 @@ fun AOutlinedButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     contentPadding: PaddingValues = PaddingValues(
-        horizontal = ADimensions.SpacingLg,
-        vertical = ADimensions.SpacingSm
+        horizontal = Theme.spacing._16,
+        vertical = Theme.spacing._8
     ),
     content: @Composable () -> Unit
 ) {
     OutlinedButton(
         onClick = onClick,
-        modifier = modifier.height(ADimensions.ButtonHeight),
+        modifier = modifier.height(48.dp),
         enabled = enabled,
-        shape = RoundedCornerShape(ADimensions.RadiusMd),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
+        shape = RoundedCornerShape(Theme.radius.md),
+        border = BorderStroke(1.dp, Theme.colorScheme.brand.brand),
         colors = ButtonDefaults.outlinedButtonColors(
-            contentColor = MaterialTheme.colorScheme.primary
+            contentColor = Theme.colorScheme.brand.brand
         ),
         contentPadding = contentPadding
     ) {
@@ -43,7 +42,7 @@ fun AOutlinedButton(
 }
 
 /**
- * Outlined button with text.
+ * Outlined button convenience overload with text.
  */
 @Composable
 fun AOutlinedButton(

@@ -25,7 +25,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.ae.alice.designsystem.components.ABottomNavBar
 import com.ae.alice.designsystem.components.ADrawerContent
 import com.ae.alice.designsystem.components.ADrawerItems

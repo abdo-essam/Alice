@@ -25,6 +25,7 @@ fun CarDetailsScreen(
     modelId: String,
     modelName: String,
     onBackClick: () -> Unit,
+    onGetCarClick: () -> Unit,
     viewModel: CarDetailsViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -32,6 +33,16 @@ fun CarDetailsScreen(
 
     LaunchedEffect(modelId) {
         viewModel.processIntent(CarDetailsIntent.LoadModel(modelId))
+    }
+
+    LaunchedEffect(viewModel.effect) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                is CarDetailsEffect.NavigateToGetCar -> {
+                    onGetCarClick()
+                }
+            }
+        }
     }
 
     Scaffold(

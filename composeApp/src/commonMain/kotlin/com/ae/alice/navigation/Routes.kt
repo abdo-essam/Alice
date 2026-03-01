@@ -21,4 +21,7 @@ object Routes {
         val modelId: String,
         val modelName: String
     )
+
+    @Serializable
+    data object Places
 }

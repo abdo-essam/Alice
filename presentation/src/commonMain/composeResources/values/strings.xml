@@ -42,4 +42,15 @@
     <string name="language_english">English</string>
     <string name="language_arabic">العربية</string>
     <string name="language_switch">Switch Language</string>
+
+    <!-- Places Screen -->
+    <string name="places_search_placeholder">Search places...</string>
+    <string name="places_empty">No places found</string>
+    <string name="places_error_default">An error occurred</string>
+    <string name="places_location_label">Location</string>
+    <string name="places_tab_one">First List</string>
+    <string name="places_tab_two">Second List</string>
+    <string name="places_category_label">Category</string>
+    <string name="places_details">Details</string>
+    <string name="places_save">Save</string>
 </resources>

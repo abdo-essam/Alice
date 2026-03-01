@@ -8,6 +8,7 @@ import androidx.navigation.toRoute
 import com.ae.alice.presentation.screens.brands.BrandsScreen
 import com.ae.alice.presentation.screens.cardetails.CarDetailsScreen
 import com.ae.alice.presentation.screens.models.ModelsScreen
+import com.ae.alice.presentation.screens.places.PlacesScreen
 
 /**
  * App navigation host.
@@ -45,8 +46,14 @@ fun AppNavHost(
             CarDetailsScreen(
                 modelId = args.modelId,
                 modelName = args.modelName,
-                onBackClick = { navController.popBackStack() }
+                onBackClick = { navController.popBackStack() },
+                onGetCarClick = { navController.navigate(Routes.Places) }
             )
+        }
+
+        composable<Routes.Places> {
+            PlacesScreen()
         }
     }
 }
+

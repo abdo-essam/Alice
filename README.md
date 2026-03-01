@@ -1,6 +1,6 @@
 # Alice 🐺
 
-A Kotlin Multiplatform Mobile (KMM) application for browsing car brands and models.
+A Kotlin Multiplatform Mobile (KMM) application for browsing car brands, models, and discovering car-related services and places.
 
 ## 📱 Screenshots
 
@@ -12,11 +12,11 @@ The project follows **Clean Architecture** with the following modules:
 
 ```
 Alice/
-├── composeApp/          # App entry point, screens, navigation
-├── presentation/        # BaseViewModel, MVI interfaces (UiState, UiIntent, UiEffect)
+├── composeApp/          # App entry point, navigation, DI initialization
+├── presentation/        # Screens, ViewModels (MVI), UI contracts
 ├── domain/              # Pure Kotlin entities & repository interfaces
-├── data/                # Repository implementations, fake data
-├── designsystem/        # UI components, theme, colors
+├── data/                # Repository implementations, fake data sources
+├── designsystem/        # Reusable UI components, theme, colors, typography
 ├── network/             # Ktor client, API services
 └── common/              # Shared utilities (Result, ErrorState)
 ```
@@ -29,6 +29,8 @@ graph TD
     composeApp --> domain
     composeApp --> data
     composeApp --> designsystem
+    presentation --> designsystem
+    presentation --> domain
     data --> domain
     network --> common
 ```
@@ -38,18 +40,24 @@ graph TD
 ### Colors (Alice Branding)
 | Name | Hex | Usage |
 |------|-----|-------|
-| Primary (Copper) | `#C4956A` | Buttons, accents |
+| Primary (Copper) | `#C4956A` | Buttons, accents, active tabs |
 | Secondary (Dark Brown) | `#4A3C31` | Text, icons |
 | Light Tan | `#D4A574` | Secondary accents |
 | Background | `#FAFAFA` | Screen background |
+| Surface Variant | `#F5F0EB` | Card backgrounds, tab backgrounds |
 
 ### Components
 - `AHeader` - App header with logo and action icons
 - `ASearchField` - Search input with clear button
 - `AGridCard` - Image + title card for grid displays
+- `APlaceCard` - Place card with image, title, address, details & save buttons
+- `ATabRow` - Animated pill-shaped tab row
+- `ASelector` - Pill-shaped dropdown selector (location, category)
 - `ABottomNavBar` - Bottom navigation with 4 tabs
 - `APrimaryButton`, `AOutlinedButton`, `ATextButton` - Button variants
 - `ACard`, `ATextField` - Common UI elements
+- `ADrawer` - Navigation drawer with menu items
+- `AShimmer` - Loading skeleton animation
 
 ## 🔧 Tech Stack
 
@@ -59,6 +67,7 @@ graph TD
 - **Coil 3** - Image loading
 - **Ktor** - Networking (prepared for future API)
 - **Navigation Compose** - Type-safe navigation
+- **Kotlin Serialization** - Route serialization
 
 ## 🚀 Getting Started
 
@@ -85,12 +94,27 @@ open iosApp/iosApp.xcodeproj
 
 ## 📁 Project Structure
 
+### Domain Entities
+- `Brand` - Car brand/manufacturer (id, name, logoUrl, country, etc.)
+- `CarModel` - Car model (id, name, price, specs, images, etc.)
+- `Place` - Service provider/place (id, name, address, categoryId, imageUrl, isSaved)
+- `ServiceCategory` - Service category with tab assignment (id, name, tab)
+- `ServiceTab` - Enum: `TAB_ONE`, `TAB_TWO`
+
 ### Screens
-- **BrandsScreen** - 2-column grid of car brands
+- **BrandsScreen** - 2-column grid of car brands with search
 - **ModelsScreen** - List of car models for selected brand
+- **CarDetailsScreen** - Detailed view of a car model
+- **PlacesScreen** - Service providers organized by category tabs
+  - Location selector (city picker)
+  - Search functionality
+  - Two category tabs (القائمة الأولى / القائمة الثانية)
+  - Service category dropdown
+  - Scrollable place cards
 
 ### ViewModels (MVI Pattern)
 ```kotlin
+// All ViewModels follow this pattern:
 class BrandsViewModel(
     private val brandRepository: BrandRepository
 ) : BaseViewModel<BrandsState, BrandsIntent, BrandsEffect>(BrandsState()) {
@@ -101,9 +125,23 @@ class BrandsViewModel(
 ### Navigation
 Type-safe navigation using Kotlin serialization:
 ```kotlin
-@Serializable data object Brands : Routes
-@Serializable data class Models(val brandId: String, val brandName: String) : Routes
+@Serializable data object Brands
+@Serializable data class Models(val brandId: String, val brandName: String)
+@Serializable data class CarDetails(val modelId: String, val modelName: String)
+@Serializable data object Places
 ```
+
+### Service Categories (37 total)
+**Tab 1 — Sales, Maintenance, Oils & Tires:**
+- Car showrooms (new/used), installment sales, import/export, auctions
+- Maintenance centers, mechanic/electrical/AC workshops, body & paint, diagnostics, transmission
+- Oil change, tire fitting, wheel alignment, batteries
+
+**Tab 2 — Washing, Accessories, Services, Electric:**
+- Car wash (manual/automatic), polishing, nano ceramic, PPF, interior cleaning
+- Spare parts, accessories, audio systems, glass, GPS/alarm
+- Car rental, towing, roadside assistance, pre-purchase inspection, customization
+- Electric vehicle maintenance, charging stations, smart car programming
 
 ## 📝 License
 

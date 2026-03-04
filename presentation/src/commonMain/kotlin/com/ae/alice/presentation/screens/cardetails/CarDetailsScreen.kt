@@ -1,47 +1,50 @@
 package com.ae.alice.presentation.screens.cardetails
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import com.ae.alice.designsystem.theme.ATheme
+import com.ae.alice.designsystem.components.scaffold.Scaffold
+import com.ae.alice.designsystem.components.state.ErrorLayout
+import com.ae.alice.designsystem.components.state.LoadingLayout
+import com.ae.alice.designsystem.theme.Theme
+import com.ae.alice.presentation.screens.cardetails.components.CarDetailsAppBar
 import com.ae.alice.presentation.screens.cardetails.components.CarDetailsBottomBar
 import com.ae.alice.presentation.screens.cardetails.components.CarDetailsContent
-import com.ae.alice.presentation.screens.cardetails.components.CarDetailsErrorView
-import com.ae.alice.presentation.screens.cardetails.components.CarDetailsLoadingIndicator
-import com.ae.alice.presentation.screens.cardetails.components.CarDetailsTopBar
 import org.koin.compose.viewmodel.koinViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Car details screen — uses MENA Scaffold with AppBar back navigation,
+ * LoadingLayout, ErrorLayout, and a sticky bottom action bar.
+ */
 @Composable
 fun CarDetailsScreen(
     modelId: String,
     modelName: String,
     onBackClick: () -> Unit,
+    onGetCarClick: () -> Unit,
     viewModel: CarDetailsViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsState()
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     LaunchedEffect(modelId) {
         viewModel.processIntent(CarDetailsIntent.LoadModel(modelId))
     }
 
+    LaunchedEffect(viewModel.effect) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                is CarDetailsEffect.NavigateToGetCar -> onGetCarClick()
+            }
+        }
+    }
+
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        containerColor = ATheme.colors.Light.Background,
+        backgroundColor = Theme.colorScheme.background.surface,
         topBar = {
-            CarDetailsTopBar(
+            CarDetailsAppBar(
                 title = modelName,
                 onBackClick = onBackClick,
-                scrollBehavior = scrollBehavior
             )
         },
         bottomBar = {
@@ -53,44 +56,20 @@ fun CarDetailsScreen(
                 )
             }
         }
-    ) { paddingValues ->
-        CarDetailsBody(
-            state = state,
-            onRetry = {
-                viewModel.processIntent(CarDetailsIntent.Retry)
-            },
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        )
-    }
-}
-
-@Composable
-private fun CarDetailsBody(
-    state: CarDetailsState,
-    onRetry: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    when {
-        state.isLoading -> {
-            CarDetailsLoadingIndicator(modifier = modifier)
-        }
-
-        state.hasError -> {
-            CarDetailsErrorView(
-                errorMessage = state.error,
-                onRetryClick = onRetry,
-                modifier = modifier
-            )
-        }
-
-        state.isContentReady -> {
-            CarDetailsContent(
-                model = state.model!!,
-                modifier = modifier
-            )
+    ) {
+        when {
+            state.isLoading -> LoadingLayout()
+            state.hasError -> {
+                ErrorLayout(
+                    title = state.error ?: "",
+                    onRetry = { viewModel.processIntent(CarDetailsIntent.Retry) }
+                )
+            }
+            state.isContentReady -> {
+                CarDetailsContent(
+                    model = state.model!!
+                )
+            }
         }
     }
 }
-

@@ -1,62 +1,44 @@
 package com.ae.alice.presentation.screens.models
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.outlined.BrokenImage
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import coil3.compose.SubcomposeAsyncImage
-import com.ae.alice.designsystem.components.ASearchField
-import com.ae.alice.designsystem.theme.ATheme
-import com.ae.alice.domain.entity.CarModel
 import alice.presentation.generated.resources.Res
-import alice.presentation.generated.resources.models_search_placeholder
+import alice.presentation.generated.resources.ic_arrow_left
 import alice.presentation.generated.resources.models_empty
 import alice.presentation.generated.resources.models_error_default
-import alice.presentation.generated.resources.models_back
+import alice.presentation.generated.resources.models_search_placeholder
+import com.ae.alice.designsystem.components.appBar.AppBar
+import com.ae.alice.designsystem.components.card.GridCard
+import com.ae.alice.designsystem.components.icon.Icon
+import com.ae.alice.designsystem.components.scaffold.Scaffold
+import com.ae.alice.designsystem.components.state.EmptyLayout
+import com.ae.alice.designsystem.components.state.ErrorLayout
+import com.ae.alice.designsystem.components.state.LoadingLayout
+import com.ae.alice.designsystem.components.textField.SearchField
+import com.ae.alice.designsystem.theme.Theme
+import com.ae.alice.domain.entity.CarModel
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
- * Models screen displaying car models for a specific brand
- * with title, search bar, and grid layout.
+ * Models screen — inner screen, no bottom nav.
+ * Uses MENA Scaffold, AppBar with back arrow, LoadingLayout, ErrorLayout.
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModelsScreen(
     brandId: String,
@@ -72,190 +54,72 @@ fun ModelsScreen(
     }
 
     Scaffold(
-        containerColor = ATheme.colors.Light.Background,
+        backgroundColor = Theme.colorScheme.background.surfaceLow,
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = brandName,
-                        fontWeight = FontWeight.SemiBold
+            AppBar(
+                title = brandName,
+                leadingContent = {
+                    Icon(
+                        painter = painterResource(Res.drawable.ic_arrow_left),
+                        contentDescription = "Back",
+                        tint = Theme.colorScheme.primary.primary
                     )
                 },
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(Res.string.models_back)
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = ATheme.colors.Light.Surface,
-                    titleContentColor = ATheme.colors.Light.TextPrimary,
-                    navigationIconContentColor = ATheme.colors.Secondary
-                )
+                onLeadingClick = onBackClick
             )
         }
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
+    ) {
+        Column(modifier = Modifier.fillMaxSize()) {
             // Search bar
-            ASearchField(
+            SearchField(
                 value = state.searchQuery,
                 onValueChange = { viewModel.processIntent(ModelsIntent.Search(it)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
-                        horizontal = ATheme.dimens.ScreenPaddingHorizontal,
-                        vertical = ATheme.dimens.SpacingSm
+                        horizontal = Theme.spacing._16,
+                        vertical = Theme.spacing._8
                     ),
                 placeholder = stringResource(Res.string.models_search_placeholder),
                 onClear = { viewModel.processIntent(ModelsIntent.Search("")) }
             )
 
-            Spacer(modifier = Modifier.height(ATheme.dimens.SpacingSm))
+            Spacer(modifier = Modifier.height(Theme.spacing._8))
 
             // Content
             when {
-                state.isLoading -> {
-                    LoadingContent()
-                }
+                state.isLoading -> LoadingLayout()
                 state.error != null -> {
-                    ErrorContent(message = state.error ?: stringResource(Res.string.models_error_default))
+                    ErrorLayout(
+                        title = state.error ?: stringResource(Res.string.models_error_default),
+                        onRetry = { viewModel.processIntent(ModelsIntent.LoadModels(brandId)) }
+                    )
                 }
                 state.filteredModels.isEmpty() -> {
-                    EmptyContent()
+                    EmptyLayout(
+                        title = stringResource(Res.string.models_empty),
+                    )
                 }
                 else -> {
-                    ModelsGrid(
-                        models = state.filteredModels,
-                        onModelClick = onModelClick
-                    )
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
+                        contentPadding = PaddingValues(Theme.spacing._16),
+                        horizontalArrangement = Arrangement.spacedBy(Theme.spacing._12),
+                        verticalArrangement = Arrangement.spacedBy(Theme.spacing._12)
+                    ) {
+                        items(
+                            items = state.filteredModels,
+                            key = { it.id }
+                        ) { model ->
+                            GridCard(
+                                imageUrl = model.imageUrl ?: "",
+                                title = model.name,
+                                onClick = { onModelClick(model) }
+                            )
+                        }
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun ModelsGrid(
-    models: List<CarModel>,
-    onModelClick: (CarModel) -> Unit
-) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(ATheme.dimens.ScreenPaddingHorizontal),
-        horizontalArrangement = Arrangement.spacedBy(ATheme.dimens.SpacingMd),
-        verticalArrangement = Arrangement.spacedBy(ATheme.dimens.SpacingMd)
-    ) {
-        items(
-            items = models,
-            key = { it.id }
-        ) { model ->
-            ModelGridCard(
-                model = model,
-                onClick = { onModelClick(model) }
-            )
-        }
-    }
-}
-
-@Composable
-private fun ModelGridCard(
-    model: CarModel,
-    onClick: () -> Unit
-) {
-    Card(
-        onClick = onClick,
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(ATheme.dimens.RadiusMd),
-        colors = CardDefaults.cardColors(
-            containerColor = ATheme.colors.Light.Surface
-        ),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 1.dp,
-            pressedElevation = 3.dp
-        )
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(ATheme.dimens.SpacingMd),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(ATheme.dimens.SpacingSm)
-        ) {
-            // Model image
-            SubcomposeAsyncImage(
-                model = model.imageUrl ?: "",
-                contentDescription = model.name,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1.2f),
-                contentScale = ContentScale.Fit,
-                loading = {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(24.dp),
-                        color = ATheme.colors.Primary,
-                        strokeWidth = 2.dp
-                    )
-                },
-                error = {
-                    Icon(
-                        imageVector = Icons.Outlined.BrokenImage,
-                        contentDescription = null,
-                        modifier = Modifier.size(32.dp),
-                        tint = ATheme.colors.Light.TextDisabled
-                    )
-                }
-            )
-
-            // Model name
-            Text(
-                text = model.name,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = ATheme.colors.Light.TextPrimary,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-    }
-}
-
-@Composable
-private fun LoadingContent() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator(color = ATheme.colors.Primary)
-    }
-}
-
-@Composable
-private fun ErrorContent(message: String) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text = message, color = ATheme.colors.Error)
-    }
-}
-
-@Composable
-private fun EmptyContent() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = stringResource(Res.string.models_empty),
-            color = ATheme.colors.Light.TextSecondary
-        )
     }
 }

@@ -16,7 +16,7 @@ fun App() {
     val localeState = remember { LocaleState() }
 
     AppLocaleProvider(localeState = localeState) {
-        AliceTheme {
+        AliceTheme(language = localeState.language.code) {
             val navController = rememberNavController()
             AppNavHost(navController = navController)
         }

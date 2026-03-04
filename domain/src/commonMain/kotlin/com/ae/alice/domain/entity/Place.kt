@@ -9,5 +9,7 @@ data class Place(
     val address: String,
     val categoryId: String,
     val imageUrl: String? = null,
-    val isSaved: Boolean = false
+    val isSaved: Boolean = false,
+    val latitude: Double = 0.0,
+    val longitude: Double = 0.0
 )

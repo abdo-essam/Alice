@@ -1,7 +1,6 @@
 package com.ae.alice.designsystem.components.button
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -11,7 +10,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ae.alice.designsystem.components.button.content.BaseButtonContent
 import com.ae.alice.designsystem.theme.Theme
+import sv.lib.squircleshape.SquircleShape
 
+/**
+ * MENA-style PrimaryButton with SquircleShape and matching loading state colors.
+ */
 @Composable
 fun PrimaryButton(
     text: String,
@@ -22,15 +25,15 @@ fun PrimaryButton(
     iconStartPadding: Dp = Theme.spacing._8,
     isEnabled: Boolean = true,
     isLoading: Boolean = false,
-    containerColor: Color = Theme.colorScheme.brand.brand,
+    containerColor: Color = Theme.colorScheme.primary.primary,
     disabledContainerColor: Color = Theme.colorScheme.disabled,
-    contentColor: Color = Theme.colorScheme.brand.onBrand,
+    contentColor: Color = Theme.colorScheme.primary.onPrimary,
     disabledContentColor: Color = Theme.colorScheme.textDisabled,
     contentPadding: PaddingValues = PaddingValues(
         horizontal = Theme.spacing._16,
         vertical = 13.dp
     ),
-    shape: Shape = RoundedCornerShape(Theme.radius.md)
+    shape: Shape = SquircleShape(Theme.radius.md)
 ) {
     Button(
         isEnabled = isEnabled,

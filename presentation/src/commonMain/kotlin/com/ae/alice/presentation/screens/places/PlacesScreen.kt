@@ -1,8 +1,5 @@
 package com.ae.alice.presentation.screens.places
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,220 +8,189 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
+import androidx.compose.foundation.clickable
 import androidx.compose.ui.Modifier
-import com.ae.alice.designsystem.components.ABottomNavBar
-import com.ae.alice.designsystem.components.ADrawerContent
-import com.ae.alice.designsystem.components.ADrawerItems
-import com.ae.alice.designsystem.components.AHeader
-import com.ae.alice.designsystem.components.ANavItems
-import com.ae.alice.designsystem.components.APlaceCard
-import com.ae.alice.designsystem.components.ASearchField
-import com.ae.alice.designsystem.components.ASelector
-import com.ae.alice.designsystem.components.ATabRow
-import com.ae.alice.designsystem.theme.Theme
-import com.ae.alice.domain.entity.ServiceTab
 import alice.presentation.generated.resources.Res
-import alice.presentation.generated.resources.places_search_placeholder
+import alice.presentation.generated.resources.places_category_label
 import alice.presentation.generated.resources.places_empty
-import alice.presentation.generated.resources.places_error_default
 import alice.presentation.generated.resources.places_location_label
+import alice.presentation.generated.resources.places_search_placeholder
 import alice.presentation.generated.resources.places_tab_one
 import alice.presentation.generated.resources.places_tab_two
-import alice.presentation.generated.resources.places_category_label
+import com.ae.alice.designsystem.components.appBar.HomeAppBar
+import com.ae.alice.designsystem.components.card.PlaceCard
+import com.ae.alice.designsystem.components.scaffold.Scaffold
+import com.ae.alice.designsystem.components.selector.Selector
+import com.ae.alice.designsystem.components.segment.Segment
+import com.ae.alice.designsystem.components.state.EmptyLayout
+import com.ae.alice.designsystem.components.state.ErrorLayout
+import com.ae.alice.designsystem.components.state.LoadingLayout
+import com.ae.alice.designsystem.components.text.Text
+import com.ae.alice.designsystem.components.textField.SearchField
+import com.ae.alice.designsystem.theme.Theme
+import com.ae.alice.domain.entity.ServiceTab
 import org.jetbrains.compose.resources.stringResource
-import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
- * Places screen displaying service providers organized by categories and tabs.
+ * Places screen — inner screen, no bottom navigation bar.
  */
 @Composable
 fun PlacesScreen(
+    onPickLocationClick: () -> Unit,
+    passedLocation: String? = null,
     viewModel: PlacesViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsState()
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
 
+    LaunchedEffect(passedLocation) {
+        if (!passedLocation.isNullOrEmpty()) {
+            viewModel.processIntent(PlacesIntent.SelectLocation(passedLocation))
+        }
+    }
     val locations = listOf("الرياض", "جدة", "الدمام", "الخبر", "مكة المكرمة", "المدينة المنورة")
 
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet {
-                ADrawerContent(
-                    items = ADrawerItems.default(selectedIndex = -1),
-                    onItemClick = {
-                        scope.launch { drawerState.close() }
-                    }
+    Scaffold(
+        backgroundColor = Theme.colorScheme.background.surfaceLow,
+        topBar = { HomeAppBar() },
+    ) {
+        when {
+            state.isLoading -> LoadingLayout()
+            state.error != null -> {
+                ErrorLayout(
+                    title = state.error ?: "Error",
+                    onRetry = { viewModel.processIntent(PlacesIntent.LoadData) }
+                )
+            }
+            else -> {
+                PlacesContent(
+                    state = state,
+                    viewModel = viewModel,
+                    onPickLocationClick = onPickLocationClick
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun PlacesContent(
+    state: PlacesState,
+    viewModel: PlacesViewModel,
+    onPickLocationClick: () -> Unit,
+) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(bottom = Theme.spacing._16)
     ) {
-        Scaffold(
-            containerColor = Theme.colorScheme.background.surfaceLow,
-            topBar = {
-                AHeader(
-                    showMenuIcon = true,
-                    onMenuClick = {
-                        scope.launch { drawerState.open() }
-                    }
-                )
-            },
-            bottomBar = {
-                ABottomNavBar(
-                    items = ANavItems.default(selectedIndex = 1)
-                )
-            }
-        ) { paddingValues ->
-            Column(
+        // Location selector
+        item {
+            com.ae.alice.designsystem.components.dropdown.DropdownSelector(
+                label = stringResource(Res.string.places_location_label),
+                selectedValue = state.selectedLocation,
+                options = emptyList(), // Not used anymore since we have a dedicated screen
+                onOptionSelected = {  },
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = Theme.spacing._16,
+                        vertical = Theme.spacing._8
+                    )
+                    .clickable { onPickLocationClick() },
+                placeholder = "اختيار الموقع"
+            )
+        }
+
+        // Search bar
+        item {
+            SearchField(
+                value = state.searchQuery,
+                onValueChange = { viewModel.processIntent(PlacesIntent.Search(it)) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Theme.spacing._16),
+                placeholder = stringResource(Res.string.places_search_placeholder),
+                onClear = { viewModel.processIntent(PlacesIntent.Search("")) }
+            )
+            Spacer(modifier = Modifier.height(Theme.spacing._12))
+        }
+
+        // Tabs
+        item {
+            Segment(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Theme.spacing._16)
             ) {
-                // ── Location selector ──
-                ASelector(
-                    label = stringResource(Res.string.places_location_label),
-                    selectedValue = state.selectedLocation,
-                    options = locations,
-                    onOptionSelected = {
-                        viewModel.processIntent(PlacesIntent.SelectLocation(it))
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = Theme.spacing._16,
-                            vertical = Theme.spacing._8
-                        )
-                )
+                item(stringResource(Res.string.places_tab_one)) {
+                    LaunchedEffect(state.selectedTab) {
+                        if (state.selectedTab != ServiceTab.TAB_ONE) {
+                            viewModel.processIntent(PlacesIntent.SelectTab(ServiceTab.TAB_ONE))
+                        }
+                    }
+                }
+                item(stringResource(Res.string.places_tab_two)) {
+                    LaunchedEffect(state.selectedTab) {
+                        if (state.selectedTab != ServiceTab.TAB_TWO) {
+                            viewModel.processIntent(PlacesIntent.SelectTab(ServiceTab.TAB_TWO))
+                        }
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(Theme.spacing._12))
+        }
 
-                // ── Search bar ──
-                ASearchField(
-                    value = state.searchQuery,
-                    onValueChange = { viewModel.processIntent(PlacesIntent.Search(it)) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = Theme.spacing._16),
-                    placeholder = stringResource(Res.string.places_search_placeholder),
-                    onClear = { viewModel.processIntent(PlacesIntent.Search("")) }
-                )
-
-                Spacer(modifier = Modifier.height(Theme.spacing._12))
-
-                // ── Tabs ──
-                ATabRow(
-                    tabs = listOf(
-                        stringResource(Res.string.places_tab_one),
-                        stringResource(Res.string.places_tab_two)
-                    ),
-                    selectedIndex = if (state.selectedTab == ServiceTab.TAB_ONE) 0 else 1,
-                    onTabSelected = { index ->
-                        val tab = if (index == 0) ServiceTab.TAB_ONE else ServiceTab.TAB_TWO
-                        viewModel.processIntent(PlacesIntent.SelectTab(tab))
+        // Category selector
+        if (state.filteredCategories.isNotEmpty()) {
+            item {
+                Selector(
+                    label = stringResource(Res.string.places_category_label),
+                    selectedValue = state.selectedCategory?.name ?: "",
+                    options = state.filteredCategories.map { it.name },
+                    onOptionSelected = { name ->
+                        val category =
+                            state.filteredCategories.firstOrNull { it.name == name }
+                        category?.let {
+                            viewModel.processIntent(PlacesIntent.SelectCategory(it))
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = Theme.spacing._16)
                 )
-
                 Spacer(modifier = Modifier.height(Theme.spacing._12))
+            }
+        }
 
-                // ── Category dropdown ──
-                if (state.filteredCategories.isNotEmpty()) {
-                    ASelector(
-                        label = stringResource(Res.string.places_category_label),
-                        selectedValue = state.selectedCategory?.name ?: "",
-                        options = state.filteredCategories.map { it.name },
-                        onOptionSelected = { name ->
-                            val category = state.filteredCategories.firstOrNull { it.name == name }
-                            category?.let {
-                                viewModel.processIntent(PlacesIntent.SelectCategory(it))
-                            }
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = Theme.spacing._16)
+        // Places list
+        if (state.places.isEmpty() && !state.isLoading) {
+            item {
+                EmptyLayout(
+                    title = stringResource(Res.string.places_empty),
+                )
+            }
+        } else {
+            items(state.places, key = { it.id }) { place ->
+                PlaceCard(
+                    name = place.name,
+                    address = place.address,
+                    imageUrl = place.imageUrl,
+                    isSaved = place.isSaved,
+                    onDetailsClick = {
+                        viewModel.processIntent(PlacesIntent.PlaceDetailsClicked(place))
+                    },
+                    onSaveClick = {
+                        viewModel.processIntent(PlacesIntent.ToggleSave(place.id))
+                    },
+                    modifier = Modifier.padding(
+                        horizontal = Theme.spacing._16,
+                        vertical = Theme.spacing._4
                     )
-
-                    Spacer(modifier = Modifier.height(Theme.spacing._12))
-                }
-
-                // ── Content ──
-                when {
-                    state.isLoading -> {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator(color = Theme.colorScheme.brand.brand)
-                        }
-                    }
-                    state.error != null -> {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = state.error ?: stringResource(Res.string.places_error_default),
-                                color = Theme.colorScheme.error
-                            )
-                        }
-                    }
-                    state.places.isEmpty() -> {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = stringResource(Res.string.places_empty),
-                                color = Theme.colorScheme.shadeSecondary
-                            )
-                        }
-                    }
-                    else -> {
-                        LazyColumn(
-                            contentPadding = PaddingValues(
-                                horizontal = Theme.spacing._16,
-                                vertical = Theme.spacing._8
-                            ),
-                            verticalArrangement = Arrangement.spacedBy(Theme.spacing._12)
-                        ) {
-                            items(
-                                items = state.places,
-                                key = { it.id }
-                            ) { place ->
-                                APlaceCard(
-                                    name = place.name,
-                                    address = place.address,
-                                    imageUrl = place.imageUrl,
-                                    isSaved = place.isSaved,
-                                    onDetailsClick = {
-                                        viewModel.processIntent(
-                                            PlacesIntent.PlaceDetailsClicked(place)
-                                        )
-                                    },
-                                    onSaveClick = {
-                                        viewModel.processIntent(
-                                            PlacesIntent.ToggleSave(place.id)
-                                        )
-                                    }
-                                )
-                            }
-                        }
-                    }
-                }
+                )
             }
         }
     }

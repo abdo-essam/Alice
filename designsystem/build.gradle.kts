@@ -36,6 +36,9 @@ kotlin {
             
             // Compose Unstyled
             implementation(libs.composeunstyled)
+            
+            // SquircleShape
+            api(libs.squircle.shape)
         }
     }
 }

@@ -19,4 +19,14 @@
     <string name="header_menu">Menu</string>
     <string name="header_logo_desc">Alice Logo</string>
     <string name="header_title">ALICE</string>
+
+    <!-- Dialog -->
+    <string name="close_dialog">Close</string>
+
+    <!-- State Layouts -->
+    <string name="retry">Retry</string>
+    <string name="error_default_title">Something went wrong</string>
+    <string name="error_default_message">An unexpected error occurred. Please try again.</string>
+    <string name="empty_default_title">Nothing here yet</string>
+    <string name="empty_default_message">No data available at this time.</string>
 </resources>

@@ -53,4 +53,27 @@
     <string name="places_category_label">Category</string>
     <string name="places_details">Details</string>
     <string name="places_save">Save</string>
+
+    <!-- Profile Screen -->
+    <string name="profile_title">Profile</string>
+    <string name="profile_account_settings">Account Settings</string>
+    <string name="profile_edit_profile">Edit Profile</string>
+    <string name="profile_change_password">Change Password</string>
+    <string name="profile_addresses">Addresses</string>
+    <string name="profile_app_settings">App Settings</string>
+    <string name="profile_language">Language</string>
+    <string name="profile_theme">Theme</string>
+    <string name="profile_other">Other</string>
+    <string name="profile_privacy_policy">Privacy &amp; Policy</string>
+    <string name="profile_contact_us">Contact Us</string>
+    <string name="profile_logout">Log Out</string>
+    <string name="profile_version">Version</string>
+
+    <!-- Bottom Nav -->
+    <string name="nav_home_ar">الرئيسية</string>
+    <string name="nav_archive_ar">الأرشيف</string>
+    <string name="nav_profile_ar">حسابي</string>
+
+    <!-- Dropdown -->
+    <string name="dropdown_select">Select</string>
 </resources>

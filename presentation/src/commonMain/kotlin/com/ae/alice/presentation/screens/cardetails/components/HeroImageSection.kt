@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.BrokenImage
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,10 +18,15 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
+import com.ae.alice.designsystem.components.indicator.DotsProgressIndicator
 import com.ae.alice.designsystem.theme.Theme
 
 private const val HERO_ASPECT_RATIO = 1.4f
 
+/**
+ * Full-width hero image with gradient background.
+ * Uses MENA's [DotsProgressIndicator] for loading state.
+ */
 @Composable
 fun HeroImageSection(
     imageUrl: String?,
@@ -51,27 +55,15 @@ fun HeroImageSection(
                 .padding(Theme.spacing._24)
                 .clip(RoundedCornerShape(Theme.radius.lg)),
             contentScale = ContentScale.Fit,
-            loading = { ImageLoadingPlaceholder() },
-            error = { ImageErrorPlaceholder() }
+            loading = { DotsProgressIndicator() },
+            error = {
+                Icon(
+                    imageVector = Icons.Outlined.BrokenImage,
+                    contentDescription = null,
+                    modifier = Modifier.size(64.dp),
+                    tint = Theme.colorScheme.textDisabled
+                )
+            }
         )
     }
-}
-
-@Composable
-private fun ImageLoadingPlaceholder() {
-    CircularProgressIndicator(
-        modifier = Modifier.size(32.dp),
-        color = Theme.colorScheme.brand.brand,
-        strokeWidth = 3.dp
-    )
-}
-
-@Composable
-private fun ImageErrorPlaceholder() {
-    Icon(
-        imageVector = Icons.Outlined.BrokenImage,
-        contentDescription = null,
-        modifier = Modifier.size(64.dp),
-        tint = Theme.colorScheme.textDisabled
-    )
 }

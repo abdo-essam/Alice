@@ -1,7 +1,6 @@
 package com.ae.alice.presentation.screens.brands
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -12,39 +11,29 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.ae.alice.designsystem.components.ABottomNavBar
-import com.ae.alice.designsystem.components.ADrawerContent
-import com.ae.alice.designsystem.components.ADrawerItems
-import com.ae.alice.designsystem.components.AGridCard
-import com.ae.alice.designsystem.components.AHeader
-import com.ae.alice.designsystem.components.ANavItems
-import com.ae.alice.designsystem.components.ASearchField
-import com.ae.alice.designsystem.theme.Theme
-import com.ae.alice.domain.entity.Brand
 import alice.presentation.generated.resources.Res
-import alice.presentation.generated.resources.brands_search_placeholder
 import alice.presentation.generated.resources.brands_empty
 import alice.presentation.generated.resources.brands_error_default
+import alice.presentation.generated.resources.brands_search_placeholder
+import com.ae.alice.designsystem.components.appBar.HomeAppBar
+import com.ae.alice.designsystem.components.card.GridCard
+import com.ae.alice.designsystem.components.scaffold.Scaffold
+import com.ae.alice.designsystem.components.state.EmptyLayout
+import com.ae.alice.designsystem.components.state.ErrorLayout
+import com.ae.alice.designsystem.components.state.LoadingLayout
+import com.ae.alice.designsystem.components.textField.SearchField
+import com.ae.alice.designsystem.theme.Theme
+import com.ae.alice.domain.entity.Brand
 import org.jetbrains.compose.resources.stringResource
-import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
- * Brands screen displaying car manufacturers in a grid layout
- * with a hamburger menu drawer.
+ * Standalone brands screen (used if navigating directly to Brands route).
+ * Note: In the main flow, brands are displayed via HomeBrandsTab in MainScreen.
  */
 @Composable
 fun BrandsScreen(
@@ -52,140 +41,78 @@ fun BrandsScreen(
     viewModel: BrandsViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsState()
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
 
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet {
-                ADrawerContent(
-                    items = ADrawerItems.default(selectedIndex = 0),
-                    onItemClick = {
-                        scope.launch { drawerState.close() }
-                    }
+    Scaffold(
+        backgroundColor = Theme.colorScheme.background.surfaceLow,
+        topBar = { HomeAppBar() },
+    ) {
+        when {
+            state.isLoading -> LoadingLayout()
+            state.error != null -> {
+                ErrorLayout(
+                    title = state.error ?: stringResource(Res.string.brands_error_default),
+                    onRetry = { viewModel.processIntent(BrandsIntent.LoadBrands) }
+                )
+            }
+            else -> {
+                BrandsContent(
+                    state = state,
+                    viewModel = viewModel,
+                    onBrandClick = onBrandClick
                 )
             }
         }
-    ) {
-        Scaffold(
-            containerColor = Theme.colorScheme.background.surfaceLow,
-            topBar = {
-                AHeader(
-                    showMenuIcon = true,
-                    onMenuClick = {
-                        scope.launch { drawerState.open() }
-                    }
-                )
-            },
-            bottomBar = {
-                ABottomNavBar(
-                    items = ANavItems.default(selectedIndex = 0)
-                )
-            }
-        ) { paddingValues ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
+    }
+}
+
+/**
+ * Reusable brands content — extracted so it can be used both in BrandsScreen
+ * and in HomeBrandsTab within MainScreen.
+ */
+@Composable
+fun BrandsContent(
+    state: BrandsState,
+    viewModel: BrandsViewModel,
+    onBrandClick: (Brand) -> Unit
+) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        SearchField(
+            value = state.searchQuery,
+            onValueChange = { viewModel.processIntent(BrandsIntent.Search(it)) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    horizontal = Theme.spacing._16,
+                    vertical = Theme.spacing._8
+                ),
+            placeholder = stringResource(Res.string.brands_search_placeholder),
+            onClear = { viewModel.processIntent(BrandsIntent.Search("")) }
+        )
+
+        Spacer(modifier = Modifier.height(Theme.spacing._8))
+
+        if (state.filteredBrands.isEmpty()) {
+            EmptyLayout(
+                title = stringResource(Res.string.brands_empty),
+            )
+        } else {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                contentPadding = PaddingValues(Theme.spacing._16),
+                horizontalArrangement = Arrangement.spacedBy(Theme.spacing._12),
+                verticalArrangement = Arrangement.spacedBy(Theme.spacing._12)
             ) {
-                // Search bar
-                ASearchField(
-                    value = state.searchQuery,
-                    onValueChange = { viewModel.processIntent(BrandsIntent.Search(it)) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = Theme.spacing._16,
-                            vertical = Theme.spacing._8
-                        ),
-                    placeholder = stringResource(Res.string.brands_search_placeholder),
-                    onClear = { viewModel.processIntent(BrandsIntent.Search("")) }
-                )
-
-                Spacer(modifier = Modifier.height(Theme.spacing._8))
-
-                // Content
-                when {
-                    state.isLoading -> {
-                        LoadingContent()
-                    }
-                    state.error != null -> {
-                        ErrorContent(message = state.error ?: stringResource(Res.string.brands_error_default))
-                    }
-                    else -> {
-                        BrandsGrid(
-                            brands = state.filteredBrands,
-                            onBrandClick = onBrandClick
-                        )
-                    }
+                items(
+                    items = state.filteredBrands,
+                    key = { it.id }
+                ) { brand ->
+                    GridCard(
+                        imageUrl = brand.logoUrl ?: "",
+                        title = brand.name,
+                        onClick = { onBrandClick(brand) }
+                    )
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun BrandsGrid(
-    brands: List<Brand>,
-    onBrandClick: (Brand) -> Unit
-) {
-    if (brands.isEmpty()) {
-        EmptyContent()
-        return
-    }
-
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(Theme.spacing._16),
-        horizontalArrangement = Arrangement.spacedBy(Theme.spacing._12),
-        verticalArrangement = Arrangement.spacedBy(Theme.spacing._12)
-    ) {
-        items(
-            items = brands,
-            key = { it.id }
-        ) { brand ->
-            AGridCard(
-                imageUrl = brand.logoUrl ?: "",
-                title = brand.name,
-                onClick = { onBrandClick(brand) }
-            )
-        }
-    }
-}
-
-@Composable
-private fun LoadingContent() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator(color = Theme.colorScheme.brand.brand)
-    }
-}
-
-@Composable
-private fun ErrorContent(message: String) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = message,
-            color = Theme.colorScheme.error
-        )
-    }
-}
-
-@Composable
-private fun EmptyContent() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = stringResource(Res.string.brands_empty),
-            color = Theme.colorScheme.shadeSecondary
-        )
     }
 }

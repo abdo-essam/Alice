@@ -5,15 +5,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
-import coil3.compose.AsyncImage
+import coil3.compose.SubcomposeAsyncImage
+import com.ae.alice.designsystem.components.indicator.DotsProgressIndicator
 import com.ae.alice.designsystem.theme.Theme
 
-/**
- * Network image component with placeholder and error states.
- * Uses Coil 3 AsyncImage for compatibility with IntrinsicSize layouts.
- */
 @Composable
 fun NetworkImage(
     url: String,
@@ -26,13 +22,17 @@ fun NetworkImage(
         return
     }
 
-    AsyncImage(
+    SubcomposeAsyncImage(
         model = url,
         contentDescription = contentDescription,
         contentScale = contentScale,
         modifier = modifier,
-        placeholder = ColorPainter(Theme.colorScheme.background.surfaceHigh),
-        error = ColorPainter(Theme.colorScheme.background.surfaceHigh)
+        loading = {
+            ImagePlaceholder(modifier = Modifier.matchParentSize())
+        },
+        error = {
+            ImagePlaceholder(modifier = Modifier.matchParentSize())
+        }
     )
 }
 
@@ -42,6 +42,6 @@ private fun ImagePlaceholder(modifier: Modifier = Modifier) {
         modifier = modifier.background(Theme.colorScheme.background.surfaceHigh),
         contentAlignment = Alignment.Center,
     ) {
-        // Empty placeholder with surfaceHigh background
+        DotsProgressIndicator()
     }
 }

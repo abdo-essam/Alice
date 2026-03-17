@@ -26,22 +26,6 @@ import com.ae.alice.designsystem.components.text.Text
 import com.ae.alice.designsystem.components.textfield.SearchField
 import com.ae.alice.designsystem.theme.Theme
 
-/**
- * Bottom sheet content for selecting an item from a searchable list.
- *
- * ┌────────────────────────────────┐
- * │         ── drag handle ──      │
- * │         Title                  │
- * │  ┌──────────────────────────┐  │
- * │  │  🔍 Search...            │  │
- * │  └──────────────────────────┘  │
- * │  ┌──────────────────────────┐  │
- * │  │  Option 1                │  │
- * │  │  Option 2  ← selected   │  │
- * │  │  Option 3                │  │
- * │  └──────────────────────────┘  │
- * └────────────────────────────────┘
- */
 @Composable
 fun SelectionSheetContent(
     title: String,

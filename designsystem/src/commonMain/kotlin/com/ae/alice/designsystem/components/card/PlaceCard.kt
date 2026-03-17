@@ -6,8 +6,10 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -34,34 +36,6 @@ import com.ae.alice.designsystem.theme.Theme
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
-/**
- * Place card — Arabic RTL layout:
- *
- * ┌──────────────────────────────────────────────┐
- * │  🔖                          Title  [IMAGE]  │
- * │                           Address..          │
- * │  [تفاصيل]                                    │
- * └──────────────────────────────────────────────┘
- *
- * RTL behavior:
- * - Bookmark: top-start (visually top-right)
- * - Image: end (visually left side... NO — end = left in LTR, right in RTL)
- *
- * Actually in RTL with Row:
- * - start = right side visually
- * - end = left side visually
- *
- * So: Bookmark (start=right) | spacer | Title+Address | Image (end=left)
- * But the design image shows: Bookmark top-left, Image top-right, Title center
- *
- * For the reference image (Arabic):
- * - Image is on the RIGHT (end in RTL = left... )
- *
- * Let's just use explicit ordering that works for RTL:
- * Row: [Bookmark] [Title+Address weight] [Image]
- * In RTL this renders as: Image | Title | Bookmark (right to left)
- * Which means: Image on LEFT, Title in CENTER, Bookmark on RIGHT ✓
- */
 @Composable
 fun PlaceCard(
     name: String,
@@ -74,9 +48,10 @@ fun PlaceCard(
 ) {
     val cardShape = RoundedCornerShape(Theme.radius.lg)
 
-    Box(
+    Row(
         modifier = modifier
             .fillMaxWidth()
+            .height(IntrinsicSize.Min)
             .shadow(
                 elevation = 2.dp,
                 shape = cardShape,
@@ -84,43 +59,41 @@ fun PlaceCard(
                 spotColor = Theme.colorScheme.shadeTertiary.copy(alpha = 0.08f),
             )
             .clip(cardShape)
-            .background(Theme.colorScheme.background.surface)
+            .background(Theme.colorScheme.background.surface),
     ) {
+        // ── Start side: Bookmark + Title/Address + Details button ──
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(Theme.spacing._12)
+                .weight(1f)
+                .fillMaxHeight()
+                .padding(Theme.spacing._12),
+            verticalArrangement = Arrangement.SpaceBetween,
         ) {
-            // ── Top row: Bookmark + Title/Address + Image ──
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.Top,
-            ) {
-                // Bookmark (start side)
-                Icon(
-                    painter = painterResource(
-                        if (isSaved) Res.drawable.ic_bookmark_filled
-                        else Res.drawable.ic_bookmark_outlined
-                    ),
-                    contentDescription = null,
-                    tint = if (isSaved) Theme.colorScheme.brand.brand
-                    else Theme.colorScheme.shadeSecondary,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) { onSaveClick() }
-                )
-
-                Spacer(modifier = Modifier.width(Theme.spacing._4))
-
-                // Title + Address (fills middle)
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = Theme.spacing._4),
+            // Top section: Bookmark + Text
+            Column {
+                // Bookmark row
+                Row(
+                    verticalAlignment = Alignment.Top,
                 ) {
+                    Icon(
+                        painter = painterResource(
+                            if (isSaved) Res.drawable.ic_bookmark_filled
+                            else Res.drawable.ic_bookmark_outlined
+                        ),
+                        contentDescription = null,
+                        tint = if (isSaved) Theme.colorScheme.brand.brand
+                        else Theme.colorScheme.shadeSecondary,
+                        modifier = Modifier
+                            .size(22.dp)
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() }
+                            ) { onSaveClick() }
+                    )
+
+                    Spacer(modifier = Modifier.width(Theme.spacing._8))
+
+                    // Title
                     Text(
                         text = name,
                         style = Theme.typography.title.small,
@@ -128,34 +101,24 @@ fun PlaceCard(
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
                     )
-
-                    Spacer(modifier = Modifier.height(Theme.spacing._4))
-
-                    Text(
-                        text = address,
-                        style = Theme.typography.label.small,
-                        color = Theme.colorScheme.shadeSecondary,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                    )
                 }
 
-                Spacer(modifier = Modifier.width(Theme.spacing._8))
+                Spacer(modifier = Modifier.height(Theme.spacing._4))
 
-                // Image (end side)
-                NetworkImage(
-                    url = imageUrl,
-                    contentDescription = name,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(80.dp)
-                        .clip(RoundedCornerShape(Theme.radius.md))
+                // Address — indented to align with title (after bookmark)
+                Text(
+                    text = address,
+                    style = Theme.typography.label.small,
+                    color = Theme.colorScheme.shadeSecondary,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(start = 30.dp)
                 )
             }
 
             Spacer(modifier = Modifier.height(Theme.spacing._12))
 
-            // ── Bottom row: Details button only ──
+            // Details button — bottom start
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(Theme.radius.sm))
@@ -177,5 +140,23 @@ fun PlaceCard(
                 )
             }
         }
+
+        // ── End side: Image (full card height) ──
+        NetworkImage(
+            url = imageUrl,
+            contentDescription = name,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .width(110.dp)
+                .fillMaxHeight()
+                .clip(
+                    RoundedCornerShape(
+                        topStart = Theme.radius.md,
+                        bottomStart = Theme.radius.md,
+                        topEnd = Theme.radius.lg,
+                        bottomEnd = Theme.radius.lg,
+                    )
+                )
+        )
     }
 }

@@ -1,5 +1,8 @@
 package com.ae.alice.designsystem.components.bottomSheet
 
+import alice.designsystem.generated.resources.Res
+import alice.designsystem.generated.resources.no_results
+import alice.designsystem.generated.resources.search_placeholder
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -25,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.ae.alice.designsystem.components.text.Text
 import com.ae.alice.designsystem.components.textfield.SearchField
 import com.ae.alice.designsystem.theme.Theme
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun SelectionSheetContent(
@@ -33,7 +37,7 @@ fun SelectionSheetContent(
     selectedOption: String,
     onOptionSelected: (String) -> Unit,
     modifier: Modifier = Modifier,
-    searchPlaceholder: String = "بحث...",
+    searchPlaceholder: String = stringResource(Res.string.search_placeholder),
     showSearch: Boolean = true,
 ) {
     var searchQuery by remember { mutableStateOf("") }
@@ -89,7 +93,7 @@ fun SelectionSheetContent(
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
-                            text = "لا توجد نتائج",
+                            text = stringResource(Res.string.no_results),
                             style = Theme.typography.body.medium,
                             color = Theme.colorScheme.shadeTertiary,
                         )

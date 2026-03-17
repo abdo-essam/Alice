@@ -5,12 +5,17 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.ae.alice.presentation.screens.brands.BrandsScreen
 import com.ae.alice.presentation.screens.cardetails.CarDetailsScreen
+import com.ae.alice.presentation.screens.main.MainScreen
 import com.ae.alice.presentation.screens.models.ModelsScreen
+import com.ae.alice.presentation.screens.places.PlacesScreen
+import com.ae.alice.presentation.screens.location.PickLocationScreen
 
 /**
  * App navigation host.
+ *
+ * Main screen has the bottom navigation bar.
+ * Inner screens (Models, CarDetails, Places) do NOT have bottom nav.
  */
 @Composable
 fun AppNavHost(
@@ -18,16 +23,16 @@ fun AppNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.Brands
+        startDestination = Routes.Main
     ) {
-        composable<Routes.Brands> {
-            BrandsScreen(
+        composable<Routes.Main> {
+            MainScreen(
                 onBrandClick = { brand ->
                     navController.navigate(Routes.Models(brand.id, brand.name))
                 }
             )
         }
-        
+
         composable<Routes.Models> { backStackEntry ->
             val args: Routes.Models = backStackEntry.toRoute()
             ModelsScreen(
@@ -39,13 +44,38 @@ fun AppNavHost(
                 }
             )
         }
-        
+
         composable<Routes.CarDetails> { backStackEntry ->
             val args: Routes.CarDetails = backStackEntry.toRoute()
             CarDetailsScreen(
                 modelId = args.modelId,
                 modelName = args.modelName,
-                onBackClick = { navController.popBackStack() }
+                onBackClick = { navController.popBackStack() },
+                onGetCarClick = { navController.navigate(Routes.Places) }
+            )
+        }
+
+        composable<Routes.Places> { backStackEntry ->
+            val savedStateHandle = backStackEntry.savedStateHandle
+            val selectedLocation = savedStateHandle.get<String>("selected_location")
+
+            PlacesScreen(
+                passedLocation = selectedLocation,
+                onNavigateToDetails = {
+
+                }
+            )
+        }
+
+        composable<Routes.PickLocation> {
+            PickLocationScreen(
+                onBackClick = { navController.popBackStack() },
+                onLocationSubmitted = { lat, lng, address ->
+                    navController.previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.set("selected_location", address)
+                    navController.popBackStack()
+                }
             )
         }
     }

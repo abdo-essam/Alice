@@ -7,6 +7,7 @@ import com.ae.alice.designsystem.locale.AppLocaleProvider
 import com.ae.alice.designsystem.locale.LocaleState
 import com.ae.alice.designsystem.theme.AliceTheme
 import com.ae.alice.navigation.AppNavHost
+import org.koin.compose.KoinContext
 
 /**
  * Main App composable.
@@ -15,10 +16,12 @@ import com.ae.alice.navigation.AppNavHost
 fun App() {
     val localeState = remember { LocaleState() }
 
-    AppLocaleProvider(localeState = localeState) {
-        AliceTheme {
-            val navController = rememberNavController()
-            AppNavHost(navController = navController)
+    KoinContext {
+        AppLocaleProvider(localeState = localeState) {
+            AliceTheme(language = localeState.language.code) {
+                val navController = rememberNavController()
+                AppNavHost(navController = navController)
+            }
         }
     }
 }

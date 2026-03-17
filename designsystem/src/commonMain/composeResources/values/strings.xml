@@ -29,4 +29,9 @@
     <string name="error_default_message">An unexpected error occurred. Please try again.</string>
     <string name="empty_default_title">Nothing here yet</string>
     <string name="empty_default_message">No data available at this time.</string>
+    <!-- Places Screen -->
+    <string name="places_details">Details</string>
+    <string name="places_save">Save</string>
+    <string name="places_rating_buyers">buyers</string>
+    <string name="places_address_prefix">Address:</string>
 </resources>

@@ -23,8 +23,7 @@ import com.ae.alice.designsystem.components.card.GridCard
 import com.ae.alice.designsystem.components.state.EmptyLayout
 import com.ae.alice.designsystem.components.state.ErrorLayout
 import com.ae.alice.designsystem.components.state.LoadingLayout
-import com.ae.alice.designsystem.components.text.Text
-import com.ae.alice.designsystem.components.textField.SearchField
+import com.ae.alice.designsystem.components.textfield.SearchField
 import com.ae.alice.designsystem.theme.Theme
 import com.ae.alice.domain.entity.Brand
 import com.ae.alice.presentation.screens.brands.BrandsIntent

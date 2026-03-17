@@ -9,6 +9,7 @@ import com.ae.alice.presentation.base.UiState
 
 data class PlacesState(
     val isLoading: Boolean = false,
+    val isPlacesLoading: Boolean = false,
     val searchQuery: String = "",
     val selectedTab: ServiceTab = ServiceTab.TAB_ONE,
     val categories: List<ServiceCategory> = emptyList(),
@@ -31,4 +32,5 @@ sealed interface PlacesIntent : UiIntent {
 
 sealed interface PlacesEffect : UiEffect {
     data class NavigateToPlaceDetails(val place: Place) : PlacesEffect
+    data class ShowError(val message: String) : PlacesEffect
 }

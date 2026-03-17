@@ -1,4 +1,4 @@
-package com.ae.alice.designsystem.components.textField
+package com.ae.alice.designsystem.components.textfield
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image

@@ -61,7 +61,10 @@ fun AppNavHost(
 
             PlacesScreen(
                 onPickLocationClick = { navController.navigate(Routes.PickLocation) },
-                passedLocation = selectedLocation
+                passedLocation = selectedLocation,
+                onNavigateToDetails = {
+
+                }
             )
         }
 

@@ -76,8 +76,8 @@ fun EmptyLayout(
 }
 
 /**
- * Simple empty state — just title and optional message, no icon or button.
- * Useful for empty lists, empty archive, etc.
+ * Minimal empty state — title only, no icon or button.
+ * Useful for inline empty sections within scrollable content.
  */
 @Composable
 fun EmptyLayout(
@@ -87,8 +87,8 @@ fun EmptyLayout(
 ) {
     Column(
         modifier = modifier
-            .fillMaxSize()
-            .padding(Theme.spacing._24),
+            .fillMaxWidth()
+            .padding(vertical = Theme.spacing._40),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -97,7 +97,6 @@ fun EmptyLayout(
             style = Theme.typography.title.medium,
             color = Theme.colorScheme.shadePrimary,
             textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
         )
 
         message?.let {

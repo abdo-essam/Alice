@@ -8,6 +8,8 @@ import com.ae.alice.domain.entity.ServiceCategory
  */
 interface PlaceRepository {
     suspend fun getCategories(): List<ServiceCategory>
-    suspend fun getPlacesByCategory(categoryId: String): List<Place>
-    suspend fun searchPlaces(query: String): List<Place>
+    suspend fun getPlacesByCategory(categoryId: String, location: String = ""): List<Place>
+    suspend fun searchPlaces(query: String, location: String = ""): List<Place>
+    suspend fun savePlace(placeId: String)
+    suspend fun unsavePlace(placeId: String)
 }

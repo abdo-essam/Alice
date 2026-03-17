@@ -40,11 +40,7 @@ fun AliceTheme(
     isSystemDark: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val isFollowingSystemDark = remember(appTheme, isSystemDark) {
-        appTheme == AppTheme.SYSTEM.name && isSystemDark
-    }
-
-    val colorScheme = remember(appTheme, isFollowingSystemDark) {
+    val colorScheme = remember(appTheme, isSystemDark) {
         when (appTheme) {
             AppTheme.LIGHT.name -> LightColorScheme
             AppTheme.DARK.name -> DarkColorScheme

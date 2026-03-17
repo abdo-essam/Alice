@@ -25,11 +25,12 @@ import alice.designsystem.generated.resources.Res
 import alice.designsystem.generated.resources.ic_arrow_down
 import com.ae.alice.designsystem.components.icon.Icon
 import com.ae.alice.designsystem.components.text.Text
+import com.ae.alice.designsystem.components.textfield.BasicTextField
 import com.ae.alice.designsystem.theme.Theme
 import org.jetbrains.compose.resources.painterResource
 
 /**
- * Mobile number text field — wraps [BasicTextField] with phone-specific defaults.
+ * Mobile number text field — wraps [com.ae.alice.designsystem.components.textfield.BasicTextField] with phone-specific defaults.
  */
 @Composable
 fun MobileNumberTextField(

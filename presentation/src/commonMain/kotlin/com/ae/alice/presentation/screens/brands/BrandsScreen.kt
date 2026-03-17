@@ -25,7 +25,7 @@ import com.ae.alice.designsystem.components.scaffold.Scaffold
 import com.ae.alice.designsystem.components.state.EmptyLayout
 import com.ae.alice.designsystem.components.state.ErrorLayout
 import com.ae.alice.designsystem.components.state.LoadingLayout
-import com.ae.alice.designsystem.components.textField.SearchField
+import com.ae.alice.designsystem.components.textfield.SearchField
 import com.ae.alice.designsystem.theme.Theme
 import com.ae.alice.domain.entity.Brand
 import org.jetbrains.compose.resources.stringResource

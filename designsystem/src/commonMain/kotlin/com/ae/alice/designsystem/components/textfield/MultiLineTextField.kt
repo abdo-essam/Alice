@@ -7,10 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Shape
+import com.ae.alice.designsystem.components.textfield.BasicTextField
 import com.ae.alice.designsystem.theme.Theme
 
 /**
- * Multi-line text field — delegates to [BasicTextField] with `singleLine = false`.
+ * Multi-line text field — delegates to [com.ae.alice.designsystem.components.textfield.BasicTextField] with `singleLine = false`.
  */
 @Composable
 fun MultiLineTextField(

@@ -10,10 +10,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.input.VisualTransformation
+import com.ae.alice.designsystem.components.textfield.BasicTextField
 import com.ae.alice.designsystem.theme.Theme
 
 /**
- * Standard single-line text field — thin wrapper around [BasicTextField]
+ * Standard single-line text field — thin wrapper around [com.ae.alice.designsystem.components.textfield.BasicTextField]
  * that exposes only the most common parameters.
  */
 @Composable

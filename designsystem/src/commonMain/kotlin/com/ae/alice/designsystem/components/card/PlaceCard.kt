@@ -48,10 +48,9 @@ fun PlaceCard(
 ) {
     val cardShape = RoundedCornerShape(Theme.radius.lg)
 
-    Row(
+    Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(IntrinsicSize.Min)
             .shadow(
                 elevation = 2.dp,
                 shape = cardShape,
@@ -59,104 +58,106 @@ fun PlaceCard(
                 spotColor = Theme.colorScheme.shadeTertiary.copy(alpha = 0.08f),
             )
             .clip(cardShape)
-            .background(Theme.colorScheme.background.surface),
+            .background(Theme.colorScheme.background.surface)
+            .padding(Theme.spacing._8)
     ) {
-        // ── Start side: Bookmark + Title/Address + Details button ──
-        Column(
+        Row(
             modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
-                .padding(Theme.spacing._12),
-            verticalArrangement = Arrangement.SpaceBetween,
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min),
         ) {
-            // Top section: Bookmark + Text
-            Column {
-                // Bookmark row
-                Row(
-                    verticalAlignment = Alignment.Top,
-                ) {
-                    Icon(
-                        painter = painterResource(
-                            if (isSaved) Res.drawable.ic_bookmark_filled
-                            else Res.drawable.ic_bookmark_outlined
-                        ),
-                        contentDescription = null,
-                        tint = if (isSaved) Theme.colorScheme.brand.brand
-                        else Theme.colorScheme.shadeSecondary,
-                        modifier = Modifier
-                            .size(22.dp)
-                            .clickable(
-                                indication = null,
-                                interactionSource = remember { MutableInteractionSource() }
-                            ) { onSaveClick() }
-                    )
+            // ── Start side: Bookmark + Title/Address + Details button ──
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .padding(Theme.spacing._4),
+                verticalArrangement = Arrangement.SpaceBetween,
+            ) {
+                // Top section: Bookmark + Text
+                Column {
+                    // Bookmark row
+                    Row(
+                        verticalAlignment = Alignment.Top,
+                    ) {
+                        Icon(
+                            painter = painterResource(
+                                if (isSaved) Res.drawable.ic_bookmark_filled
+                                else Res.drawable.ic_bookmark_outlined
+                            ),
+                            contentDescription = null,
+                            tint = if (isSaved) Theme.colorScheme.brand.brand
+                            else Theme.colorScheme.shadeSecondary,
+                            modifier = Modifier
+                                .size(22.dp)
+                                .clickable(
+                                    indication = null,
+                                    interactionSource = remember { MutableInteractionSource() }
+                                ) { onSaveClick() }
+                        )
 
-                    Spacer(modifier = Modifier.width(Theme.spacing._8))
+                        Spacer(modifier = Modifier.width(Theme.spacing._8))
 
-                    // Title
+                        // Title
+                        Text(
+                            text = name,
+                            style = Theme.typography.title.small,
+                            color = Theme.colorScheme.shadePrimary,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(Theme.spacing._4))
+
+                    // Address
                     Text(
-                        text = name,
-                        style = Theme.typography.title.small,
-                        color = Theme.colorScheme.shadePrimary,
+                        text = address,
+                        style = Theme.typography.label.small,
+                        color = Theme.colorScheme.shadeSecondary,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.padding(start = 30.dp)
                     )
                 }
 
-                Spacer(modifier = Modifier.height(Theme.spacing._4))
+                Spacer(modifier = Modifier.height(Theme.spacing._12))
 
-                // Address — indented to align with title (after bookmark)
-                Text(
-                    text = address,
-                    style = Theme.typography.label.small,
-                    color = Theme.colorScheme.shadeSecondary,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(start = 30.dp)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(Theme.spacing._12))
-
-            // Details button — bottom start
-            Box(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(Theme.radius.sm))
-                    .background(Theme.colorScheme.brand.brand)
-                    .clickable(
-                        indication = null,
-                        interactionSource = remember { MutableInteractionSource() }
-                    ) { onDetailsClick() }
-                    .padding(
-                        horizontal = Theme.spacing._24,
-                        vertical = Theme.spacing._8
-                    ),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = stringResource(Res.string.places_details),
-                    style = Theme.typography.label.medium,
-                    color = Theme.colorScheme.brand.onBrand,
-                )
-            }
-        }
-
-        // ── End side: Image (full card height) ──
-        NetworkImage(
-            url = imageUrl,
-            contentDescription = name,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .width(110.dp)
-                .fillMaxHeight()
-                .clip(
-                    RoundedCornerShape(
-                        topStart = Theme.radius.md,
-                        bottomStart = Theme.radius.md,
-                        topEnd = Theme.radius.lg,
-                        bottomEnd = Theme.radius.lg,
+                // Details button
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(Theme.radius.sm))
+                        .background(Theme.colorScheme.brand.brand)
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) { onDetailsClick() }
+                        .padding(
+                            horizontal = Theme.spacing._24,
+                            vertical = Theme.spacing._8
+                        ),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        text = stringResource(Res.string.places_details),
+                        style = Theme.typography.label.medium,
+                        color = Theme.colorScheme.brand.onBrand,
                     )
-                )
-        )
+                }
+            }
+
+            Spacer(modifier = Modifier.width(Theme.spacing._8))
+
+            // ── End side: Image (full card height, with inner padding gap) ──
+            NetworkImage(
+                url = imageUrl,
+                contentDescription = name,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .width(110.dp)
+                    .fillMaxHeight()
+                    .clip(RoundedCornerShape(Theme.radius.md))
+            )
+        }
     }
 }

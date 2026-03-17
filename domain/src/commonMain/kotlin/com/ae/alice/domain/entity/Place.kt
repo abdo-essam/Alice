@@ -12,6 +12,4 @@ data class Place(
     val latitude: Double = 0.0,
     val longitude: Double = 0.0,
     val isSaved: Boolean = false,
-    val rating: Double = 0.0,
-    val reviewCount: Int = 0,
 )

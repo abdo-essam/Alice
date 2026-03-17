@@ -1,5 +1,6 @@
 package com.ae.alice.presentation.screens.places
 
+import com.ae.alice.domain.entity.Location
 import com.ae.alice.domain.entity.Place
 import com.ae.alice.domain.entity.ServiceCategory
 import com.ae.alice.domain.entity.ServiceTab
@@ -16,7 +17,8 @@ data class PlacesState(
     val filteredCategories: List<ServiceCategory> = emptyList(),
     val selectedCategory: ServiceCategory? = null,
     val places: List<Place> = emptyList(),
-    val selectedLocation: String = "الرياض",
+    val locations: List<Location> = emptyList(),
+    val selectedLocation: String = "دبي",
     val showLocationSheet: Boolean = false,
     val showCategorySheet: Boolean = false,
     val error: String? = null

@@ -22,8 +22,8 @@ import alice.presentation.generated.resources.places_location_label
 import alice.presentation.generated.resources.places_search_placeholder
 import alice.presentation.generated.resources.places_tab_one
 import alice.presentation.generated.resources.places_tab_two
-import com.ae.alice.designsystem.components.bottomSheet.SelectionSheetContent
 import com.ae.alice.designsystem.components.bottomSheet.BottomSheet
+import com.ae.alice.designsystem.components.bottomSheet.SelectionSheetContent
 import com.ae.alice.designsystem.components.card.PlaceCard
 import com.ae.alice.designsystem.components.scaffold.Scaffold
 import com.ae.alice.designsystem.components.segment.SegmentTabRow
@@ -38,10 +38,6 @@ import com.ae.alice.domain.entity.ServiceTab
 import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-
-private val LOCATIONS = listOf(
-    "الرياض", "جدة", "الدمام", "الخبر", "مكة المكرمة", "المدينة المنورة"
-)
 
 @Composable
 fun PlacesScreen(
@@ -77,11 +73,12 @@ fun PlacesScreen(
                     sheetContent = {
                         SelectionSheetContent(
                             title = stringResource(Res.string.places_location_label),
-                            options = LOCATIONS,
+                            options = state.locations.map { it.name },
                             selectedOption = state.selectedLocation,
                             onOptionSelected = { location ->
                                 viewModel.processIntent(PlacesIntent.SelectLocation(location))
-                            }
+                            },
+                            searchPlaceholder = stringResource(Res.string.places_search_placeholder),
                         )
                     }
                 )
@@ -101,7 +98,8 @@ fun PlacesScreen(
                                 state.filteredCategories
                                     .firstOrNull { it.name == name }
                                     ?.let { viewModel.processIntent(PlacesIntent.SelectCategory(it)) }
-                            }
+                            },
+                            searchPlaceholder = stringResource(Res.string.places_search_placeholder),
                         )
                     }
                 )
@@ -150,13 +148,13 @@ private fun PlacesContent(
             bottom = Theme.spacing._24,
         )
     ) {
-        // ── Location selector ──
+        // ── Location selector (no label) ──
         item(key = "location") {
             Selector(
-                label = stringResource(Res.string.places_location_label),
                 selectedValue = state.selectedLocation,
                 onClick = onLocationSelectorClick,
                 isExpanded = state.showLocationSheet,
+                placeholder = stringResource(Res.string.places_location_label),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = Theme.spacing._16),
@@ -198,14 +196,14 @@ private fun PlacesContent(
             Spacer(modifier = Modifier.height(Theme.spacing._16))
         }
 
-        // ── Category selector ──
+        // ── Category selector (no label) ──
         if (state.filteredCategories.isNotEmpty()) {
             item(key = "category") {
                 Selector(
-                    label = stringResource(Res.string.places_category_label),
                     selectedValue = state.selectedCategory?.name ?: "",
                     onClick = onCategorySelectorClick,
                     isExpanded = state.showCategorySheet,
+                    placeholder = stringResource(Res.string.places_category_label),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = Theme.spacing._16),
@@ -258,8 +256,6 @@ private fun PlacesContent(
                         address = place.address,
                         imageUrl = place.imageUrl,
                         isSaved = place.isSaved,
-                        rating = place.rating,
-                        reviewCount = place.reviewCount,
                         onDetailsClick = { onPlaceDetailsClick(place) },
                         onSaveClick = { onToggleSave(place.id) },
                         modifier = Modifier

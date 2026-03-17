@@ -27,25 +27,29 @@ import com.ae.alice.designsystem.components.text.Text
 import com.ae.alice.designsystem.theme.Theme
 
 /**
- * Pill-shaped selector that triggers a callback on click (to open bottom sheet).
- * No label keyword — just selected value + chevron.
+ * Pill-shaped selector — no label, just value + chevron.
+ * Tapping opens a bottom sheet (handled by caller).
  *
- * Design matches reference:
- * ┌──────────────────────────────────────────┐
- * │  ˅        الشارقة        [ اختر الامارة ]│
- * └──────────────────────────────────────────┘
+ * ┌──────────────────────────────────┐
+ * │  ˅              الشارقة          │
+ * └──────────────────────────────────┘
  */
 @Composable
 fun Selector(
-    label: String,
     selectedValue: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    placeholder: String = "",
     isExpanded: Boolean = false,
 ) {
     val chevronRotation by animateFloatAsState(
         targetValue = if (isExpanded) 180f else 0f
     )
+
+    val displayText = selectedValue.ifEmpty { placeholder }
+    val textColor = if (selectedValue.isNotEmpty())
+        Theme.colorScheme.shadePrimary
+    else Theme.colorScheme.shadeTertiary
 
     Row(
         modifier = modifier
@@ -61,50 +65,32 @@ fun Selector(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() }
             ) { onClick() }
-            .padding(Theme.spacing._4),
-        verticalAlignment = Alignment.CenterVertically
+            .padding(
+                horizontal = Theme.spacing._16,
+                vertical = Theme.spacing._12,
+            ),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        // Chevron icon (start side)
-        Box(
-            modifier = Modifier.padding(start = Theme.spacing._12),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                imageVector = Icons.Default.KeyboardArrowDown,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(22.dp)
-                    .rotate(chevronRotation),
-                tint = Theme.colorScheme.brand.brand
-            )
-        }
+        // Chevron (start side)
+        Icon(
+            imageVector = Icons.Default.KeyboardArrowDown,
+            contentDescription = null,
+            modifier = Modifier
+                .size(22.dp)
+                .rotate(chevronRotation),
+            tint = Theme.colorScheme.brand.brand
+        )
 
-        // Selected value (center)
+        // Value (centered, fills remaining space)
         Row(
             modifier = Modifier.weight(1f),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = selectedValue.ifEmpty { "—" },
+                text = displayText,
                 style = Theme.typography.body.medium,
-                color = if (selectedValue.isNotEmpty())
-                    Theme.colorScheme.shadePrimary
-                else Theme.colorScheme.shadeTertiary,
-            )
-        }
-
-        // Label chip (end side)
-        Box(
-            modifier = Modifier
-                .clip(RoundedCornerShape(Theme.radius.full))
-                .background(Theme.colorScheme.background.surfaceHigh)
-                .padding(horizontal = Theme.spacing._20, vertical = 10.dp)
-        ) {
-            Text(
-                text = label,
-                style = Theme.typography.label.large,
-                color = Theme.colorScheme.secondary.secondary
+                color = textColor,
             )
         }
     }

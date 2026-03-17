@@ -47,7 +47,7 @@
     <string name="places_search_placeholder">ابحث عن الأماكن...</string>
     <string name="places_empty">لا توجد أماكن</string>
     <string name="places_error_default">حدث خطأ</string>
-    <string name="places_location_label">الموقع</string>
+    <string name="places_location_label">اختر الامارة</string>
     <string name="places_tab_one">معارض سيارات</string>
     <string name="places_tab_two">غسيل وعناية</string>
     <string name="places_category_label">التصنيف</string>

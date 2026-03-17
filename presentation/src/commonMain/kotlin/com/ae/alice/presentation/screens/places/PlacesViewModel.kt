@@ -37,6 +37,18 @@ class PlacesViewModel(
             is PlacesIntent.PlaceDetailsClicked -> {
                 emitEffect(PlacesEffect.NavigateToPlaceDetails(intent.place))
             }
+            is PlacesIntent.ShowLocationSheet -> {
+                updateState { copy(showLocationSheet = true) }
+            }
+            is PlacesIntent.DismissLocationSheet -> {
+                updateState { copy(showLocationSheet = false) }
+            }
+            is PlacesIntent.ShowCategorySheet -> {
+                updateState { copy(showCategorySheet = true) }
+            }
+            is PlacesIntent.DismissCategorySheet -> {
+                updateState { copy(showCategorySheet = false) }
+            }
         }
     }
 
@@ -45,7 +57,7 @@ class PlacesViewModel(
             .debounce(SEARCH_DEBOUNCE_MS)
             .distinctUntilChanged()
             .onEach { query -> executeSearch(query) }
-            .launchIn(viewModelScope) // Use viewModelScope from androidx.lifecycle
+            .launchIn(viewModelScope)
     }
 
     private fun loadData() {
@@ -75,7 +87,6 @@ class PlacesViewModel(
 
     private fun onTabSelected(tab: ServiceTab) {
         if (tab == currentState.selectedTab) return
-
         val filtered = currentState.categories.filter { it.tab == tab }
         val firstCategory = filtered.firstOrNull()
         updateState {
@@ -92,16 +103,14 @@ class PlacesViewModel(
 
     private fun onCategorySelected(category: ServiceCategory) {
         if (category.id == currentState.selectedCategory?.id) return
-        updateState { copy(selectedCategory = category, searchQuery = "") }
+        updateState { copy(selectedCategory = category, searchQuery = "", showCategorySheet = false) }
         loadPlacesForCategory(category.id)
     }
 
     private fun loadPlacesForCategory(categoryId: String) {
         updateState { copy(isPlacesLoading = true) }
         tryExecute(
-            call = {
-                placeRepository.getPlacesByCategory(categoryId, currentState.selectedLocation)
-            },
+            call = { placeRepository.getPlacesByCategory(categoryId, currentState.selectedLocation) },
             onSuccess = { places ->
                 updateState { copy(places = places, isPlacesLoading = false) }
             },
@@ -127,9 +136,7 @@ class PlacesViewModel(
         if (query.isBlank()) return
         updateState { copy(isPlacesLoading = true) }
         tryExecute(
-            call = {
-                placeRepository.searchPlaces(query, currentState.selectedLocation)
-            },
+            call = { placeRepository.searchPlaces(query, currentState.selectedLocation) },
             onSuccess = { places ->
                 updateState { copy(places = places, isPlacesLoading = false) }
             },
@@ -142,7 +149,7 @@ class PlacesViewModel(
 
     private fun onLocationSelected(location: String) {
         if (location == currentState.selectedLocation) return
-        updateState { copy(selectedLocation = location) }
+        updateState { copy(selectedLocation = location, showLocationSheet = false) }
         if (currentState.searchQuery.isNotBlank()) {
             executeSearch(currentState.searchQuery)
         } else {
@@ -153,26 +160,18 @@ class PlacesViewModel(
     private fun onToggleSave(placeId: String) {
         val place = currentState.places.find { it.id == placeId } ?: return
         val newSavedState = !place.isSaved
-
-        // Optimistic update
         updateState {
             copy(places = places.map {
                 if (it.id == placeId) it.copy(isSaved = newSavedState) else it
             })
         }
-
-        // Persist to repository
         tryExecute(
             call = {
-                if (newSavedState) {
-                    placeRepository.savePlace(placeId)
-                } else {
-                    placeRepository.unsavePlace(placeId)
-                }
+                if (newSavedState) placeRepository.savePlace(placeId)
+                else placeRepository.unsavePlace(placeId)
             },
-            onSuccess = { /* already updated optimistically */ },
+            onSuccess = { },
             onError = { _ ->
-                // Rollback
                 updateState {
                     copy(places = places.map {
                         if (it.id == placeId) it.copy(isSaved = !newSavedState) else it

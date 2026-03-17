@@ -60,7 +60,6 @@ fun AppNavHost(
             val selectedLocation = savedStateHandle.get<String>("selected_location")
 
             PlacesScreen(
-                onPickLocationClick = { navController.navigate(Routes.PickLocation) },
                 passedLocation = selectedLocation,
                 onNavigateToDetails = {
 

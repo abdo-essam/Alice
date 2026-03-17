@@ -17,6 +17,8 @@ data class PlacesState(
     val selectedCategory: ServiceCategory? = null,
     val places: List<Place> = emptyList(),
     val selectedLocation: String = "الرياض",
+    val showLocationSheet: Boolean = false,
+    val showCategorySheet: Boolean = false,
     val error: String? = null
 ) : UiState
 
@@ -28,6 +30,10 @@ sealed interface PlacesIntent : UiIntent {
     data class SelectLocation(val location: String) : PlacesIntent
     data class ToggleSave(val placeId: String) : PlacesIntent
     data class PlaceDetailsClicked(val place: Place) : PlacesIntent
+    data object ShowLocationSheet : PlacesIntent
+    data object DismissLocationSheet : PlacesIntent
+    data object ShowCategorySheet : PlacesIntent
+    data object DismissCategorySheet : PlacesIntent
 }
 
 sealed interface PlacesEffect : UiEffect {

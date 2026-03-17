@@ -48,8 +48,8 @@
     <string name="places_empty">لا توجد أماكن</string>
     <string name="places_error_default">حدث خطأ</string>
     <string name="places_location_label">اختر الامارة</string>
-    <string name="places_tab_one">معارض سيارات</string>
-    <string name="places_tab_two">غسيل وعناية</string>
+    <string name="places_tab_one">المبيعات</string>
+    <string name="places_tab_two">الغسيل والتفصيل</string>
     <string name="places_category_label">التصنيف</string>
     <string name="places_details">التفاصيل</string>
     <string name="places_save">حفظ</string>

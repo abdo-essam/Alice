@@ -34,4 +34,6 @@
     <string name="places_save">Save</string>
     <string name="places_rating_buyers">buyers</string>
     <string name="places_address_prefix">Address:</string>
+    <string name="search_placeholder">Search...</string>
+    <string name="no_results">No results found</string>
 </resources>

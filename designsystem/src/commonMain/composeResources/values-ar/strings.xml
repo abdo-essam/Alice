@@ -25,4 +25,6 @@
     <string name="places_save">حفظ</string>
     <string name="places_rating_buyers">مشتري</string>
     <string name="places_address_prefix">العنوان :</string>
+    <string name="search_placeholder">بحث...</string>
+    <string name="no_results">لا توجد نتائج</string>
 </resources>

@@ -35,8 +35,8 @@ import com.ae.alice.designsystem.util.AppTheme
  */
 @Composable
 fun AliceTheme(
-    language: String = AppLanguage.ENGLISH.code,
-    appTheme: String = AppTheme.SYSTEM.name,
+    language: String = AppLanguage.ARABIC.code,
+    appTheme: String = AppTheme.LIGHT.name,
     isSystemDark: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {

@@ -9,6 +9,7 @@ import androidx.compose.ui.layout.ContentScale
 import coil3.compose.SubcomposeAsyncImage
 import alice.designsystem.generated.resources.Res
 import alice.designsystem.generated.resources.ic_delete_search
+import alice.designsystem.generated.resources.ic_image_placeholder
 import org.jetbrains.compose.resources.painterResource
 import com.ae.alice.designsystem.components.icon.Icon
 import com.ae.alice.designsystem.components.indicator.DotsProgressIndicator
@@ -60,10 +61,9 @@ private fun ErrorPlaceholder(modifier: Modifier = Modifier) {
     ) {
         // You can replace this with a better broken-image icon if available
         Icon(
-            painter = painterResource(Res.drawable.ic_delete_search),
+            painter = painterResource(Res.drawable.ic_image_placeholder),
             contentDescription = "Error loading image",
-            tint = Theme.colorScheme.shadeTertiary,
-            modifier = Modifier.size(24.dp)
+            tint = Theme.colorScheme.shadeSecondary,
         )
     }
 }

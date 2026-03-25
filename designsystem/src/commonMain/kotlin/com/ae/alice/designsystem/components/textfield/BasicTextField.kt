@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import com.ae.alice.designsystem.components.icon.Icon
 import com.ae.alice.designsystem.components.text.Text
 import com.ae.alice.designsystem.theme.Theme
+import androidx.compose.ui.text.style.TextOverflow
 
 /**
  * Core text field — all higher-level text fields delegate to this.
@@ -217,7 +218,9 @@ private fun InnerTextFieldWithHint(
             Text(
                 text = hint,
                 style = Theme.typography.label.medium,
-                color = Theme.colorScheme.shadeTertiary
+                color = Theme.colorScheme.shadeTertiary,
+                maxLines = if (singleLine) 1 else Int.MAX_VALUE,
+                overflow = if (singleLine) TextOverflow.Ellipsis else TextOverflow.Clip
             )
         }
     }

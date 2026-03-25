@@ -11,6 +11,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        
+        // Force Arabic Locale for testing composeResources
+        val locale = java.util.Locale("ar")
+        java.util.Locale.setDefault(locale)
+        val config = android.content.res.Configuration()
+        config.setLocale(locale)
+        baseContext.resources.updateConfiguration(config, baseContext.resources.displayMetrics)
 
         setContent {
             App()

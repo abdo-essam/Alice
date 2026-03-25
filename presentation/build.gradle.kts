@@ -47,6 +47,8 @@ kotlin {
             // Coil
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
+            
+            implementation(libs.maplibre.compose)
         }
     }
 }

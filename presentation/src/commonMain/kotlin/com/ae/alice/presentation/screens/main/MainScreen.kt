@@ -23,6 +23,20 @@ import com.ae.alice.designsystem.theme.Theme
 import com.ae.alice.domain.entity.Brand
 import com.ae.alice.presentation.screens.brands.BrandsContent
 import com.ae.alice.presentation.screens.profile.ProfileScreen
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.rememberDrawerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
+import androidx.compose.runtime.rememberCoroutineScope
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -38,12 +52,33 @@ fun MainScreen(
     onBrandClick: (Brand) -> Unit,
 ) {
     var selectedTab by remember { mutableIntStateOf(0) }
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
 
-    Scaffold(
-        backgroundColor = Theme.colorScheme.background.surfaceLow,
-        topBar = {
-            when (selectedTab) {
-                0 -> HomeAppBar()
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet {
+                Text("Drawer", modifier = Modifier.padding(16.dp))
+                // Add more drawer items here if needed
+            }
+        }
+    ) {
+        Scaffold(
+            backgroundColor = Theme.colorScheme.background.surfaceLow,
+            topBar = {
+                when (selectedTab) {
+                    0 -> HomeAppBar(
+                        navigationIcon = {
+                            IconButton(onClick = { scope.launch { drawerState.open() } }) {
+                                Icon(
+                                    imageVector = Icons.Default.Menu,
+                                    contentDescription = "Menu",
+                                    tint = Theme.colorScheme.shadePrimary
+                                )
+                            }
+                        }
+                    )
                 // Archive and Profile have their own app bars inside their content
             }
         },
@@ -76,4 +111,5 @@ fun MainScreen(
             2 -> ProfileTab()
         }
     }
+}
 }

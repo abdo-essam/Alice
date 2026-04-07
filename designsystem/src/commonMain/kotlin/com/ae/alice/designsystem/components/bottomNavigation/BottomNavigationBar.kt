@@ -6,22 +6,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.ae.alice.designsystem.theme.Theme
 
-/**
- * Bottom navigation bar using a DSL builder.
- *
- * Usage:
- * ```
- * BottomNavigationBar(selectedItemIndex = currentTab) {
- *     bottomNavigationItem(
- *         selectedIcon = painterResource(Res.drawable.ic_home_selected),
- *         notSelectedIcon = painterResource(Res.drawable.ic_home),
- *         title = "Home",
- *         entry = { navigateTo(Screen.Home) }
- *     )
- *     bottomNavigationItem(...)
- * }
- * ```
- */
 @Composable
 fun BottomNavigationBar(
     modifier: Modifier = Modifier,

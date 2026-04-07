@@ -14,10 +14,6 @@ import androidx.compose.runtime.remember
 import alice.presentation.generated.resources.ic_bookmark_filled
 import alice.presentation.generated.resources.ic_bookmark_outlined
 
-/**
- * MENA-style app bar for car details — back arrow + title.
- * Uses the design system's [AppBar] with [AppBarOptionContainer] leading content.
- */
 @Composable
 fun CarDetailsAppBar(
     title: String,

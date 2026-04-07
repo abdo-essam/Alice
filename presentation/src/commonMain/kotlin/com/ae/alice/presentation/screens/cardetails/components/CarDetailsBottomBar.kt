@@ -12,10 +12,6 @@ import alice.presentation.generated.resources.Res
 import alice.presentation.generated.resources.car_details_get_car
 import org.jetbrains.compose.resources.stringResource
 
-/**
- * Bottom action bar for car details — single CTA button.
- * Sits inside the MENA Scaffold's bottomBar slot which already handles navigation bar padding.
- */
 @Composable
 fun CarDetailsBottomBar(
     onGetCarClick: () -> Unit,

@@ -13,10 +13,6 @@ import com.ae.alice.presentation.screens.cardetails.components.CarDetailsBottomB
 import com.ae.alice.presentation.screens.cardetails.components.CarDetailsContent
 import org.koin.compose.viewmodel.koinViewModel
 
-/**
- * Car details screen — uses MENA Scaffold with AppBar back navigation,
- * LoadingLayout, ErrorLayout, and a sticky bottom action bar.
- */
 @Composable
 fun CarDetailsScreen(
     modelId: String,

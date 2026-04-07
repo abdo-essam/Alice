@@ -1,7 +1,5 @@
 package com.ae.alice.data.fake
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import com.ae.alice.domain.entity.CarModel
 import com.ae.alice.domain.repository.CarModelRepository
 
@@ -193,9 +191,5 @@ class FakeCarModelRepository : CarModelRepository {
             it.brandName.contains(query, ignoreCase = true) ||
             it.category?.contains(query, ignoreCase = true) == true
         }
-    }
-    
-    override fun observeModelsByBrand(brandId: String): Flow<List<CarModel>> {
-        return flowOf(modelsByBrand[brandId] ?: emptyList())
     }
 }

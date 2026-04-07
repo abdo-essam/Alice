@@ -22,10 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.material3.ripple
 import com.ae.alice.designsystem.theme.Theme
 
-/**
- * Container for app bar trailing/leading icon options.
- * Renders a 40dp rounded box with optional badge indicator.
- */
 @Composable
 fun AppBarOptionContainer(
     modifier: Modifier = Modifier,

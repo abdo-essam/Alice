@@ -32,9 +32,6 @@ import com.ae.alice.presentation.screens.profile.ProfileScreen
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
-/**
- * Home tab — brands grid.
- */
 @Composable
 fun HomeBrandsTab(
     onBrandClick: (Brand) -> Unit,
@@ -95,9 +92,7 @@ fun HomeBrandsTab(
     }
 }
 
-/**
- * Archive tab — placeholder for saved/bookmarked items.
- */
+
 @Composable
 fun ArchiveTab() {
     EmptyLayout(
@@ -106,9 +101,6 @@ fun ArchiveTab() {
     )
 }
 
-/**
- * Profile tab — renders the full ProfileScreen.
- */
 @Composable
 fun ProfileTab() {
     ProfileScreen()

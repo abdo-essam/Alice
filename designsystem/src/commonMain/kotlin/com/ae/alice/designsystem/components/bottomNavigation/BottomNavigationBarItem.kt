@@ -16,17 +16,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
 import com.ae.alice.designsystem.components.icon.Icon
 import com.ae.alice.designsystem.components.text.Text
 import com.ae.alice.designsystem.theme.Theme
 
-/**
- * A single bottom navigation item.
- * Shows label only when selected; icon color animates between brand and shade.
- */
 @Composable
 fun BottomNavigationBarItem(
     isSelected: Boolean,
@@ -80,10 +75,6 @@ fun BottomNavigationBarItem(
     }
 }
 
-/**
- * Resolves the correct [Painter] from [BottomNavigationItem], supporting
- * both Painter-based and ImageVector-based icons.
- */
 @Composable
 private fun resolveIconPainter(item: BottomNavigationItem, isSelected: Boolean): Painter {
     return if (item.painterIcon != null && item.painterSelectedIcon != null) {

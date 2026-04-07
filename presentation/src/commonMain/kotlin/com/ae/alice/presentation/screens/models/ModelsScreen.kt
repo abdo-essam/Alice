@@ -35,10 +35,6 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
-/**
- * Models screen — inner screen, no bottom nav.
- * Uses MENA Scaffold, AppBar with back arrow, LoadingLayout, ErrorLayout.
- */
 @Composable
 fun ModelsScreen(
     brandId: String,

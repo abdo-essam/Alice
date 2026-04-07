@@ -14,26 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.ae.alice.designsystem.components.text.Text
 import com.ae.alice.designsystem.theme.Theme
 
-/**
- * MENA-style app bar with title, optional leading content (back button, menu, etc.)
- * and optional trailing content (action icons).
- *
- * Usage:
- * ```
- * AppBar(
- *     title = "Screen Title",
- *     leadingContent = {
- *         Icon(painterResource(Res.drawable.ic_arrow_left), null)
- *     },
- *     onLeadingClick = { navigator.pop() },
- *     trailingContent = {
- *         AppBarOptionContainer(onClick = {}) {
- *             Icon(painterResource(Res.drawable.ic_user), null)
- *         }
- *     }
- * )
- * ```
- */
 @Composable
 fun AppBar(
     title: String,

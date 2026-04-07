@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import com.ae.alice.designsystem.components.text.Text
 import com.ae.alice.designsystem.theme.Theme
+import androidx.compose.ui.graphics.Color
 
 /**
  * Segmented tab row for filtering content — no paging, just tab selection.
@@ -42,20 +43,26 @@ fun SegmentTabRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(Theme.radius.md))
-            .background(Theme.colorScheme.background.surfaceHigh)
-            .padding(Theme.spacing._4),
+            .shadow(
+                elevation = 2.dp,
+                shape = RoundedCornerShape(Theme.radius.lg),
+                ambientColor = Theme.colorScheme.shadeTertiary.copy(alpha = 0.06f),
+                spotColor = Theme.colorScheme.shadeTertiary.copy(alpha = 0.08f),
+            )
+            .clip(RoundedCornerShape(Theme.radius.lg))
+            .background(Theme.colorScheme.background.surface)
+            .padding(Theme.spacing._8),
     ) {
         tabs.forEachIndexed { index, title ->
             val isSelected = index == selectedIndex
 
             val backgroundColor by animateColorAsState(
-                targetValue = if (isSelected) Theme.colorScheme.background.surface
-                else Theme.colorScheme.background.surfaceHigh,
+                targetValue = if (isSelected) Theme.colorScheme.brand.brand
+                else Color.Transparent,
                 animationSpec = spring(stiffness = Spring.StiffnessMediumLow)
             )
             val textColor by animateColorAsState(
-                targetValue = if (isSelected) Theme.colorScheme.brand.brand
+                targetValue = if (isSelected) Theme.colorScheme.brand.onBrand
                 else Theme.colorScheme.shadeSecondary,
                 animationSpec = spring(stiffness = Spring.StiffnessMediumLow)
             )
@@ -63,15 +70,6 @@ fun SegmentTabRow(
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .then(
-                        if (isSelected) {
-                            Modifier.shadow(
-                                elevation = 2.dp,
-                                shape = RoundedCornerShape(Theme.radius.sm),
-                                ambientColor = Theme.colorScheme.shadeTertiary.copy(alpha = 0.1f)
-                            )
-                        } else Modifier
-                    )
                     .clip(RoundedCornerShape(Theme.radius.sm))
                     .background(backgroundColor)
                     .clickable(

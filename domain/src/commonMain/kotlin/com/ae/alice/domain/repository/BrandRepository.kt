@@ -3,10 +3,6 @@ package com.ae.alice.domain.repository
 import kotlinx.coroutines.flow.Flow
 import com.ae.alice.domain.entity.Brand
 
-/**
- * Repository interface for brand operations.
- * Implementation in data layer.
- */
 interface BrandRepository {
     suspend fun getBrands(): List<Brand>
     suspend fun getBrandById(id: String): Brand?

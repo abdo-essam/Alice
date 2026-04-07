@@ -69,7 +69,7 @@ fun PlacesScreen(
         backgroundColor = Theme.colorScheme.background.surfaceLow,
         topBar = {
             AppBar(
-                title = stringResource(Res.string.places_location_label),
+                title = "",
                 leadingContent = {
                     com.ae.alice.designsystem.components.icon.Icon(
                         painter = org.jetbrains.compose.resources.painterResource(Res.drawable.ic_arrow_left),

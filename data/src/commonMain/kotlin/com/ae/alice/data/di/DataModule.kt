@@ -8,10 +8,6 @@ import com.ae.alice.domain.repository.BrandRepository
 import com.ae.alice.domain.repository.CarModelRepository
 import com.ae.alice.domain.repository.PlaceRepository
 
-/**
- * Koin module for data layer dependencies.
- * Uses fake repositories for development.
- */
 val dataModule = module {
     single<BrandRepository> { FakeBrandRepository() }
     single<CarModelRepository> { FakeCarModelRepository() }

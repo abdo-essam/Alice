@@ -66,7 +66,7 @@ fun ProfileScreen(
 ) {
     val state by viewModel.state.collectAsState()
     val scope = rememberCoroutineScope()
-    val isFeatureEnabled = false
+    val isFeatureEnabled = true
 
     Scaffold(
         backgroundColor = Theme.colorScheme.background.surface,

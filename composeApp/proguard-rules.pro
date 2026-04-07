@@ -5,6 +5,8 @@
 -dontwarn java.lang.management.**
 -dontwarn io.ktor.**
 -keep class coil3.** { *; }
+-keep class okhttp3.** { *; }
+-keep class okio.** { *; }
 
 # Keep Coroutines & Serialization
 -keep class kotlinx.coroutines.** { *; }

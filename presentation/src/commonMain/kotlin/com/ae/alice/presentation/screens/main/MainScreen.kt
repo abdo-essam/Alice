@@ -49,8 +49,26 @@ fun MainScreen(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                Text("Drawer", modifier = Modifier.padding(16.dp))
-                // Add more drawer items here if needed
+                Text(
+                    text = "Alice App",
+                    style = Theme.typography.title.large,
+                    modifier = Modifier.padding(16.dp)
+                )
+                androidx.compose.material3.NavigationDrawerItem(
+                    label = { Text("Home") },
+                    selected = false,
+                    onClick = { scope.launch { drawerState.close() } }
+                )
+                androidx.compose.material3.NavigationDrawerItem(
+                    label = { Text("Categories") },
+                    selected = false,
+                    onClick = { scope.launch { drawerState.close() } }
+                )
+                androidx.compose.material3.NavigationDrawerItem(
+                    label = { Text("Settings") },
+                    selected = false,
+                    onClick = { scope.launch { drawerState.close() } }
+                )
             }
         }
     ) {

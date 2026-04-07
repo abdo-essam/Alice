@@ -66,7 +66,7 @@ fun ProfileScreen(
 ) {
     val state by viewModel.state.collectAsState()
     val scope = rememberCoroutineScope()
-    val isFeatureEnabled = true
+    val isFeatureEnabled = false
 
     Scaffold(
         backgroundColor = Theme.colorScheme.background.surface,
@@ -76,6 +76,7 @@ fun ProfileScreen(
     ) {
         if (!isFeatureEnabled) {
             com.ae.alice.designsystem.components.state.EmptyLayout(
+                modifier = Modifier.fillMaxSize(),
                 title = "Coming Soon",
                 message = "Profile feature is temporarily disabled."
             )

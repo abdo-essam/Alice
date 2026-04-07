@@ -96,6 +96,7 @@ fun HomeBrandsTab(
 @Composable
 fun ArchiveTab() {
     EmptyLayout(
+        modifier = Modifier.fillMaxSize(),
         title = "الأرشيف",
         message = "لا توجد عناصر محفوظة بعد",
     )

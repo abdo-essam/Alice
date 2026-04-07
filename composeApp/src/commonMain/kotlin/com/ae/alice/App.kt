@@ -9,9 +9,6 @@ import com.ae.alice.designsystem.theme.AliceTheme
 import com.ae.alice.navigation.AppNavHost
 import org.koin.compose.KoinContext
 
-/**
- * Main App composable.
- */
 @Composable
 fun App() {
     val localeState = remember { LocaleState() }

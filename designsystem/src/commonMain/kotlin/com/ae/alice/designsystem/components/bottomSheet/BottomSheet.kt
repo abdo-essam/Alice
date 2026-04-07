@@ -57,10 +57,6 @@ enum class BottomSheetValue {
     HIDDEN, COLLAPSED, EXPANDED
 }
 
-/**
- * MENA-style bottom sheet with anchored drag, scrim, dismiss gestures, and sticky footer.
- * Must be used inside a [ScaffoldScope] overlay.
- */
 @Composable
 fun ScaffoldScope.BottomSheet(
     isVisible: Boolean,

@@ -3,9 +3,6 @@ package com.ae.alice.presentation.screens.brands
 import com.ae.alice.domain.repository.BrandRepository
 import com.ae.alice.presentation.base.BaseViewModel
 
-/**
- * ViewModel for BrandsScreen using MVI pattern.
- */
 class BrandsViewModel(
     private val brandRepository: BrandRepository
 ) : BaseViewModel<BrandsState, BrandsIntent, BrandsEffect>(BrandsState()) {

@@ -1,7 +1,5 @@
 package com.ae.alice.data.fake
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import com.ae.alice.domain.entity.Brand
 import com.ae.alice.domain.repository.BrandRepository
 
@@ -115,6 +113,4 @@ class FakeBrandRepository : BrandRepository {
             it.country?.contains(query, ignoreCase = true) == true
         }
     }
-    
-    override fun observeBrands(): Flow<List<Brand>> = flowOf(brands)
 }

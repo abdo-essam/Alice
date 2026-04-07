@@ -11,10 +11,6 @@ import alice.presentation.generated.resources.Res
 import alice.presentation.generated.resources.car_details_about
 import org.jetbrains.compose.resources.stringResource
 
-/**
- * Description section — section title + body text.
- * Uses the design system's themed [Text] component.
- */
 @Composable
 fun DescriptionSection(
     description: String,

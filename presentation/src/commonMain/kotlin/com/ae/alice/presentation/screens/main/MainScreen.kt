@@ -18,11 +18,8 @@ import alice.presentation.generated.resources.nav_profile_ar
 import com.ae.alice.designsystem.components.appBar.HomeAppBar
 import com.ae.alice.designsystem.components.bottomNavigation.BottomNavigationBar
 import com.ae.alice.designsystem.components.scaffold.Scaffold
-import com.ae.alice.designsystem.components.state.EmptyLayout
 import com.ae.alice.designsystem.theme.Theme
 import com.ae.alice.domain.entity.Brand
-import com.ae.alice.presentation.screens.brands.BrandsContent
-import com.ae.alice.presentation.screens.profile.ProfileScreen
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
@@ -40,13 +37,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
-/**
- * Main screen with bottom navigation — manages switching between
- * Home (Brands), Archive, and Profile tabs.
- *
- * The bottom nav only exists here, NOT on inner screens like
- * CarDetails, Models, or Places.
- */
 @Composable
 fun MainScreen(
     onBrandClick: (Brand) -> Unit,

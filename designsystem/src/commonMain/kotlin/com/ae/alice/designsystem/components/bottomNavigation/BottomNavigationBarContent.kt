@@ -19,10 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
 import com.ae.alice.designsystem.theme.Theme
 
-/**
- * Lays out navigation items in a row, with an animated brand-colored indicator
- * that slides to the selected item.
- */
 @Composable
 fun BottomNavigationBarContent(
     items: List<BottomNavigationItem>,

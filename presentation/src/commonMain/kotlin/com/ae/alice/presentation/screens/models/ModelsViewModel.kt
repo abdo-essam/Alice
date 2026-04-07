@@ -3,9 +3,6 @@ package com.ae.alice.presentation.screens.models
 import com.ae.alice.domain.repository.CarModelRepository
 import com.ae.alice.presentation.base.BaseViewModel
 
-/**
- * ViewModel for ModelsScreen using MVI pattern.
- */
 class ModelsViewModel(
     private val carModelRepository: CarModelRepository
 ) : BaseViewModel<ModelsState, ModelsIntent, ModelsEffect>(ModelsState()) {

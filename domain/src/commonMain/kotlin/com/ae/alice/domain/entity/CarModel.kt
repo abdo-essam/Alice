@@ -1,8 +1,5 @@
 package com.ae.alice.domain.entity
 
-/**
- * Domain entity representing a car model.
- */
 data class CarModel(
     val id: String,
     val name: String,

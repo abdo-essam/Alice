@@ -23,10 +23,6 @@ import com.ae.alice.designsystem.theme.Theme
 
 private const val HERO_ASPECT_RATIO = 1.4f
 
-/**
- * Full-width hero image with gradient background.
- * Uses MENA's [DotsProgressIndicator] for loading state.
- */
 @Composable
 fun HeroImageSection(
     imageUrl: String?,

@@ -3,12 +3,6 @@ package com.ae.alice.designsystem.components.bottomNavigation
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 
-/**
- * DSL scope for building [BottomNavigationBar] items.
- *
- * Supports both [Painter] and [ImageVector] icons, so callers can use
- * either drawable resources or Material Icons.
- */
 interface BottomNavigationScope {
     fun bottomNavigationItem(
         notSelectedIcon: Painter,
@@ -25,10 +19,6 @@ interface BottomNavigationScope {
     )
 }
 
-/**
- * Represents a single bottom navigation tab.
- * Icons can be either [Painter] (from resources) or [ImageVector] (Material Icons).
- */
 data class BottomNavigationItem(
     val painterIcon: Painter? = null,
     val painterSelectedIcon: Painter? = null,

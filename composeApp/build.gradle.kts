@@ -27,7 +27,6 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
             implementation(libs.kotlinx.coroutines.android)
-            implementation(libs.ktor.client.okhttp)
         }
         
         commonMain.dependencies {
@@ -35,7 +34,6 @@ kotlin {
             implementation(project(":presentation"))
             implementation(project(":domain"))
             implementation(project(":data"))
-            implementation(project(":network"))
             implementation(project(":designsystem"))
             
             // Compose

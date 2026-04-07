@@ -1,7 +1,6 @@
 package com.ae.alice.di
 
 import org.koin.core.context.startKoin
-import org.koin.core.module.Module
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 import com.ae.alice.data.di.dataModule
@@ -11,11 +10,9 @@ import com.ae.alice.presentation.screens.models.ModelsViewModel
 import com.ae.alice.presentation.screens.places.PlacesViewModel
 import com.ae.alice.presentation.screens.profile.ProfileViewModel
 import com.ae.alice.presentation.screens.location.LocationViewModel
+import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 
-/**
- * Initialize Koin dependency injection.
- */
 fun initKoin(
     platformModules: List<Module> = emptyList(),
     appDeclaration: KoinAppDeclaration = {}
@@ -30,9 +27,6 @@ fun initKoin(
     }
 }
 
-/**
- * App module with ViewModels.
- */
 val appModule = module {
     viewModel { BrandsViewModel(get()) }
     viewModel { ModelsViewModel(get()) }

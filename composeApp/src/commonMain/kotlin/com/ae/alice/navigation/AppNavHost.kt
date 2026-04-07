@@ -10,13 +10,6 @@ import com.ae.alice.presentation.screens.main.MainScreen
 import com.ae.alice.presentation.screens.models.ModelsScreen
 import com.ae.alice.presentation.screens.places.PlacesScreen
 import com.ae.alice.presentation.screens.location.PickLocationScreen
-
-/**
- * App navigation host.
- *
- * Main screen has the bottom navigation bar.
- * Inner screens (Models, CarDetails, Places) do NOT have bottom nav.
- */
 @Composable
 fun AppNavHost(
     navController: NavHostController

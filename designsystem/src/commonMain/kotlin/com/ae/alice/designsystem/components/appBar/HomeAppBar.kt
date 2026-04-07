@@ -31,6 +31,7 @@ import org.jetbrains.compose.resources.stringResource
 fun HomeAppBar(
     modifier: Modifier = Modifier,
     title: String = "ALICE",
+    navigationIcon: (@Composable () -> Unit)? = null,
     trailingContent: (@Composable () -> Unit)? = null,
     titleColor: Color = Theme.colorScheme.shadePrimary,
     contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 18.dp)
@@ -46,14 +47,7 @@ fun HomeAppBar(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            Image(
-                painter = painterResource(Res.drawable.alice_logo),
-                contentDescription = stringResource(Res.string.header_logo_desc),
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape),
-                contentScale = ContentScale.Crop
-            )
+            navigationIcon?.invoke()
             Text(
                 text = title,
                 color = titleColor,

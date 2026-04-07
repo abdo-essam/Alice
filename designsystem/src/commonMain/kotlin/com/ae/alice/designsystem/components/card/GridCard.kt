@@ -45,7 +45,7 @@ fun GridCard(
         modifier = modifier
             .fillMaxWidth()
             .clip(shape)
-            .background(Theme.colorScheme.background.surfaceHigh)
+            .background(Theme.colorScheme.background.surface)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,

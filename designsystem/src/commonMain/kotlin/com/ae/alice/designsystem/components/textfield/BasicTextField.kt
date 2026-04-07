@@ -125,7 +125,7 @@ fun BasicTextField(
                 modifier = Modifier
                     .weight(1f)
                     .clip(shape)
-                    .background(color = Theme.colorScheme.background.surfaceHigh)
+                    .background(color = Theme.colorScheme.background.surface)
                     .focusRequester(focusRequester)
                     .onFocusChanged { onFocusChanged(it.isFocused) }
             )

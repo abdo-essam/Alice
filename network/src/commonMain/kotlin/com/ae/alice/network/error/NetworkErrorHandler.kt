@@ -3,7 +3,6 @@ package com.ae.alice.network.error
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.http.HttpStatusCode
-import com.ae.alice.common.result.ErrorState
 
 /**
  * Maps network exceptions to ErrorState.

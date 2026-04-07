@@ -37,7 +37,7 @@ jobs:
       - name: Build and Distribute APK
         # Note: If your release build requires a signing config (keystore), 
         # ensure you set that up in build.gradle.kts or distribute the Debug APK instead.
-        run: ./gradlew :composeApp:appDistributionUploadRelease
+        run: ./gradlew :composeApp:assembleRelease :composeApp:appDistributionUploadRelease
 
       - name: Clean up credentials
         if: always()

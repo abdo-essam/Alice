@@ -1,4 +1,6 @@
 [versions]
+googleServices = "4.4.2"
+firebaseAppDistribution = "5.0.0"
 # Android
 agp = "8.11.2"
 android-compileSdk = "36"
@@ -43,6 +45,12 @@ kotlinx-coroutines = "1.10.1"
 
 # Date/Time
 kotlinx-datetime = "0.6.1"
+
+# SquircleShape
+squircleShape = "4.0.0"
+
+# Maplibre
+mapLibra = "0.11.1"
 
 [libraries]
 # Kotlin Testing
@@ -110,7 +118,15 @@ coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.re
 # Compose Unstyled
 composeunstyled = { module = "com.composables:composeunstyled", version.ref = "composeunstyled" }
 
+# SquircleShape
+squircle-shape = { module = "com.stoyanvuchev:squircle-shape", version.ref = "squircleShape" }
+
+# Maplibre
+maplibre-compose = { module = "org.maplibre.compose:maplibre-compose", version.ref = "mapLibra" }
+
 [plugins]
+googleServices = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+firebaseAppDistribution = { id = "com.google.firebase.appdistribution", version.ref = "firebaseAppDistribution" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }

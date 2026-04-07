@@ -19,4 +19,21 @@
     <string name="header_menu">Menu</string>
     <string name="header_logo_desc">Alice Logo</string>
     <string name="header_title">ALICE</string>
+
+    <!-- Dialog -->
+    <string name="close_dialog">Close</string>
+
+    <!-- State Layouts -->
+    <string name="retry">Retry</string>
+    <string name="error_default_title">Something went wrong</string>
+    <string name="error_default_message">An unexpected error occurred. Please try again.</string>
+    <string name="empty_default_title">Nothing here yet</string>
+    <string name="empty_default_message">No data available at this time.</string>
+    <!-- Places Screen -->
+    <string name="places_details">Details</string>
+    <string name="places_save">Save</string>
+    <string name="places_rating_buyers">buyers</string>
+    <string name="places_address_prefix">Address:</string>
+    <string name="search_placeholder">Search...</string>
+    <string name="no_results">No results found</string>
 </resources>

@@ -1,0 +1,79 @@
+package com.ae.alice.presentation.screens.main
+
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import alice.presentation.generated.resources.Res
+import alice.presentation.generated.resources.ic_bookmark
+import alice.presentation.generated.resources.ic_bookmark_selected
+import alice.presentation.generated.resources.ic_home
+import alice.presentation.generated.resources.ic_home_selected
+import alice.presentation.generated.resources.ic_profile
+import alice.presentation.generated.resources.ic_profile_selected
+import alice.presentation.generated.resources.nav_archive_ar
+import alice.presentation.generated.resources.nav_home_ar
+import alice.presentation.generated.resources.nav_profile_ar
+import com.ae.alice.designsystem.components.appBar.HomeAppBar
+import com.ae.alice.designsystem.components.bottomNavigation.BottomNavigationBar
+import com.ae.alice.designsystem.components.scaffold.Scaffold
+import com.ae.alice.designsystem.components.state.EmptyLayout
+import com.ae.alice.designsystem.theme.Theme
+import com.ae.alice.domain.entity.Brand
+import com.ae.alice.presentation.screens.brands.BrandsContent
+import com.ae.alice.presentation.screens.profile.ProfileScreen
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+
+/**
+ * Main screen with bottom navigation — manages switching between
+ * Home (Brands), Archive, and Profile tabs.
+ *
+ * The bottom nav only exists here, NOT on inner screens like
+ * CarDetails, Models, or Places.
+ */
+@Composable
+fun MainScreen(
+    onBrandClick: (Brand) -> Unit,
+) {
+    var selectedTab by remember { mutableIntStateOf(0) }
+
+    Scaffold(
+        backgroundColor = Theme.colorScheme.background.surfaceLow,
+        topBar = {
+            when (selectedTab) {
+                0 -> HomeAppBar()
+                // Archive and Profile have their own app bars inside their content
+            }
+        },
+        bottomBar = {
+            BottomNavigationBar(selectedItemIndex = selectedTab) {
+                bottomNavigationItem(
+                    selectedIcon = painterResource(Res.drawable.ic_home_selected),
+                    notSelectedIcon = painterResource(Res.drawable.ic_home),
+                    title = stringResource(Res.string.nav_home_ar),
+                    entry = { selectedTab = 0 }
+                )
+                bottomNavigationItem(
+                    selectedIcon = painterResource(Res.drawable.ic_bookmark_selected),
+                    notSelectedIcon = painterResource(Res.drawable.ic_bookmark),
+                    title = stringResource(Res.string.nav_archive_ar),
+                    entry = { selectedTab = 1 }
+                )
+                bottomNavigationItem(
+                    selectedIcon = painterResource(Res.drawable.ic_profile_selected),
+                    notSelectedIcon = painterResource(Res.drawable.ic_profile),
+                    title = stringResource(Res.string.nav_profile_ar),
+                    entry = { selectedTab = 2 }
+                )
+            }
+        }
+    ) {
+        when (selectedTab) {
+            0 -> HomeBrandsTab(onBrandClick = onBrandClick)
+            1 -> ArchiveTab()
+            2 -> ProfileTab()
+        }
+    }
+}

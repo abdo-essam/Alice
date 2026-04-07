@@ -24,7 +24,7 @@ enum class AppLanguage(val code: String, val displayName: String) {
  * Manages the current locale state.
  */
 class LocaleState {
-    var language by mutableStateOf(AppLanguage.ENGLISH)
+    var language by mutableStateOf(AppLanguage.ARABIC)
         internal set
 
     fun switchLanguage() {

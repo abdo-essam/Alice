@@ -24,6 +24,7 @@ sealed interface CarDetailsIntent : UiIntent {
     data class LoadModel(val modelId: String) : CarDetailsIntent
     data object GetCar : CarDetailsIntent
     data object Retry : CarDetailsIntent
+    data object ToggleSave : CarDetailsIntent
 }
 
 /**

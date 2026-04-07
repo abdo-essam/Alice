@@ -3,12 +3,19 @@ package com.ae.alice.presentation.screens.cardetails.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.ae.alice.designsystem.theme.ATheme
+import com.ae.alice.designsystem.components.dropdown.DropdownSelector
+import com.ae.alice.designsystem.theme.Theme
 import com.ae.alice.domain.entity.CarModel
 
 @Composable
@@ -26,19 +33,28 @@ fun CarDetailsContent(
             contentDescription = model.name
         )
 
-        Spacer(modifier = Modifier.height(ATheme.dimens.ScreenPaddingVertical))
+        val isArabic = com.ae.alice.designsystem.locale.LocalAppLocale.current.language == com.ae.alice.designsystem.locale.AppLanguage.ARABIC
 
-        model.description?.let { description ->
-            Spacer(modifier = Modifier.height(ATheme.dimens.SpacingXl))
+        model.description?.let { originalDescription ->
+            val description = if (isArabic) {
+                when (model.brandId) {
+                    "1", "3", "7", "8", "9" -> "نظرة عامة\n\nتتميز هذه السيارة بتصميم رياضي فاخر، وتكنولوجيا متقدمة، وأداء عالٍ، مما يضمن لك تجربة قيادة استثنائية."
+                    "2", "4", "5", "6", "10" -> "نظرة عامة\n\nتجمع هذه السيارة بين الاقتصاد في استهلاك الوقود والمميزات العصرية والراحة في القيادة، مما يجعلها خياراً مثالياً للاستخدام اليومي."
+                    else -> "نظرة عامة\n\nسيارة عصرية تقدم لك كل ما تحتاجه من راحة، أمان، وأداء قوي على الطريق بأفضل المعايير العالمية."
+                }
+            } else {
+                originalDescription
+            }
+
+            Spacer(modifier = Modifier.height(Theme.spacing._20))
 
             SectionDivider()
 
-            Spacer(modifier = Modifier.height(ATheme.dimens.SpacingXl))
+            Spacer(modifier = Modifier.height(Theme.spacing._20))
 
             DescriptionSection(description = description)
         }
 
-        // Extra spacing at the bottom so content doesn't hide behind bottom bar
-        Spacer(modifier = Modifier.height(ATheme.dimens.Spacing4xl))
+        Spacer(modifier = Modifier.height(Theme.spacing._40))
     }
 }

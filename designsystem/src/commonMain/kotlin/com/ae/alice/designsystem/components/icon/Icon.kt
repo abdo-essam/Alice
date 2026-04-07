@@ -1,0 +1,26 @@
+package com.ae.alice.designsystem.components.icon
+
+import androidx.compose.material3.Icon
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+
+/**
+ * Themed icon wrapper — defaults tint to [Color.Unspecified] so the icon
+ * inherits the parent content color unless explicitly overridden.
+ */
+@Composable
+fun Icon(
+    painter: Painter,
+    contentDescription: String?,
+    modifier: Modifier = Modifier,
+    tint: Color = Color.Unspecified,
+) {
+    Icon(
+        painter = painter,
+        tint = tint,
+        contentDescription = contentDescription,
+        modifier = modifier
+    )
+}

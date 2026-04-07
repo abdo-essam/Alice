@@ -33,44 +33,19 @@ fun CarDetailsContent(
             contentDescription = model.name
         )
 
-        Spacer(modifier = Modifier.height(Theme.spacing._16))
+        val isArabic = com.ae.alice.designsystem.locale.LocalAppLocale.current.language == com.ae.alice.designsystem.locale.AppLanguage.ARABIC
 
-        // Options
-        var selectedYear by remember { mutableStateOf(model.year?.toString() ?: "2024") }
-        var selectedCategory by remember { mutableStateOf(model.category ?: "Sedan") }
-        var selectedEngine by remember { mutableStateOf(model.engineType ?: "V6") }
+        model.description?.let { originalDescription ->
+            val description = if (isArabic) {
+                when (model.brandId) {
+                    "1", "3", "7", "8", "9" -> "نظرة عامة\n\nتتميز هذه السيارة بتصميم رياضي فاخر، وتكنولوجيا متقدمة، وأداء عالٍ، مما يضمن لك تجربة قيادة استثنائية."
+                    "2", "4", "5", "6", "10" -> "نظرة عامة\n\nتجمع هذه السيارة بين الاقتصاد في استهلاك الوقود والمميزات العصرية والراحة في القيادة، مما يجعلها خياراً مثالياً للاستخدام اليومي."
+                    else -> "نظرة عامة\n\nسيارة عصرية تقدم لك كل ما تحتاجه من راحة، أمان، وأداء قوي على الطريق بأفضل المعايير العالمية."
+                }
+            } else {
+                originalDescription
+            }
 
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = Theme.spacing._16)
-        ) {
-            DropdownSelector(
-                label = "Year",
-                selectedValue = selectedYear,
-                options = listOf("2024", "2025", "2026"),
-                onOptionSelected = { selectedYear = it },
-                modifier = Modifier.fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(Theme.spacing._12))
-            DropdownSelector(
-                label = "Category",
-                selectedValue = selectedCategory,
-                options = listOf("Sedan", "SUV", "Coupe", "Truck"),
-                onOptionSelected = { selectedCategory = it },
-                modifier = Modifier.fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(Theme.spacing._12))
-            DropdownSelector(
-                label = "Engine Make",
-                selectedValue = selectedEngine,
-                options = listOf("V6", "V8", "Electric", "Hybrid"),
-                onOptionSelected = { selectedEngine = it },
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-
-        Spacer(modifier = Modifier.height(Theme.spacing._16))
-
-        model.description?.let { description ->
             Spacer(modifier = Modifier.height(Theme.spacing._20))
 
             SectionDivider()

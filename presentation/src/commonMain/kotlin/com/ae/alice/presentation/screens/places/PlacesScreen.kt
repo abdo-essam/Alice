@@ -22,6 +22,8 @@ import alice.presentation.generated.resources.places_location_label
 import alice.presentation.generated.resources.places_search_placeholder
 import alice.presentation.generated.resources.places_tab_one
 import alice.presentation.generated.resources.places_tab_two
+import alice.presentation.generated.resources.ic_arrow_left
+import com.ae.alice.designsystem.components.appBar.AppBar
 import com.ae.alice.designsystem.components.bottomSheet.BottomSheet
 import com.ae.alice.designsystem.components.bottomSheet.SelectionSheetContent
 import com.ae.alice.designsystem.components.card.PlaceCard
@@ -42,6 +44,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun PlacesScreen(
     onNavigateToDetails: (Place) -> Unit,
+    onBackClick: () -> Unit,
     passedLocation: String? = null,
     viewModel: PlacesViewModel = koinViewModel()
 ) {
@@ -64,6 +67,19 @@ fun PlacesScreen(
 
     Scaffold(
         backgroundColor = Theme.colorScheme.background.surfaceLow,
+        topBar = {
+            AppBar(
+                title = stringResource(Res.string.places_location_label),
+                leadingContent = {
+                    com.ae.alice.designsystem.components.icon.Icon(
+                        painter = org.jetbrains.compose.resources.painterResource(Res.drawable.ic_arrow_left),
+                        contentDescription = "Back",
+                        tint = Theme.colorScheme.primary.primary
+                    )
+                },
+                onLeadingClick = onBackClick
+            )
+        },
         overlays = {
             // ── Location Bottom Sheet ──
             bottomSheet(isVisible = state.showLocationSheet) { isVisible ->

@@ -63,7 +63,8 @@ fun AppNavHost(
                 passedLocation = selectedLocation,
                 onNavigateToDetails = {
 
-                }
+                },
+                onBackClick = { navController.popBackStack() }
             )
         }
 

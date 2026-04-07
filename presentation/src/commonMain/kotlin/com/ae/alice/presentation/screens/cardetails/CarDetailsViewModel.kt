@@ -20,6 +20,14 @@ class CarDetailsViewModel(
             }
             is CarDetailsIntent.GetCar -> getCar()
             is CarDetailsIntent.Retry -> currentModelId?.let { loadModel(it) }
+            is CarDetailsIntent.ToggleSave -> toggleSave()
+        }
+    }
+
+    private fun toggleSave() {
+        val currentModel = currentState.model ?: return
+        updateState {
+            copy(model = currentModel.copy(isFavorite = !currentModel.isFavorite))
         }
     }
 

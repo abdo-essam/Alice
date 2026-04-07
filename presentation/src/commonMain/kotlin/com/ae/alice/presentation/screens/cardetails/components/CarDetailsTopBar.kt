@@ -8,6 +8,11 @@ import com.ae.alice.designsystem.components.appBar.AppBar
 import com.ae.alice.designsystem.components.icon.Icon
 import com.ae.alice.designsystem.theme.Theme
 import org.jetbrains.compose.resources.painterResource
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.runtime.remember
+import alice.presentation.generated.resources.ic_bookmark_filled
+import alice.presentation.generated.resources.ic_bookmark_outlined
 
 /**
  * MENA-style app bar for car details — back arrow + title.
@@ -16,7 +21,9 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun CarDetailsAppBar(
     title: String,
+    isSaved: Boolean,
     onBackClick: () -> Unit,
+    onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     AppBar(
@@ -29,6 +36,22 @@ fun CarDetailsAppBar(
                 tint = Theme.colorScheme.primary.primary
             )
         },
-        onLeadingClick = onBackClick
+        onLeadingClick = onBackClick,
+        trailingContent = {
+            Icon(
+                painter = painterResource(
+                    if (isSaved) Res.drawable.ic_bookmark_filled
+                    else Res.drawable.ic_bookmark_outlined
+                ),
+                contentDescription = null,
+                tint = if (isSaved) Theme.colorScheme.brand.brand
+                else Theme.colorScheme.shadeSecondary,
+                modifier = Modifier
+                    .clickable(
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() }
+                    ) { onSaveClick() }
+            )
+        }
     )
 }

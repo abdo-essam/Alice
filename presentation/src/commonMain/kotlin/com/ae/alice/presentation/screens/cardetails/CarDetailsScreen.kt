@@ -44,7 +44,9 @@ fun CarDetailsScreen(
         topBar = {
             CarDetailsAppBar(
                 title = modelName,
+                isSaved = state.model?.isFavorite == true,
                 onBackClick = onBackClick,
+                onSaveClick = { viewModel.processIntent(CarDetailsIntent.ToggleSave) }
             )
         },
         bottomBar = {

@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.googleServices)
+    alias(libs.plugins.firebaseAppDistribution)
 }
 
 kotlin {
@@ -100,6 +102,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            firebaseAppDistribution {
+                artifactType = "APK"
+                groups = "qa-testers"
+                // The service account is automatically injected via GOOGLE_APPLICATION_CREDENTIALS in Github Actions
+            }
         }
     }
     

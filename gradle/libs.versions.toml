@@ -1,4 +1,6 @@
 [versions]
+googleServices = "4.4.2"
+firebaseAppDistribution = "5.0.0"
 # Android
 agp = "8.11.2"
 android-compileSdk = "36"
@@ -123,6 +125,8 @@ squircle-shape = { module = "com.stoyanvuchev:squircle-shape", version.ref = "sq
 maplibre-compose = { module = "org.maplibre.compose:maplibre-compose", version.ref = "mapLibra" }
 
 [plugins]
+googleServices = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+firebaseAppDistribution = { id = "com.google.firebase.appdistribution", version.ref = "firebaseAppDistribution" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }

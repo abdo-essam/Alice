@@ -2,6 +2,8 @@
 
 # Ktor & Coil rules needed because of reflection and ServiceLoader usage inside KMP Network libraries
 -keep class io.ktor.** { *; }
+-dontwarn java.lang.management.**
+-dontwarn io.ktor.**
 -keep class coil3.** { *; }
 
 # Keep Coroutines & Serialization

@@ -41,6 +41,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.window.Popup
+import androidx.compose.ui.window.PopupProperties
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
@@ -125,101 +127,106 @@ fun ScaffoldScope.BottomSheet(
         sheetNestedScrollConnection(dragState, Orientation.Vertical)
     }
 
-    Box(modifier = modifier.fillMaxSize()) {
-        // Back press dismiss handled by system navigation
+    Popup(
+        onDismissRequest = onDismissRequest,
+        properties = PopupProperties(focusable = true, dismissOnBackPress = dismissOnBackPress, dismissOnClickOutside = false)
+    ) {
+        Box(modifier = modifier.fillMaxSize()) {
+            // Back press dismiss handled by system navigation
 
-        AnimatedVisibility(
-            visible = showScrim,
-            enter = fadeIn(),
-            exit = fadeOut(),
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = scrimColor)
-                    .clickable(
-                        enabled = dismissOnClickOutside,
-                        onClick = {
-                            showScrim = false
-                            scope.launch {
-                                dragState.animateTo(BottomSheetValue.HIDDEN, tween(250))
-                                onDismissRequest()
-                            }
-                        },
-                        indication = null,
-                        interactionSource = remember { MutableInteractionSource() }
-                    )
-            )
-        }
-
-        Box(
-            modifier = Modifier
-                .padding(top = paddingFromTop)
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-                .offset { IntOffset(0, dragState.requireOffset().roundToInt()) }
-                .nestedScroll(nestedConnection)
-                .anchoredDraggable(
-                    state = dragState,
-                    orientation = Orientation.Vertical
-                )
-                .onSizeChanged { sheetSize = it }
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(containerColor, cornerShape)
-                    .clip(cornerShape)
+            AnimatedVisibility(
+                visible = showScrim,
+                enter = fadeIn(),
+                exit = fadeOut(),
             ) {
-                // Drag handle
                 Box(
-                    modifier = Modifier.padding(vertical = 6.dp)
-                        .size(width = 39.dp, height = 2.dp)
-                        .align(Alignment.CenterHorizontally)
-                        .background(
-                            color = Theme.colorScheme.shadeTertiary,
-                            shape = RoundedCornerShape(2.dp)
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = scrimColor)
+                        .clickable(
+                            enabled = dismissOnClickOutside,
+                            onClick = {
+                                showScrim = false
+                                scope.launch {
+                                    dragState.animateTo(BottomSheetValue.HIDDEN, tween(250))
+                                    onDismissRequest()
+                                }
+                            },
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
                         )
                 )
-                sheetContent()
+            }
+
+            Box(
+                modifier = Modifier
+                    .padding(top = paddingFromTop)
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .offset { IntOffset(0, dragState.requireOffset().roundToInt()) }
+                    .nestedScroll(nestedConnection)
+                    .anchoredDraggable(
+                        state = dragState,
+                        orientation = Orientation.Vertical
+                    )
+                    .onSizeChanged { sheetSize = it }
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(containerColor, cornerShape)
+                        .clip(cornerShape)
+                ) {
+                    // Drag handle
+                    Box(
+                        modifier = Modifier.padding(vertical = 6.dp)
+                            .size(width = 39.dp, height = 2.dp)
+                            .align(Alignment.CenterHorizontally)
+                            .background(
+                                color = Theme.colorScheme.shadeTertiary,
+                                shape = RoundedCornerShape(2.dp)
+                            )
+                    )
+                    sheetContent()
+                    AnimatedVisibility(
+                        visible = dragState.currentValue != BottomSheetValue.HIDDEN && sheetSize != IntSize.Zero,
+                        enter = fadeIn() + slideInVertically(initialOffsetY = { it }),
+                        exit = fadeOut() + slideOutVertically(targetOffsetY = { it })
+                    ) {
+                        Box(
+                            modifier = Modifier.background(containerColor)
+                                .offset(
+                                    y = WindowInsets.navigationBars
+                                        .asPaddingValues()
+                                        .calculateBottomPadding()
+                                )
+                                .height(with(LocalDensity.current) { referenceHeight.toDp() })
+                        )
+                    }
+                }
+            }
+
+            Box(
+                modifier = Modifier
+                    .offset(
+                        y = WindowInsets.navigationBars
+                            .asPaddingValues()
+                            .calculateBottomPadding()
+                    )
+                    .background(containerColor)
+                    .clickable(false) {}
+                    .align(Alignment.BottomCenter)
+                    .onGloballyPositioned { coordinates ->
+                        referenceHeight = coordinates.size.height
+                    }
+            ) {
                 AnimatedVisibility(
                     visible = dragState.currentValue != BottomSheetValue.HIDDEN && sheetSize != IntSize.Zero,
                     enter = fadeIn() + slideInVertically(initialOffsetY = { it }),
                     exit = fadeOut() + slideOutVertically(targetOffsetY = { it })
                 ) {
-                    Box(
-                        modifier = Modifier.background(containerColor)
-                            .offset(
-                                y = WindowInsets.navigationBars
-                                    .asPaddingValues()
-                                    .calculateBottomPadding()
-                            )
-                            .height(with(LocalDensity.current) { referenceHeight.toDp() })
-                    )
+                    stickyFooterContent()
                 }
-            }
-        }
-
-        Box(
-            modifier = Modifier
-                .offset(
-                    y = WindowInsets.navigationBars
-                        .asPaddingValues()
-                        .calculateBottomPadding()
-                )
-                .background(containerColor)
-                .clickable(false) {}
-                .align(Alignment.BottomCenter)
-                .onGloballyPositioned { coordinates ->
-                    referenceHeight = coordinates.size.height
-                }
-        ) {
-            AnimatedVisibility(
-                visible = dragState.currentValue != BottomSheetValue.HIDDEN && sheetSize != IntSize.Zero,
-                enter = fadeIn() + slideInVertically(initialOffsetY = { it }),
-                exit = fadeOut() + slideOutVertically(targetOffsetY = { it })
-            ) {
-                stickyFooterContent()
             }
         }
     }

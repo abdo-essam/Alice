@@ -10,18 +10,17 @@ import com.ae.alice.presentation.screens.main.MainScreen
 import com.ae.alice.presentation.screens.main.components.MainBottomNavBar
 import com.ae.alice.presentation.screens.models.ModelsScreen
 import com.ae.alice.presentation.screens.places.PlacesScreen
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.ae.alice.designsystem.components.scaffold.Scaffold
 
 @Composable
 fun AppNavHost(
-    navController: NavHostController
+    navController: NavHostController,
+    modifier: Modifier = Modifier
 ) {
     var selectedTab by remember { mutableIntStateOf(0) }
 

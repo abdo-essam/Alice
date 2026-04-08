@@ -9,7 +9,6 @@ import com.ae.alice.presentation.screens.cardetails.CarDetailsScreen
 import com.ae.alice.presentation.screens.main.MainScreen
 import com.ae.alice.presentation.screens.models.ModelsScreen
 import com.ae.alice.presentation.screens.places.PlacesScreen
-import com.ae.alice.presentation.screens.location.PickLocationScreen
 @Composable
 fun AppNavHost(
     navController: NavHostController
@@ -58,18 +57,6 @@ fun AppNavHost(
 
                 },
                 onBackClick = { navController.popBackStack() }
-            )
-        }
-
-        composable<Routes.PickLocation> {
-            PickLocationScreen(
-                onBackClick = { navController.popBackStack() },
-                onLocationSubmitted = { lat, lng, address ->
-                    navController.previousBackStackEntry
-                        ?.savedStateHandle
-                        ?.set("selected_location", address)
-                    navController.popBackStack()
-                }
             )
         }
     }

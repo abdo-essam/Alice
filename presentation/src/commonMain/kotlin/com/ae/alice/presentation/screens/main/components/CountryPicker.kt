@@ -3,6 +3,7 @@ package com.ae.alice.presentation.screens.main.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -45,6 +46,8 @@ fun ScaffoldScope.CountryPicker(
         isVisible = isVisible,
         onDismissRequest = onDismiss,
         modifier = modifier,
+        skipPartiallyExpanded = true,
+        containerColor = Theme.colorScheme.background.surfaceLow,
         sheetContent = {
             Text(
                 text = stringResource(Res.string.pick_your_country),
@@ -71,10 +74,12 @@ fun ScaffoldScope.CountryPicker(
             LazyColumn(
                 contentPadding = PaddingValues(bottom = 32.dp),
                 verticalArrangement = Arrangement.spacedBy(Theme.spacing._8),
-                modifier = Modifier.padding(
-                    horizontal = Theme.spacing._16,
-                    vertical = Theme.spacing._8
-                )
+                modifier = Modifier
+                    .fillMaxHeight(0.85f)
+                    .padding(
+                        horizontal = Theme.spacing._16,
+                        vertical = Theme.spacing._8
+                    )
             ) {
                 items(
                     items = filteredCountries,

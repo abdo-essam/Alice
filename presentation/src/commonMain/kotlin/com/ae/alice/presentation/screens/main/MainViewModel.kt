@@ -11,7 +11,7 @@ import com.ae.alice.presentation.base.UiIntent
 import com.ae.alice.presentation.base.UiEffect
 
 data class MainState(
-    val selectedCountry: Country = Country.default(),
+    val selectedCountry: Country? = null,
     val countries: List<Country> = emptyList(),
     val showCountryPicker: Boolean = false
 ) : UiState

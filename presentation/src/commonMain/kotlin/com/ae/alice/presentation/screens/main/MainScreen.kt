@@ -119,16 +119,16 @@ fun MainScreen(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(4.dp)
                             ) {
-                                com.ae.alice.designsystem.components.text.Text(
-                                    text = state.selectedCountry.flagEmoji
+                                Text(
+                                    text = state.selectedCountry?.flagEmoji ?: ""
                                 )
-                                com.ae.alice.designsystem.components.text.Text(
-                                    text = state.selectedCountry.countryName,
+                                Text(
+                                    text = state.selectedCountry?.countryName ?: "",
                                     style = Theme.typography.label.large,
                                     color = Theme.colorScheme.shadePrimary
                                 )
-                                androidx.compose.material3.Icon(
-                                    imageVector = androidx.compose.material.icons.Icons.Default.KeyboardArrowDown,
+                                Icon(
+                                    imageVector = Icons.Default.KeyboardArrowDown,
                                     contentDescription = "Select country",
                                     tint = Theme.colorScheme.shadePrimary,
                                     modifier = Modifier.padding(start = 2.dp)
@@ -163,15 +163,17 @@ fun MainScreen(
         },
         overlays = {
             bottomSheet(isVisible = state.showCountryPicker) { overlayVisible ->
-                CountryPicker(
-                    isVisible = overlayVisible,
-                    countries = state.countries,
-                    currentCountry = state.selectedCountry,
-                    onDismiss = { viewModel.processIntent(MainIntent.HideCountryPicker) },
-                    onClickConfirm = { country: com.ae.alice.domain.entity.Country ->
-                        viewModel.processIntent(MainIntent.SelectCountry(country))
-                    }
-                )
+                if (state.selectedCountry != null) {
+                    CountryPicker(
+                        isVisible = overlayVisible,
+                        countries = state.countries,
+                        currentCountry = state.selectedCountry!!,
+                        onDismiss = { viewModel.processIntent(MainIntent.HideCountryPicker) },
+                        onClickConfirm = { country: com.ae.alice.domain.entity.Country ->
+                            viewModel.processIntent(MainIntent.SelectCountry(country))
+                        }
+                    )
+                }
             }
         }
     ) {

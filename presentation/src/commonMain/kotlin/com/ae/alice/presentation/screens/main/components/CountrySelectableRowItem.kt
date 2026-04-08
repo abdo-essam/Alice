@@ -29,7 +29,7 @@ fun CountrySelectableRowItem(
     modifier: Modifier = Modifier
 ) {
     val animatedCountryItemColor by animateColorAsState(
-        targetValue = if (isSelected) Theme.colorScheme.background.surfaceHigh
+        targetValue = if (isSelected) Theme.colorScheme.primary.primary.copy(alpha = 0.08f)
         else Theme.colorScheme.background.surfaceLow
     )
 

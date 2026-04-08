@@ -2,28 +2,13 @@ package com.ae.alice.presentation.screens.main
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.setValue
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.ui.Alignment
-import alice.presentation.generated.resources.Res
-import alice.presentation.generated.resources.ic_bookmark
-import alice.presentation.generated.resources.ic_bookmark_selected
-import alice.presentation.generated.resources.ic_home
-import alice.presentation.generated.resources.ic_home_selected
-import alice.presentation.generated.resources.ic_location
-import alice.presentation.generated.resources.ic_profile
-import alice.presentation.generated.resources.ic_profile_selected
-import alice.presentation.generated.resources.nav_archive_ar
-import alice.presentation.generated.resources.nav_home_ar
-import alice.presentation.generated.resources.nav_profile_ar
 import com.ae.alice.designsystem.components.appBar.HomeAppBar
-import com.ae.alice.designsystem.components.bottomNavigation.BottomNavigationBar
 import com.ae.alice.designsystem.components.scaffold.Scaffold
 import com.ae.alice.designsystem.theme.Theme
 import com.ae.alice.domain.entity.Brand
@@ -45,16 +30,13 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.rememberCoroutineScope
 import com.ae.alice.presentation.screens.main.components.CountryPicker
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
-
 @Composable
 fun MainScreen(
+    selectedTab: Int,
     onBrandClick: (Brand) -> Unit,
     viewModel: MainViewModel = org.koin.compose.viewmodel.koinViewModel()
 ) {
     val state by viewModel.state.collectAsState()
-    var selectedTab by remember { mutableIntStateOf(0) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -136,52 +118,30 @@ fun MainScreen(
                             }
                         }
                     )
+                }
                 // Archive and Profile have their own app bars inside their content
-            }
-        },
-        bottomBar = {
-            BottomNavigationBar(selectedItemIndex = selectedTab) {
-                bottomNavigationItem(
-                    selectedIcon = painterResource(Res.drawable.ic_home_selected),
-                    notSelectedIcon = painterResource(Res.drawable.ic_home),
-                    title = stringResource(Res.string.nav_home_ar),
-                    entry = { selectedTab = 0 }
-                )
-                bottomNavigationItem(
-                    selectedIcon = painterResource(Res.drawable.ic_bookmark_selected),
-                    notSelectedIcon = painterResource(Res.drawable.ic_bookmark),
-                    title = stringResource(Res.string.nav_archive_ar),
-                    entry = { selectedTab = 1 }
-                )
-                bottomNavigationItem(
-                    selectedIcon = painterResource(Res.drawable.ic_profile_selected),
-                    notSelectedIcon = painterResource(Res.drawable.ic_profile),
-                    title = stringResource(Res.string.nav_profile_ar),
-                    entry = { selectedTab = 2 }
-                )
-            }
-        },
-        overlays = {
-            bottomSheet(isVisible = state.showCountryPicker) { overlayVisible ->
-                if (state.selectedCountry != null) {
-                    CountryPicker(
-                        isVisible = overlayVisible,
-                        countries = state.countries,
-                        currentCountry = state.selectedCountry!!,
-                        onDismiss = { viewModel.processIntent(MainIntent.HideCountryPicker) },
-                        onClickConfirm = { country: com.ae.alice.domain.entity.Country ->
-                            viewModel.processIntent(MainIntent.SelectCountry(country))
-                        }
-                    )
+            },
+            overlays = {
+                bottomSheet(isVisible = state.showCountryPicker) { overlayVisible ->
+                    if (state.selectedCountry != null) {
+                        CountryPicker(
+                            isVisible = overlayVisible,
+                            countries = state.countries,
+                            currentCountry = state.selectedCountry!!,
+                            onDismiss = { viewModel.processIntent(MainIntent.HideCountryPicker) },
+                            onClickConfirm = { country: com.ae.alice.domain.entity.Country ->
+                                viewModel.processIntent(MainIntent.SelectCountry(country))
+                            }
+                        )
+                    }
                 }
             }
-        }
-    ) {
-        when (selectedTab) {
-            0 -> HomeBrandsTab(onBrandClick = onBrandClick)
-            1 -> ArchiveTab()
-            2 -> ProfileTab()
+        ) {
+            when (selectedTab) {
+                0 -> HomeBrandsTab(onBrandClick = onBrandClick)
+                1 -> ArchiveTab()
+                2 -> ProfileTab()
+            }
         }
     }
-}
 }

@@ -20,8 +20,8 @@ class AppPreferencesRepositoryImpl(
 
     private val countryKey = "SELECTED_COUNTRY_CODE"
 
-    private val _selectedCountry = MutableStateFlow(Country.default())
-    override val selectedCountry: StateFlow<Country> = _selectedCountry.asStateFlow()
+    private val _selectedCountry = MutableStateFlow<Country?>(null)
+    override val selectedCountry: StateFlow<Country?> = _selectedCountry.asStateFlow()
 
     init {
         CoroutineScope(Dispatchers.IO).launch {

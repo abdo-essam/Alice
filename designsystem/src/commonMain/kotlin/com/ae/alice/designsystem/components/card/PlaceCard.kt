@@ -82,7 +82,7 @@ fun PlaceCard(
                         else Res.drawable.ic_bookmark_outlined
                     ),
                     contentDescription = null,
-                    tint = if (isSaved) Theme.colorScheme.brand.brand
+                    tint = if (isSaved) Theme.colorScheme.primary.primary
                     else Theme.colorScheme.shadeSecondary,
                     modifier = Modifier
                         .size(22.dp)
@@ -96,7 +96,7 @@ fun PlaceCard(
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(Theme.radius.sm))
-                        .background(Theme.colorScheme.brand.brand)
+                        .background(Theme.colorScheme.primary.primary)
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
@@ -110,7 +110,7 @@ fun PlaceCard(
                     Text(
                         text = stringResource(Res.string.places_details),
                         style = Theme.typography.label.medium,
-                        color = Theme.colorScheme.brand.onBrand,
+                        color = Theme.colorScheme.primary.onPrimary,
                     )
                 }
             }

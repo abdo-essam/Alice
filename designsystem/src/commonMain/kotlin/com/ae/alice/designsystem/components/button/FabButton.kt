@@ -20,8 +20,8 @@ fun FabButton(
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
     iconSize: Dp = 24.dp,
-    containerColor: Color = Theme.colorScheme.brand.brand,
-    contentColor: Color = Theme.colorScheme.brand.onBrand,
+    containerColor: Color = Theme.colorScheme.primary.primary,
+    contentColor: Color = Theme.colorScheme.primary.onPrimary,
     contentPadding: PaddingValues = PaddingValues(16.dp),
     shape: Shape = RoundedCornerShape(Theme.radius.md)
 ) {

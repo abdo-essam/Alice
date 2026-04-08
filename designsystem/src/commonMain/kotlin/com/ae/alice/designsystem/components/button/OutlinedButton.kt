@@ -24,7 +24,7 @@ fun OutlinedButton(
     iconStartPadding: Dp = Theme.spacing._8,
     isEnabled: Boolean = true,
     isLoading: Boolean = false,
-    contentColor: Color = Theme.colorScheme.brand.brand,
+    contentColor: Color = Theme.colorScheme.primary.primary,
     disabledContentColor: Color = Theme.colorScheme.textDisabled,
     contentPadding: PaddingValues = PaddingValues(
         horizontal = Theme.spacing._16,
@@ -46,7 +46,7 @@ fun OutlinedButton(
         loadingColors = listOf(
             Theme.colorScheme.stroke,
             Theme.colorScheme.shadeTertiary,
-            Theme.colorScheme.brand.brand
+            Theme.colorScheme.primary.primary
         ),
         modifier = modifier
     ) {

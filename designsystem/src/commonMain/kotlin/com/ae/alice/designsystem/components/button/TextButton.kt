@@ -20,7 +20,7 @@ fun TextButton(
     trailingIcon: Painter? = null,
     isEnabled: Boolean = true,
     isLoading: Boolean = false,
-    contentColor: Color = Theme.colorScheme.brand.brand,
+    contentColor: Color = Theme.colorScheme.primary.primary,
     disabledContentColor: Color = Theme.colorScheme.disabled,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     iconSize: Dp = 16.dp,
@@ -38,7 +38,7 @@ fun TextButton(
         loadingColors = listOf(
             Theme.colorScheme.stroke,
             Theme.colorScheme.shadeTertiary,
-            Theme.colorScheme.brand.brand
+            Theme.colorScheme.primary.primary
         ),
         modifier = modifier
     ) {

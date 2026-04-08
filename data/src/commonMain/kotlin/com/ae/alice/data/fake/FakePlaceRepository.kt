@@ -1,5 +1,6 @@
 package com.ae.alice.data.fake
 
+import com.ae.alice.domain.entity.Country
 import com.ae.alice.domain.entity.City
 import com.ae.alice.domain.entity.Place
 import com.ae.alice.domain.entity.ServiceCategory
@@ -151,6 +152,31 @@ class FakePlaceRepository : PlaceRepository {
         Place("p45", "مركز نانو شيلد", "البدع، دبي", "cat_22", imageUrl = "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?w=400", latitude = 25.2286, longitude = 55.2554),
         Place("p46", "مركز سيراميك برو", "مدينة محمد بن زايد، أبوظبي", "cat_22", imageUrl = "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=400", latitude = 24.3419, longitude = 54.5419),
     )
+
+    private val countries = listOf(
+        Country("c_dz", "الجزائر", "DZ", "🇩🇿"),
+        Country("c_bh", "البحرين", "BH", "🇧🇭"),
+        Country("c_eg", "مصر", "EG", "🇪🇬"),
+        Country("c_ir", "إيران", "IR", "🇮🇷"),
+        Country("c_iq", "العراق", "IQ", "🇮🇶"),
+        Country("c_jo", "الأردن", "JO", "🇯🇴"),
+        Country("c_kw", "الكويت", "KW", "🇰🇼"),
+        Country("c_lb", "لبنان", "LB", "🇱🇧"),
+        Country("c_ly", "ليبيا", "LY", "🇱🇾"),
+        Country("c_ma", "المغرب", "MA", "🇲🇦"),
+        Country("c_om", "عُمان", "OM", "🇴🇲"),
+        Country("c_ps", "فلسطين", "PS", "🇵🇸"),
+        Country("c_qa", "قطر", "QA", "🇶🇦"),
+        Country("c_sa", "السعودية", "SA", "🇸🇦"),
+        Country("c_so", "الصومال", "SO", "🇸🇴"),
+        Country("c_sd", "السودان", "SD", "🇸🇩"),
+        Country("c_sy", "سوريا", "SY", "🇸🇾"),
+        Country("c_tn", "تونس", "TN", "🇹🇳"),
+        Country("c_ae", "الإمارات", "AE", "🇦🇪"),
+        Country("c_ye", "اليمن", "YE", "🇾🇪")
+    )
+
+    override suspend fun getCountries(): List<Country> = countries
 
     override suspend fun getCategories(): List<ServiceCategory> = categories
 

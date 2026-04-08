@@ -45,9 +45,10 @@
 
     <!-- Places Screen -->
     <string name="places_search_placeholder">ابحث عن الأماكن...</string>
+    <string name="selector_search_country_placeholder">ابحث عن دولة...</string>
     <string name="places_empty">لا توجد أماكن</string>
     <string name="places_error_default">حدث خطأ</string>
-    <string name="places_location_label">اختر الامارة</string>
+    <string name="places_location_label">اختر مدينة</string>
     <string name="places_tab_one">المبيعات</string>
     <string name="places_tab_two">الغسيل والتفصيل</string>
     <string name="places_category_label">التصنيف</string>

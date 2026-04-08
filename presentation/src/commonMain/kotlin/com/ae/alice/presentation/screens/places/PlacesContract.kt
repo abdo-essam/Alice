@@ -18,7 +18,7 @@ data class PlacesState(
     val selectedCategory: ServiceCategory? = null,
     val places: List<Place> = emptyList(),
     val cities: List<City> = emptyList(),
-    val selectedCity: String = "دبي",
+    val selectedCity: String = "",
     val showCitySheet: Boolean = false,
     val showCategorySheet: Boolean = false,
     val error: String? = null

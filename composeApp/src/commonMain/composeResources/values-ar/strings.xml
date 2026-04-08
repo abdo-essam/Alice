@@ -12,6 +12,7 @@
     
     <!-- Country/Emirate Selector -->
     <string name="selector_country">اختر الدولة</string>
+    <string name="selector_search_country_placeholder">ابحث عن دولة...</string>
     <string name="selector_emirate">اختر الامارة</string>
     <string name="country_uae">الامارات العربية المتحدة</string>
     <string name="country_saudi">المملكة العربية السعودية</string>

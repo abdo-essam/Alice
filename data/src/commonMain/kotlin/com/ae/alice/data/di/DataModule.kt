@@ -13,7 +13,7 @@ import com.russhwolf.settings.Settings
 
 val dataModule = module {
     single<Settings> { Settings() }
-    single<AppPreferencesRepository> { AppPreferencesRepositoryImpl(get()) }
+    single<AppPreferencesRepository> { AppPreferencesRepositoryImpl(get(), get()) }
     single<BrandRepository> { FakeBrandRepository() }
     single<CarModelRepository> { FakeCarModelRepository() }
     single<PlaceRepository> { FakePlaceRepository() }

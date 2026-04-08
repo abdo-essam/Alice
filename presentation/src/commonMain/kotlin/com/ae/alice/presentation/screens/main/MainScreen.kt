@@ -16,6 +16,7 @@ import alice.presentation.generated.resources.ic_bookmark
 import alice.presentation.generated.resources.ic_bookmark_selected
 import alice.presentation.generated.resources.ic_home
 import alice.presentation.generated.resources.ic_home_selected
+import alice.presentation.generated.resources.ic_location
 import alice.presentation.generated.resources.ic_profile
 import alice.presentation.generated.resources.ic_profile_selected
 import alice.presentation.generated.resources.nav_archive_ar
@@ -34,6 +35,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.NavigationDrawerItem
@@ -107,18 +109,29 @@ fun MainScreen(
                                         color = Theme.colorScheme.background.surfaceLow,
                                         shape = RoundedCornerShape(8.dp)
                                     )
-                                    .clickable {
+                                    .clickable(
+                                        interactionSource = androidx.compose.runtime.remember { androidx.compose.foundation.interaction.MutableInteractionSource() },
+                                        indication = null
+                                    ) {
                                         viewModel.processIntent(MainIntent.ShowCountryPicker)
                                     }
                                     .padding(horizontal = 8.dp, vertical = 4.dp),
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(4.dp)
                             ) {
-                                Text(text = state.selectedCountry.flagEmoji)
-                                Text(
-                                    text = state.selectedCountry.countryCodeName,
+                                com.ae.alice.designsystem.components.text.Text(
+                                    text = state.selectedCountry.flagEmoji
+                                )
+                                com.ae.alice.designsystem.components.text.Text(
+                                    text = state.selectedCountry.countryName,
                                     style = Theme.typography.label.large,
                                     color = Theme.colorScheme.shadePrimary
+                                )
+                                androidx.compose.material3.Icon(
+                                    imageVector = androidx.compose.material.icons.Icons.Default.KeyboardArrowDown,
+                                    contentDescription = "Select country",
+                                    tint = Theme.colorScheme.shadePrimary,
+                                    modifier = Modifier.padding(start = 2.dp)
                                 )
                             }
                         }
@@ -152,6 +165,7 @@ fun MainScreen(
             bottomSheet(isVisible = state.showCountryPicker) { overlayVisible ->
                 CountryPicker(
                     isVisible = overlayVisible,
+                    countries = state.countries,
                     currentCountry = state.selectedCountry,
                     onDismiss = { viewModel.processIntent(MainIntent.HideCountryPicker) },
                     onClickConfirm = { country: com.ae.alice.domain.entity.Country ->

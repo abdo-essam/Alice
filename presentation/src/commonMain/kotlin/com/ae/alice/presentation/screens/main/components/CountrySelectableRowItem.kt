@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.dp
 import com.ae.alice.designsystem.components.text.Text
 import com.ae.alice.designsystem.theme.Theme
 import com.ae.alice.domain.entity.Country
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 
 @Composable
 fun CountrySelectableRowItem(
@@ -32,7 +34,11 @@ fun CountrySelectableRowItem(
                 if (isSelected) Theme.colorScheme.background.surfaceHigh
                 else Theme.colorScheme.background.surface
             )
-            .clickable { onClick() }
+            .clickable(
+                interactionSource = androidx.compose.runtime.remember { androidx.compose.foundation.interaction.MutableInteractionSource() },
+                indication = null,
+                onClick = onClick
+            )
             .padding(vertical = Theme.spacing._12, horizontal = Theme.spacing._16),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -50,5 +56,12 @@ fun CountrySelectableRowItem(
             textAlign = TextAlign.Start
         )
 
+        if (isSelected) {
+            androidx.compose.material3.Icon(
+                imageVector = androidx.compose.material.icons.Icons.Default.Check,
+                contentDescription = "Selected",
+                tint = Theme.colorScheme.primary.primary
+            )
+        }
     }
 }

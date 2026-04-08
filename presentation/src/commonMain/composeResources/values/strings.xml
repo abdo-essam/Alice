@@ -45,6 +45,7 @@
 
     <!-- Places Screen -->
     <string name="places_search_placeholder">Search places...</string>
+    <string name="selector_search_country_placeholder">Search for country...</string>
     <string name="places_empty">No places found</string>
     <string name="places_error_default">An error occurred</string>
     <string name="places_location_label">Location</string>

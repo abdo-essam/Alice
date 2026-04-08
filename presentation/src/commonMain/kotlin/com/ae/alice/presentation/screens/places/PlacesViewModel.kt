@@ -61,7 +61,7 @@ class PlacesViewModel(
         tryExecute(
             call = {
                 appPreferencesRepository.selectedCountry.collect { country ->
-                    currentCountryCode = country.name // Store the code (e.g. AE, EG)
+                    currentCountryCode = country.countryCodeName // Store the code (e.g. AE, EG)
                     loadData()
                 }
             },

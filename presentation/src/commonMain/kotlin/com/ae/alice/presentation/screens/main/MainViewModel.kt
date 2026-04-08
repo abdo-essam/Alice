@@ -1,6 +1,7 @@
 package com.ae.alice.presentation.screens.main
 
 import com.ae.alice.domain.entity.Country
+import com.ae.alice.domain.repository.PlaceRepository
 import com.ae.alice.domain.repository.AppPreferencesRepository
 import com.ae.alice.presentation.base.BaseViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -11,6 +12,7 @@ import com.ae.alice.presentation.base.UiEffect
 
 data class MainState(
     val selectedCountry: Country = Country.default(),
+    val countries: List<Country> = emptyList(),
     val showCountryPicker: Boolean = false
 ) : UiState
 
@@ -23,11 +25,23 @@ sealed interface MainIntent : UiIntent {
 sealed interface MainEffect : UiEffect
 
 class MainViewModel(
-    private val appPreferencesRepository: AppPreferencesRepository
+    private val appPreferencesRepository: AppPreferencesRepository,
+    private val placeRepository: PlaceRepository
 ) : BaseViewModel<MainState, MainIntent, MainEffect>(MainState()) {
 
     init {
+        loadData()
         observeCountry()
+    }
+
+    private fun loadData() {
+        tryExecute(
+            call = { placeRepository.getCountries() },
+            onSuccess = { countries ->
+                updateState { copy(countries = countries) }
+            },
+            onError = {}
+        )
     }
 
     private fun observeCountry() {

@@ -12,6 +12,7 @@
     
     <!-- Country/Emirate Selector -->
     <string name="selector_country">Select Country</string>
+    <string name="selector_search_country_placeholder">Search for country...</string>
     <string name="selector_emirate">Select Emirate</string>
     <string name="country_uae">United Arab Emirates</string>
     <string name="country_saudi">Saudi Arabia</string>

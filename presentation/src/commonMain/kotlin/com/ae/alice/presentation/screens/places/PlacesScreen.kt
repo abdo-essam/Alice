@@ -45,14 +45,14 @@ import org.koin.compose.viewmodel.koinViewModel
 fun PlacesScreen(
     onNavigateToDetails: (Place) -> Unit,
     onBackClick: () -> Unit,
-    passedLocation: String? = null,
+    passedCity: String? = null,
     viewModel: PlacesViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsState()
 
-    LaunchedEffect(passedLocation) {
-        if (!passedLocation.isNullOrEmpty()) {
-            viewModel.processIntent(PlacesIntent.SelectLocation(passedLocation))
+    LaunchedEffect(passedCity) {
+        if (!passedCity.isNullOrEmpty()) {
+            viewModel.processIntent(PlacesIntent.SelectCity(passedCity))
         }
     }
 
@@ -81,18 +81,18 @@ fun PlacesScreen(
             )
         },
         overlays = {
-            // ── Location Bottom Sheet ──
-            bottomSheet(isVisible = state.showLocationSheet) { isVisible ->
+            // ── City Bottom Sheet ──
+            bottomSheet(isVisible = state.showCitySheet) { isVisible ->
                 BottomSheet(
                     isVisible = isVisible,
-                    onDismissRequest = { viewModel.processIntent(PlacesIntent.DismissLocationSheet) },
+                    onDismissRequest = { viewModel.processIntent(PlacesIntent.DismissCitySheet) },
                     sheetContent = {
                         SelectionSheetContent(
                             title = stringResource(Res.string.places_location_label),
-                            options = state.locations.map { it.name },
-                            selectedOption = state.selectedLocation,
-                            onOptionSelected = { location ->
-                                viewModel.processIntent(PlacesIntent.SelectLocation(location))
+                            options = state.cities.map { it.name },
+                            selectedOption = state.selectedCity,
+                            onOptionSelected = { city ->
+                                viewModel.processIntent(PlacesIntent.SelectCity(city))
                             },
                             searchPlaceholder = stringResource(Res.string.places_search_placeholder),
                         )
@@ -136,7 +136,7 @@ fun PlacesScreen(
                     onSearchChanged = { viewModel.processIntent(PlacesIntent.Search(it)) },
                     onClearSearch = { viewModel.processIntent(PlacesIntent.Search("")) },
                     onTabSelected = { viewModel.processIntent(PlacesIntent.SelectTab(it)) },
-                    onLocationSelectorClick = { viewModel.processIntent(PlacesIntent.ShowLocationSheet) },
+                    onCitySelectorClick = { viewModel.processIntent(PlacesIntent.ShowCitySheet) },
                     onCategorySelectorClick = { viewModel.processIntent(PlacesIntent.ShowCategorySheet) },
                     onPlaceDetailsClick = { viewModel.processIntent(PlacesIntent.PlaceDetailsClicked(it)) },
                     onToggleSave = { viewModel.processIntent(PlacesIntent.ToggleSave(it)) },
@@ -152,7 +152,7 @@ private fun PlacesContent(
     onSearchChanged: (String) -> Unit,
     onClearSearch: () -> Unit,
     onTabSelected: (ServiceTab) -> Unit,
-    onLocationSelectorClick: () -> Unit,
+    onCitySelectorClick: () -> Unit,
     onCategorySelectorClick: () -> Unit,
     onPlaceDetailsClick: (Place) -> Unit,
     onToggleSave: (String) -> Unit,
@@ -164,12 +164,12 @@ private fun PlacesContent(
             bottom = Theme.spacing._24,
         )
     ) {
-        // ── Location selector (no label) ──
-        item(key = "location") {
+        // ── City selector (no label) ──
+        item(key = "city") {
             Selector(
-                selectedValue = state.selectedLocation,
-                onClick = onLocationSelectorClick,
-                isExpanded = state.showLocationSheet,
+                selectedValue = state.selectedCity,
+                onClick = onCitySelectorClick,
+                isExpanded = state.showCitySheet,
                 placeholder = stringResource(Res.string.places_location_label),
                 modifier = Modifier
                     .fillMaxWidth()

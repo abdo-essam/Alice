@@ -30,6 +30,7 @@ val appModule = module {
     viewModel { BrandsViewModel(get()) }
     viewModel { ModelsViewModel(get()) }
     viewModel { CarDetailsViewModel(get()) }
-    viewModel { PlacesViewModel(get()) }
+    viewModel { PlacesViewModel(get(),get()) }
     viewModel { ProfileViewModel() }
+    viewModel { com.ae.alice.presentation.screens.main.MainViewModel(get(), get()) }
 }

@@ -66,6 +66,7 @@ fun BasicTextField(
     isError: Boolean = false,
     showTrailingDivider: Boolean = true,
     errorMessage: String? = null,
+    containerColor: Color = Theme.colorScheme.background.surface,
     shape: Shape = RoundedCornerShape(Theme.radius.md),
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -125,7 +126,7 @@ fun BasicTextField(
                 modifier = Modifier
                     .weight(1f)
                     .clip(shape)
-                    .background(color = Theme.colorScheme.background.surface)
+                    .background(color = containerColor)
                     .focusRequester(focusRequester)
                     .onFocusChanged { onFocusChanged(it.isFocused) }
             )

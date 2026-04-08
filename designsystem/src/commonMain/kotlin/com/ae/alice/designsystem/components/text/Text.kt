@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.TextUnit
 @Composable
 fun Text(
     text: String,
-    style: TextStyle,
+    style: TextStyle = TextStyle.Default,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
     fontSize: TextUnit = TextUnit.Unspecified,

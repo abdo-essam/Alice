@@ -45,6 +45,7 @@
 
     <!-- Places Screen -->
     <string name="places_search_placeholder">Search places...</string>
+    <string name="selector_search_country_placeholder">Search for country...</string>
     <string name="places_empty">No places found</string>
     <string name="places_error_default">An error occurred</string>
     <string name="places_location_label">Location</string>
@@ -76,4 +77,10 @@
 
     <!-- Dropdown -->
     <string name="dropdown_select">Select</string>
+    <!-- Countries -->
+    <string name="country_uae">UAE</string>
+    <string name="country_egypt">Egypt</string>
+    <string name="country_saudi_arabia">Saudi Arabia</string>
+    <string name="pick_your_country">Pick your country</string>
+    <string name="places_confirm">Confirm</string>
 </resources>

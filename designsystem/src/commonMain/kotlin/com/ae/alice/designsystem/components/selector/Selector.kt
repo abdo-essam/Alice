@@ -78,7 +78,7 @@ fun Selector(
             modifier = Modifier
                 .size(22.dp)
                 .rotate(chevronRotation),
-            tint = Theme.colorScheme.brand.brand
+            tint = Theme.colorScheme.primary.primary
         )
 
         // Value (centered, fills remaining space)

@@ -6,6 +6,7 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,16 +24,6 @@ import com.ae.alice.designsystem.components.text.Text
 import com.ae.alice.designsystem.theme.Theme
 import androidx.compose.ui.graphics.Color
 
-/**
- * Segmented tab row for filtering content — no paging, just tab selection.
- *
- * Appearance:
- * ┌───────────────────────────────────┐
- * │  [ Tab A ]  ║  [ ▣ Tab B ]       │
- * └───────────────────────────────────┘
- *
- * The selected tab gets an elevated surface background with brand-colored text.
- */
 @Composable
 fun SegmentTabRow(
     tabs: List<String>,
@@ -52,17 +43,18 @@ fun SegmentTabRow(
             .clip(RoundedCornerShape(Theme.radius.lg))
             .background(Theme.colorScheme.background.surface)
             .padding(Theme.spacing._8),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         tabs.forEachIndexed { index, title ->
             val isSelected = index == selectedIndex
 
             val backgroundColor by animateColorAsState(
-                targetValue = if (isSelected) Theme.colorScheme.brand.brand
+                targetValue = if (isSelected) Theme.colorScheme.primary.primary
                 else Color.Transparent,
                 animationSpec = spring(stiffness = Spring.StiffnessMediumLow)
             )
             val textColor by animateColorAsState(
-                targetValue = if (isSelected) Theme.colorScheme.brand.onBrand
+                targetValue = if (isSelected) Theme.colorScheme.primary.onPrimary
                 else Theme.colorScheme.shadeSecondary,
                 animationSpec = spring(stiffness = Spring.StiffnessMediumLow)
             )

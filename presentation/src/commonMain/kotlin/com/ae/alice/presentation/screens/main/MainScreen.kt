@@ -4,7 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.setValue
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.ui.Alignment
 import alice.presentation.generated.resources.Res
 import alice.presentation.generated.resources.ic_bookmark
 import alice.presentation.generated.resources.ic_bookmark_selected
@@ -28,19 +34,24 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.rememberCoroutineScope
+import com.ae.alice.presentation.screens.main.components.CountryPicker
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun MainScreen(
     onBrandClick: (Brand) -> Unit,
+    viewModel: MainViewModel = org.koin.compose.viewmodel.koinViewModel()
 ) {
+    val state by viewModel.state.collectAsState()
     var selectedTab by remember { mutableIntStateOf(0) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -54,17 +65,17 @@ fun MainScreen(
                     style = Theme.typography.title.large,
                     modifier = Modifier.padding(16.dp)
                 )
-                androidx.compose.material3.NavigationDrawerItem(
+                NavigationDrawerItem(
                     label = { Text("Home") },
                     selected = false,
                     onClick = { scope.launch { drawerState.close() } }
                 )
-                androidx.compose.material3.NavigationDrawerItem(
+                NavigationDrawerItem(
                     label = { Text("Categories") },
                     selected = false,
                     onClick = { scope.launch { drawerState.close() } }
                 )
-                androidx.compose.material3.NavigationDrawerItem(
+                NavigationDrawerItem(
                     label = { Text("Settings") },
                     selected = false,
                     onClick = { scope.launch { drawerState.close() } }
@@ -86,6 +97,28 @@ fun MainScreen(
                                     imageVector = Icons.Default.Menu,
                                     contentDescription = "Menu",
                                     tint = Theme.colorScheme.shadePrimary
+                                )
+                            }
+                        },
+                        trailingContent = {
+                            Row(
+                                modifier = Modifier
+                                    .background(
+                                        color = Theme.colorScheme.background.surfaceLow,
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .clickable {
+                                        viewModel.processIntent(MainIntent.ShowCountryPicker)
+                                    }
+                                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Text(text = state.selectedCountry.flagEmoji)
+                                Text(
+                                    text = state.selectedCountry.countryCodeName,
+                                    style = Theme.typography.label.large,
+                                    color = Theme.colorScheme.shadePrimary
                                 )
                             }
                         }
@@ -112,6 +145,18 @@ fun MainScreen(
                     notSelectedIcon = painterResource(Res.drawable.ic_profile),
                     title = stringResource(Res.string.nav_profile_ar),
                     entry = { selectedTab = 2 }
+                )
+            }
+        },
+        overlays = {
+            bottomSheet(isVisible = state.showCountryPicker) { overlayVisible ->
+                CountryPicker(
+                    isVisible = overlayVisible,
+                    currentCountry = state.selectedCountry,
+                    onDismiss = { viewModel.processIntent(MainIntent.HideCountryPicker) },
+                    onClickConfirm = { country: com.ae.alice.domain.entity.Country ->
+                        viewModel.processIntent(MainIntent.SelectCountry(country))
+                    }
                 )
             }
         }

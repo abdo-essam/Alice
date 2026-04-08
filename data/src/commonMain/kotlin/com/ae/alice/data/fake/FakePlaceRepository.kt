@@ -11,21 +11,29 @@ class FakePlaceRepository : PlaceRepository {
     private val savedPlaceIds = mutableSetOf<String>()
 
     private val locations = listOf(
-        Location("loc_01", "أبوظبي"),
-        Location("loc_02", "دبي"),
-        Location("loc_03", "الشارقة"),
-        Location("loc_04", "عجمان"),
-        Location("loc_05", "أم القيوين"),
-        Location("loc_06", "رأس الخيمة"),
-        Location("loc_07", "الفجيرة"),
-        Location("loc_08", "العين"),
-        Location("loc_09", "خورفكان"),
-        Location("loc_10", "دبا الفجيرة"),
-        Location("loc_11", "مدينة زايد"),
-        Location("loc_12", "الرويس"),
-        Location("loc_13", "دلما"),
-        Location("loc_14", "ليوا"),
-        Location("loc_15", "المرفأ"),
+        Location("loc_01", "أبوظبي", "AE"),
+        Location("loc_02", "دبي", "AE"),
+        Location("loc_03", "الشارقة", "AE"),
+        Location("loc_04", "عجمان", "AE"),
+        Location("loc_05", "أم القيوين", "AE"),
+        Location("loc_06", "رأس الخيمة", "AE"),
+        Location("loc_07", "الفجيرة", "AE"),
+        Location("loc_08", "العين", "AE"),
+        Location("loc_09", "خورفكان", "AE"),
+        Location("loc_10", "دبا الفجيرة", "AE"),
+        Location("loc_11", "مدينة زايد", "AE"),
+        Location("loc_12", "الرويس", "AE"),
+        Location("loc_13", "دلما", "AE"),
+        Location("loc_14", "ليوا", "AE"),
+        Location("loc_15", "المرفأ", "AE"),
+        // KSA
+        Location("loc_sa_01", "الرياض", "SA"),
+        Location("loc_sa_02", "جدة", "SA"),
+        Location("loc_sa_03", "مكة المكرمة", "SA"),
+        // Egypt
+        Location("loc_eg_01", "القاهرة", "EG"),
+        Location("loc_eg_02", "الإسكندرية", "EG"),
+        Location("loc_eg_03", "الجيزة", "EG"),
     )
 
     private val categories = listOf(
@@ -101,7 +109,8 @@ class FakePlaceRepository : PlaceRepository {
 
     override suspend fun getCategories(): List<ServiceCategory> = categories
 
-    override suspend fun getLocations(): List<Location> = locations
+    override suspend fun getLocations(countryCode: String?): List<Location> = 
+        if (countryCode == null) locations else locations.filter { it.countryCode == countryCode }
 
     override suspend fun getPlacesByCategory(categoryId: String, location: String): List<Place> =
         places.filter { it.categoryId == categoryId }.map {

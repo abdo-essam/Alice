@@ -76,4 +76,10 @@
 
     <!-- Dropdown -->
     <string name="dropdown_select">Select</string>
+    <!-- Countries -->
+    <string name="country_uae">UAE</string>
+    <string name="country_egypt">Egypt</string>
+    <string name="country_saudi_arabia">Saudi Arabia</string>
+    <string name="pick_your_country">Pick your country</string>
+    <string name="places_confirm">Confirm</string>
 </resources>

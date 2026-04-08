@@ -7,8 +7,13 @@ import com.ae.alice.data.fake.FakePlaceRepository
 import com.ae.alice.domain.repository.BrandRepository
 import com.ae.alice.domain.repository.CarModelRepository
 import com.ae.alice.domain.repository.PlaceRepository
+import com.ae.alice.domain.repository.AppPreferencesRepository
+import com.ae.alice.data.AppPreferencesRepositoryImpl
+import com.russhwolf.settings.Settings
 
 val dataModule = module {
+    single<Settings> { Settings() }
+    single<AppPreferencesRepository> { AppPreferencesRepositoryImpl(get()) }
     single<BrandRepository> { FakeBrandRepository() }
     single<CarModelRepository> { FakeCarModelRepository() }
     single<PlaceRepository> { FakePlaceRepository() }

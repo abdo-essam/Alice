@@ -53,4 +53,10 @@
     <string name="places_category_label">التصنيف</string>
     <string name="places_details">التفاصيل</string>
     <string name="places_save">حفظ</string>
+    <!-- Countries -->
+    <string name="country_uae">الإمارات</string>
+    <string name="country_egypt">مصر</string>
+    <string name="country_saudi_arabia">السعودية</string>
+    <string name="pick_your_country">اختر دولتك</string>
+    <string name="places_confirm">تأكيد</string>
 </resources>

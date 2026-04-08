@@ -13,17 +13,22 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
+import com.ae.alice.domain.repository.AppPreferencesRepository
+
 @OptIn(FlowPreview::class)
 class PlacesViewModel(
-    private val placeRepository: PlaceRepository
+    private val placeRepository: PlaceRepository,
+    private val appPreferencesRepository: AppPreferencesRepository
 ) : BaseViewModel<PlacesState, PlacesIntent, PlacesEffect>(PlacesState()) {
 
     private val searchFlow = MutableSharedFlow<String>(extraBufferCapacity = 1)
     private var searchJob: Job? = null
 
+    private var currentCountryCode: String? = null
+
     init {
         observeSearch()
-        loadData()
+        observeCountry()
     }
 
     override fun handleIntent(intent: PlacesIntent) {
@@ -52,12 +57,25 @@ class PlacesViewModel(
             .launchIn(viewModelScope)
     }
 
+    private fun observeCountry() {
+        tryExecute(
+            call = {
+                appPreferencesRepository.selectedCountry.collect { country ->
+                    currentCountryCode = country.name // Store the code (e.g. AE, EG)
+                    loadData()
+                }
+            },
+            onSuccess = {},
+            onError = {}
+        )
+    }
+
     private fun loadData() {
         updateState { copy(isLoading = true, error = null) }
         tryExecute(
             call = {
                 val categories = placeRepository.getCategories()
-                val locations = placeRepository.getLocations()
+                val locations = placeRepository.getLocations(currentCountryCode)
                 Pair(categories, locations)
             },
             onSuccess = { (categories, locations) ->

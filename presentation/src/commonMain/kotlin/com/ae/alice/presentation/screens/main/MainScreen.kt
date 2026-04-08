@@ -73,7 +73,10 @@ fun MainScreen(
         }
     ) {
         Scaffold(
-            backgroundColor = Theme.colorScheme.background.surfaceLow,
+            backgroundColor = when (selectedTab) {
+                2 -> Theme.colorScheme.background.surface
+                else -> Theme.colorScheme.background.surfaceLow
+            },
             topBar = {
                 when (selectedTab) {
                     0 -> HomeAppBar(

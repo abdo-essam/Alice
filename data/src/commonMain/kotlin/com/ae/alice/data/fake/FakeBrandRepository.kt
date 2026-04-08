@@ -82,24 +82,6 @@ class FakeBrandRepository : BrandRepository {
             description = "Ferrari S.p.A. is an Italian luxury sports car manufacturer.",
             modelsCount = 6
         ),
-        Brand(
-            id = "9",
-            name = "Lamborghini",
-            logoUrl = "https://www.carlogos.org/car-logos/lamborghini-logo-1998.png",
-            country = "Italy",
-            foundedYear = 1963,
-            description = "Automobili Lamborghini S.p.A. is an Italian manufacturer of luxury sports cars and SUVs.",
-            modelsCount = 5
-        ),
-        Brand(
-            id = "10",
-            name = "Tesla",
-            logoUrl = "https://www.carlogos.org/car-logos/tesla-logo-2003.png",
-            country = "USA",
-            foundedYear = 2003,
-            description = "Tesla, Inc. is an American electric vehicle and clean energy company.",
-            modelsCount = 4
-        )
     )
     
     override suspend fun getBrands(): List<Brand> = brands

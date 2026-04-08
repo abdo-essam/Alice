@@ -17,11 +17,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import alice.presentation.generated.resources.Res
-import alice.presentation.generated.resources.places_confirm
 import alice.presentation.generated.resources.pick_your_country
 import com.ae.alice.designsystem.components.bottomSheet.BottomSheet
-import com.ae.alice.designsystem.components.button.PrimaryButton
 import com.ae.alice.designsystem.components.text.Text
+import com.ae.alice.designsystem.components.textfield.SearchField
 import com.ae.alice.designsystem.theme.Theme
 import com.ae.alice.domain.entity.Country
 import org.jetbrains.compose.resources.stringResource
@@ -36,7 +35,13 @@ fun ScaffoldScope.CountryPicker(
     onClickConfirm: (Country) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var selectedCountry by remember(currentCountry) { mutableStateOf(currentCountry) }
+    var searchQuery by remember { mutableStateOf("") }
+    val filteredCountries = remember(searchQuery) {
+        Country.entries.filter {
+            it.countryName.contains(searchQuery, ignoreCase = true) ||
+            it.countryCodeName.contains(searchQuery, ignoreCase = true)
+        }
+    }
 
     BottomSheet(
         isVisible = isVisible,
@@ -48,41 +53,43 @@ fun ScaffoldScope.CountryPicker(
                 color = Theme.colorScheme.shadePrimary,
                 style = Theme.typography.title.small,
                 modifier = Modifier.padding(
-                    horizontal = Theme.spacing._16,
-                    vertical = Theme.spacing._24
+                    start = Theme.spacing._16,
+                    end = Theme.spacing._16,
+                    top = Theme.spacing._24,
+                    bottom = Theme.spacing._12
                 )
             )
 
+            SearchField(
+                value = searchQuery,
+                onValueChange = { searchQuery = it },
+                onClear = { searchQuery = "" },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Theme.spacing._16, vertical = Theme.spacing._8)
+            )
+
             LazyColumn(
-                contentPadding = PaddingValues(bottom = 72.dp),
+                contentPadding = PaddingValues(bottom = 32.dp),
                 verticalArrangement = Arrangement.spacedBy(Theme.spacing._8),
-                modifier = Modifier.padding(horizontal = Theme.spacing._16)
+                modifier = Modifier.padding(
+                    horizontal = Theme.spacing._16,
+                    vertical = Theme.spacing._8
+                )
             ) {
                 items(
-                    items = Country.entries,
+                    items = filteredCountries,
                     key = { it.name }
                 ) { country ->
                     CountrySelectableRowItem(
                         country = country,
-                        isSelected = country == selectedCountry,
-                        onClick = { selectedCountry = country },
+                        isSelected = country == currentCountry,
+                        onClick = { 
+                            onClickConfirm(country)
+                            onDismiss()
+                        },
                     )
                 }
-            }
-
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Theme.colorScheme.background.surface)
-                    .padding(horizontal = Theme.spacing._16, vertical = Theme.spacing._12)
-            ) {
-                PrimaryButton(
-                    text = stringResource(Res.string.places_confirm),
-                    isEnabled = currentCountry != selectedCountry,
-                    onClick = { onClickConfirm(selectedCountry) },
-                    modifier = Modifier.fillMaxWidth()
-                )
             }
         }
     )

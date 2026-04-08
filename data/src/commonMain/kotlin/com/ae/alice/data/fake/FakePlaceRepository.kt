@@ -1,6 +1,6 @@
 package com.ae.alice.data.fake
 
-import com.ae.alice.domain.entity.Location
+import com.ae.alice.domain.entity.City
 import com.ae.alice.domain.entity.Place
 import com.ae.alice.domain.entity.ServiceCategory
 import com.ae.alice.domain.entity.ServiceTab
@@ -10,30 +10,75 @@ class FakePlaceRepository : PlaceRepository {
 
     private val savedPlaceIds = mutableSetOf<String>()
 
-    private val locations = listOf(
-        Location("loc_01", "أبوظبي", "AE"),
-        Location("loc_02", "دبي", "AE"),
-        Location("loc_03", "الشارقة", "AE"),
-        Location("loc_04", "عجمان", "AE"),
-        Location("loc_05", "أم القيوين", "AE"),
-        Location("loc_06", "رأس الخيمة", "AE"),
-        Location("loc_07", "الفجيرة", "AE"),
-        Location("loc_08", "العين", "AE"),
-        Location("loc_09", "خورفكان", "AE"),
-        Location("loc_10", "دبا الفجيرة", "AE"),
-        Location("loc_11", "مدينة زايد", "AE"),
-        Location("loc_12", "الرويس", "AE"),
-        Location("loc_13", "دلما", "AE"),
-        Location("loc_14", "ليوا", "AE"),
-        Location("loc_15", "المرفأ", "AE"),
-        // KSA
-        Location("loc_sa_01", "الرياض", "SA"),
-        Location("loc_sa_02", "جدة", "SA"),
-        Location("loc_sa_03", "مكة المكرمة", "SA"),
-        // Egypt
-        Location("loc_eg_01", "القاهرة", "EG"),
-        Location("loc_eg_02", "الإسكندرية", "EG"),
-        Location("loc_eg_03", "الجيزة", "EG"),
+    private val cities = listOf(
+        City("loc_dz_01", "الجزائر العاصمة", "DZ"),
+        City("loc_dz_02", "وهران", "DZ"),
+        City("loc_dz_03", "قسنطينة", "DZ"),
+        City("loc_bh_01", "المنامة", "BH"),
+        City("loc_bh_02", "المحرق", "BH"),
+        City("loc_bh_03", "الرفاع", "BH"),
+        City("loc_eg_01", "القاهرة", "EG"),
+        City("loc_eg_02", "الإسكندرية", "EG"),
+        City("loc_eg_03", "الجيزة", "EG"),
+        City("loc_ir_01", "طهران", "IR"),
+        City("loc_ir_02", "مشهد", "IR"),
+        City("loc_ir_03", "أصفهان", "IR"),
+        City("loc_iq_01", "بغداد", "IQ"),
+        City("loc_iq_02", "البصرة", "IQ"),
+        City("loc_iq_03", "أربيل", "IQ"),
+        City("loc_jo_01", "عمان", "JO"),
+        City("loc_jo_02", "إربد", "JO"),
+        City("loc_jo_03", "الزرقاء", "JO"),
+        City("loc_kw_01", "مدينة الكويت", "KW"),
+        City("loc_kw_02", "الأحمدي", "KW"),
+        City("loc_kw_03", "الفروانية", "KW"),
+        City("loc_lb_01", "بيروت", "LB"),
+        City("loc_lb_02", "طرابلس", "LB"),
+        City("loc_lb_03", "صيدا", "LB"),
+        City("loc_ly_01", "طرابلس", "LY"),
+        City("loc_ly_02", "بنغازي", "LY"),
+        City("loc_ly_03", "مصراتة", "LY"),
+        City("loc_ma_01", "الدار البيضاء", "MA"),
+        City("loc_ma_02", "الرباط", "MA"),
+        City("loc_ma_03", "فاس", "MA"),
+        City("loc_om_01", "مسقط", "OM"),
+        City("loc_om_02", "صلالة", "OM"),
+        City("loc_om_03", "صحار", "OM"),
+        City("loc_ps_01", "القدس", "PS"),
+        City("loc_ps_02", "غزة", "PS"),
+        City("loc_ps_03", "رام الله", "PS"),
+        City("loc_qa_01", "الدوحة", "QA"),
+        City("loc_qa_02", "الريان", "QA"),
+        City("loc_qa_03", "الوكرة", "QA"),
+        City("loc_sa_01", "الرياض", "SA"),
+        City("loc_sa_02", "جدة", "SA"),
+        City("loc_sa_03", "مكة المكرمة", "SA"),
+        City("loc_so_01", "مقديشو", "SO"),
+        City("loc_so_02", "هرجيسا", "SO"),
+        City("loc_so_03", "كسمايو", "SO"),
+        City("loc_sd_01", "الخرطوم", "SD"),
+        City("loc_sd_02", "أم درمان", "SD"),
+        City("loc_sd_03", "بورتسودان", "SD"),
+        City("loc_sy_01", "دمشق", "SY"),
+        City("loc_sy_02", "حلب", "SY"),
+        City("loc_sy_03", "حمص", "SY"),
+        City("loc_tn_01", "تونس العاصمة", "TN"),
+        City("loc_tn_02", "صفاقس", "TN"),
+        City("loc_tn_03", "سوسة", "TN"),
+        City("loc_01", "أبوظبي", "AE"),
+        City("loc_02", "دبي", "AE"),
+        City("loc_03", "الشارقة", "AE"),
+        City("loc_04", "عجمان", "AE"),
+        City("loc_05", "أم القيوين", "AE"),
+        City("loc_06", "رأس الخيمة", "AE"),
+        City("loc_07", "الفجيرة", "AE"),
+        City("loc_08", "العين", "AE"),
+        City("loc_09", "خورفكان", "AE"),
+        City("loc_10", "دبا الفجيرة", "AE"),
+        City("loc_11", "مدينة زايد", "AE"),
+        City("loc_ye_01", "صنعاء", "YE"),
+        City("loc_ye_02", "عدن", "YE"),
+        City("loc_ye_03", "تعز", "YE"),
     )
 
     private val categories = listOf(
@@ -109,15 +154,15 @@ class FakePlaceRepository : PlaceRepository {
 
     override suspend fun getCategories(): List<ServiceCategory> = categories
 
-    override suspend fun getLocations(countryCode: String?): List<Location> = 
-        if (countryCode == null) locations else locations.filter { it.countryCode == countryCode }
+    override suspend fun getCities(countryCode: String?): List<City> = 
+        if (countryCode == null) cities else cities.filter { it.countryCode == countryCode }
 
-    override suspend fun getPlacesByCategory(categoryId: String, location: String): List<Place> =
+    override suspend fun getPlacesByCategory(categoryId: String, city: String): List<Place> =
         places.filter { it.categoryId == categoryId }.map {
             it.copy(isSaved = it.id in savedPlaceIds)
         }
 
-    override suspend fun searchPlaces(query: String, location: String): List<Place> {
+    override suspend fun searchPlaces(query: String, city: String): List<Place> {
         if (query.isBlank()) return emptyList()
         return places.filter {
             it.name.contains(query, ignoreCase = true) ||

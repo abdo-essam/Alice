@@ -1,6 +1,6 @@
 package com.ae.alice.presentation.screens.places
 
-import com.ae.alice.domain.entity.Location
+import com.ae.alice.domain.entity.City
 import com.ae.alice.domain.entity.Place
 import com.ae.alice.domain.entity.ServiceCategory
 import com.ae.alice.domain.entity.ServiceTab
@@ -17,9 +17,9 @@ data class PlacesState(
     val filteredCategories: List<ServiceCategory> = emptyList(),
     val selectedCategory: ServiceCategory? = null,
     val places: List<Place> = emptyList(),
-    val locations: List<Location> = emptyList(),
-    val selectedLocation: String = "دبي",
-    val showLocationSheet: Boolean = false,
+    val cities: List<City> = emptyList(),
+    val selectedCity: String = "دبي",
+    val showCitySheet: Boolean = false,
     val showCategorySheet: Boolean = false,
     val error: String? = null
 ) : UiState
@@ -29,11 +29,11 @@ sealed interface PlacesIntent : UiIntent {
     data class SelectTab(val tab: ServiceTab) : PlacesIntent
     data class SelectCategory(val category: ServiceCategory) : PlacesIntent
     data class Search(val query: String) : PlacesIntent
-    data class SelectLocation(val location: String) : PlacesIntent
+    data class SelectCity(val city: String) : PlacesIntent
     data class ToggleSave(val placeId: String) : PlacesIntent
     data class PlaceDetailsClicked(val place: Place) : PlacesIntent
-    data object ShowLocationSheet : PlacesIntent
-    data object DismissLocationSheet : PlacesIntent
+    data object ShowCitySheet : PlacesIntent
+    data object DismissCitySheet : PlacesIntent
     data object ShowCategorySheet : PlacesIntent
     data object DismissCategorySheet : PlacesIntent
 }

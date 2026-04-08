@@ -49,10 +49,10 @@ fun AppNavHost(
 
         composable<Routes.Places> { backStackEntry ->
             val savedStateHandle = backStackEntry.savedStateHandle
-            val selectedLocation = savedStateHandle.get<String>("selected_location")
+            val selectedCity = savedStateHandle.get<String>("selected_city")
 
             PlacesScreen(
-                passedLocation = selectedLocation,
+                passedCity = selectedCity,
                 onNavigateToDetails = {
 
                 },

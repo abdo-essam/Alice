@@ -37,13 +37,13 @@ class PlacesViewModel(
             is PlacesIntent.SelectTab -> onTabSelected(intent.tab)
             is PlacesIntent.SelectCategory -> onCategorySelected(intent.category)
             is PlacesIntent.Search -> onSearch(intent.query)
-            is PlacesIntent.SelectLocation -> onLocationSelected(intent.location)
+            is PlacesIntent.SelectCity -> onCitySelected(intent.city)
             is PlacesIntent.ToggleSave -> onToggleSave(intent.placeId)
             is PlacesIntent.PlaceDetailsClicked -> {
                 emitEffect(PlacesEffect.NavigateToPlaceDetails(intent.place))
             }
-            is PlacesIntent.ShowLocationSheet -> updateState { copy(showLocationSheet = true) }
-            is PlacesIntent.DismissLocationSheet -> updateState { copy(showLocationSheet = false) }
+            is PlacesIntent.ShowCitySheet -> updateState { copy(showCitySheet = true) }
+            is PlacesIntent.DismissCitySheet -> updateState { copy(showCitySheet = false) }
             is PlacesIntent.ShowCategorySheet -> updateState { copy(showCategorySheet = true) }
             is PlacesIntent.DismissCategorySheet -> updateState { copy(showCategorySheet = false) }
         }
@@ -75,17 +75,17 @@ class PlacesViewModel(
         tryExecute(
             call = {
                 val categories = placeRepository.getCategories()
-                val locations = placeRepository.getLocations(currentCountryCode)
-                Pair(categories, locations)
+                val cities = placeRepository.getCities(currentCountryCode)
+                Pair(categories, cities)
             },
-            onSuccess = { (categories, locations) ->
+            onSuccess = { (categories, cities) ->
                 val filtered = categories.filter { it.tab == currentState.selectedTab }
                 val firstCategory = filtered.firstOrNull()
                 updateState {
                     copy(
                         isLoading = false,
                         categories = categories,
-                        locations = locations,
+                        cities = cities,
                         filteredCategories = filtered,
                         selectedCategory = firstCategory
                     )
@@ -125,7 +125,7 @@ class PlacesViewModel(
     private fun loadPlacesForCategory(categoryId: String) {
         updateState { copy(isPlacesLoading = true) }
         tryExecute(
-            call = { placeRepository.getPlacesByCategory(categoryId, currentState.selectedLocation) },
+            call = { placeRepository.getPlacesByCategory(categoryId, currentState.selectedCity) },
             onSuccess = { places -> updateState { copy(places = places, isPlacesLoading = false) } },
             onError = { e ->
                 updateState { copy(isPlacesLoading = false, error = e.message ?: "Failed to load places") }
@@ -147,7 +147,7 @@ class PlacesViewModel(
         if (query.isBlank()) return
         updateState { copy(isPlacesLoading = true) }
         tryExecute(
-            call = { placeRepository.searchPlaces(query, currentState.selectedLocation) },
+            call = { placeRepository.searchPlaces(query, currentState.selectedCity) },
             onSuccess = { places -> updateState { copy(places = places, isPlacesLoading = false) } },
             onError = { e ->
                 updateState { copy(isPlacesLoading = false) }
@@ -156,9 +156,9 @@ class PlacesViewModel(
         )
     }
 
-    private fun onLocationSelected(location: String) {
-        if (location == currentState.selectedLocation) return
-        updateState { copy(selectedLocation = location, showLocationSheet = false) }
+    private fun onCitySelected(city: String) {
+        if (city == currentState.selectedCity) return
+        updateState { copy(selectedCity = city, showCitySheet = false) }
         if (currentState.searchQuery.isNotBlank()) {
             executeSearch(currentState.searchQuery)
         } else {

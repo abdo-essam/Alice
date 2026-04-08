@@ -50,10 +50,5 @@ fun CountrySelectableRowItem(
             textAlign = TextAlign.Start
         )
 
-        Text(
-            text = country.callingCode,
-            style = Theme.typography.body.small,
-            color = if (isSelected) Theme.colorScheme.primary.primary else Theme.colorScheme.shadeTertiary,
-        )
     }
 }

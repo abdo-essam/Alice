@@ -10,11 +10,8 @@ import alice.designsystem.generated.resources.ic_delete_search
 import alice.designsystem.generated.resources.ic_search
 import com.ae.alice.designsystem.theme.Theme
 import org.jetbrains.compose.resources.painterResource
+import androidx.compose.ui.graphics.Color
 
-/**
- * MENA-style search field — wraps [BasicTextField] with a search leading icon
- * and a conditional clear trailing icon. Matches MENA's SearchHeader TextField pattern.
- */
 @Composable
 fun SearchField(
     value: String,
@@ -26,6 +23,7 @@ fun SearchField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     focusRequester: FocusRequester = FocusRequester(),
     onFocusChanged: (Boolean) -> Unit = {},
+    containerColor: Color = Theme.colorScheme.background.surface,
 ) {
     BasicTextField(
         value = value,
@@ -40,6 +38,7 @@ fun SearchField(
         keyboardActions = keyboardActions,
         focusRequester = focusRequester,
         onFocusChanged = onFocusChanged,
+        containerColor = containerColor,
         modifier = modifier,
     )
 }

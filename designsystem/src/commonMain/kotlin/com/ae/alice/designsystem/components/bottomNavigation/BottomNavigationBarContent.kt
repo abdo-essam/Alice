@@ -56,7 +56,7 @@ fun BottomNavigationBarContent(
                         bottomStart = Theme.radius.xs
                     )
                 )
-                .background(Theme.colorScheme.brand.brand)
+                .background(Theme.colorScheme.primary.primary)
                 .size(indicatorWidth, 4.dp)
         )
     }

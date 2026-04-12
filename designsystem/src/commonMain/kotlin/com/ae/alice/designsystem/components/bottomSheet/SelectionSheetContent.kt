@@ -125,7 +125,7 @@ private fun SelectionItem(
             .padding(vertical = Theme.spacing._2)
             .clip(RoundedCornerShape(Theme.radius.md))
             .background(
-                if (isSelected) Theme.colorScheme.brand.brand.copy(alpha = 0.08f)
+                if (isSelected) Theme.colorScheme.primary.primary.copy(alpha = 0.08f)
                 else Theme.colorScheme.background.surface
             )
             .clickable(
@@ -142,7 +142,7 @@ private fun SelectionItem(
             text = text,
             style = if (isSelected) Theme.typography.label.large
             else Theme.typography.body.medium,
-            color = if (isSelected) Theme.colorScheme.brand.brand
+            color = if (isSelected) Theme.colorScheme.primary.primary
             else Theme.colorScheme.shadePrimary,
         )
     }

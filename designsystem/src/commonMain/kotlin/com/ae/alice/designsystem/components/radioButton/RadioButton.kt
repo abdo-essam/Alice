@@ -42,7 +42,7 @@ fun RadioButton(
         targetValue = if (isSelected) 6.dp else 1.dp
     )
     val selectionBorderColor by animateColorAsState(
-        targetValue = if (isSelected) Theme.colorScheme.brand.brand else Theme.colorScheme.stroke
+        targetValue = if (isSelected) Theme.colorScheme.primary.primary else Theme.colorScheme.stroke
     )
     val disabledBorderColor by animateColorAsState(
         targetValue = if (isSelected) Theme.colorScheme.disabled else Theme.colorScheme.border.disabled

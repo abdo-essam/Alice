@@ -26,9 +26,9 @@ fun PrimaryButton(
     isEnabled: Boolean = true,
     isLoading: Boolean = false,
     containerColor: Color = Theme.colorScheme.primary.primary,
-    disabledContainerColor: Color = Theme.colorScheme.disabled,
+    disabledContainerColor: Color = Theme.colorScheme.primary.primary.copy(alpha = 0.5f),
     contentColor: Color = Theme.colorScheme.primary.onPrimary,
-    disabledContentColor: Color = Theme.colorScheme.primary.onPrimary.copy(alpha = 0.6f),
+    disabledContentColor: Color = Theme.colorScheme.primary.onPrimary.copy(alpha = 0.8f),
     contentPadding: PaddingValues = PaddingValues(
         horizontal = Theme.spacing._16,
         vertical = 13.dp

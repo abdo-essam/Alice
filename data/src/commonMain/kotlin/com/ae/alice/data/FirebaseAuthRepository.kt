@@ -23,6 +23,18 @@ class FirebaseAuthRepository : AuthRepository {
         )
     }
 
+    override suspend fun loginWithGoogle(idToken: String, accessToken: String?): User {
+        val credential = dev.gitlive.firebase.auth.GoogleAuthProvider.credential(idToken, accessToken)
+        val result = auth.signInWithCredential(credential)
+        val firebaseUser = result.user
+            ?: throw IllegalStateException("Google Login failed: no user returned")
+        return User(
+            id = firebaseUser.uid,
+            email = firebaseUser.email ?: "",
+            displayName = firebaseUser.displayName
+        )
+    }
+
     override suspend fun register(email: String, password: String, displayName: String): User {
         val result = auth.createUserWithEmailAndPassword(email, password)
         val firebaseUser = result.user

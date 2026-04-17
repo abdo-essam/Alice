@@ -17,6 +17,7 @@ import com.ae.alice.designsystem.theme.AliceTheme
 import com.ae.alice.domain.repository.AuthRepository
 import com.ae.alice.navigation.AppNavHost
 import com.ae.alice.navigation.Routes
+import dev.gitlive.firebase.auth.GoogleAuthProvider
 import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
 
@@ -41,6 +42,13 @@ fun App() {
                 var startDestination by remember { mutableStateOf<Any?>(null) }
 
                 LaunchedEffect(Unit) {
+                    // Initialize Google Auth using BuildKonfig
+                    com.mmk.kmpauth.google.GoogleAuthProvider.create(
+                        credentials = com.mmk.kmpauth.google.GoogleAuthCredentials(
+                            serverId = BuildKonfig.WEB_CLIENT_ID
+                        )
+                    )
+                    
                     val user = authRepository.getCurrentUser()
                     // TEMPORARY FIX: Forcing Routes.Login for UI testing.
                     // Change back to `if (user != null) Routes.Main else Routes.Login` for production.

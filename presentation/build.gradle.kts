@@ -33,6 +33,11 @@ kotlin {
             implementation(compose.materialIconsExtended)
             implementation(compose.ui)
             implementation(compose.components.resources)
+
+            // Auth
+            implementation(libs.kmpauth.google)
+            implementation(libs.kmpauth.firebase)
+            implementation(libs.kmpauth.uihelper)
             
             // Lifecycle
             implementation(libs.kotlinx.coroutines.core)

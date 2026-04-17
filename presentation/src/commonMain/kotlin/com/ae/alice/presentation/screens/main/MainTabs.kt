@@ -103,6 +103,6 @@ fun ArchiveTab() {
 }
 
 @Composable
-fun ProfileTab() {
-    ProfileScreen()
+fun ProfileTab(onLogout: () -> Unit = {}) {
+    ProfileScreen(onLogout = onLogout)
 }

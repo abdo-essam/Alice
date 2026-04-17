@@ -49,6 +49,9 @@ import com.ae.alice.presentation.screens.auth.components.PageDescription
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.runtime.setValue
 
 @Composable
 fun LoginScreen(
@@ -59,18 +62,34 @@ fun LoginScreen(
 ) {
     val state by viewModel.state.collectAsState()
 
+    var errorMsg by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf<String?>(null) }
+
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
             when (effect) {
                 LoginEffect.NavigateToMain -> onNavigateToMain()
                 LoginEffect.NavigateToRegister -> onNavigateToRegister()
                 LoginEffect.NavigateToForgotPassword -> onNavigateToForgotPassword()
-                is LoginEffect.ShowError -> {}
+                is LoginEffect.ShowError -> {
+                    errorMsg = effect.message
+                }
             }
         }
     }
 
-    Scaffold(backgroundColor = Theme.colorScheme.background.surfaceLow) {
+    Scaffold(
+        backgroundColor = Theme.colorScheme.background.surfaceLow,
+        snackBar = {
+            com.ae.alice.designsystem.components.snackbar.SnackBar(
+                isVisible = errorMsg != null,
+                title = "خطأ", // "Error" in Arabic
+                message = errorMsg ?: "",
+                leadingIcon = androidx.compose.ui.graphics.vector.rememberVectorPainter(Icons.Default.Warning),
+                tint = Theme.colorScheme.error,
+                onDismiss = { errorMsg = null }
+            )
+        }
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -161,10 +180,18 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            GoogleSignInButton(
-                onClick = { viewModel.processIntent(LoginIntent.GoogleSignInClicked) },
-                modifier = Modifier.fillMaxWidth()
-            )
+            com.mmk.kmpauth.google.GoogleButtonUiContainer(
+                onGoogleSignInResult = { googleUser: com.mmk.kmpauth.google.GoogleUser? ->
+                    if (googleUser != null) {
+                        viewModel.loginWithGoogle(googleUser.idToken ?: "", null)
+                    }
+                }
+            ) {
+                GoogleSignInButton(
+                    onClick = { this.onClick() },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
 
             Spacer(modifier = Modifier.height(8.dp))
 

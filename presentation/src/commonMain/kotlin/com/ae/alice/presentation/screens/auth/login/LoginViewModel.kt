@@ -24,7 +24,10 @@ class LoginViewModel(
             LoginIntent.LoginClicked -> login()
             LoginIntent.RegisterClicked -> emitEffect(LoginEffect.NavigateToRegister)
             LoginIntent.ForgotPasswordClicked -> emitEffect(LoginEffect.NavigateToForgotPassword)
-            LoginIntent.GoogleSignInClicked -> { /* TODO: Implement Google Sign In */ }
+            LoginIntent.GoogleSignInClicked -> {
+                // UI handles Google Sign in with GoogleButtonUiContainer. 
+                // Once successful, it will call loginWithGoogle() directly on ViewModel.
+            }
             LoginIntent.SkipClicked -> emitEffect(LoginEffect.NavigateToMain)
         }
     }
@@ -39,6 +42,20 @@ class LoginViewModel(
             } catch (e: Exception) {
                 updateState { copy(isLoading = false) }
                 emitEffect(LoginEffect.ShowError(e.message ?: "Login failed"))
+            }
+        }
+    }
+
+    fun loginWithGoogle(idToken: String, accessToken: String?) {
+        viewModelScope.launch(Dispatchers.Default) {
+            updateState { copy(isLoading = true) }
+            try {
+                authRepository.loginWithGoogle(idToken, accessToken)
+                updateState { copy(isLoading = false) }
+                emitEffect(LoginEffect.NavigateToMain)
+            } catch (e: Exception) {
+                updateState { copy(isLoading = false) }
+                emitEffect(LoginEffect.ShowError(e.message ?: "Google Sign-In failed"))
             }
         }
     }

@@ -76,6 +76,11 @@ fun AppNavHost(
                     selectedTab = selectedTab,
                     onBrandClick = { brand ->
                         navController.navigate(Routes.Models(brand.id, brand.name))
+                    },
+                    onLogout = {
+                        navController.navigate(Routes.Login) {
+                            popUpTo(Routes.Main) { inclusive = true }
+                        }
                     }
                 )
             }

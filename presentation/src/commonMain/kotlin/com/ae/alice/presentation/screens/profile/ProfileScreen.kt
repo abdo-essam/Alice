@@ -68,6 +68,7 @@ import org.koin.compose.viewmodel.koinViewModel
  */
 @Composable
 fun ProfileScreen(
+    onLogout: () -> Unit = {},
     viewModel: ProfileViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -81,6 +82,7 @@ fun ProfileScreen(
         viewModel.effect.collect { effect ->
             when (effect) {
                 is ProfileEffect.SwitchLanguage -> isLanguageDialogOpen = true
+                ProfileEffect.LoggedOut -> onLogout()
                 else -> {}
             }
         }

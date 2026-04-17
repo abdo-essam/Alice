@@ -32,7 +32,10 @@ class RegisterViewModel(
             }
             RegisterIntent.RegisterClicked -> register()
             RegisterIntent.LoginClicked -> emitEffect(RegisterEffect.NavigateToLogin)
-            RegisterIntent.GoogleSignInClicked -> { /* TODO: Implement Google Sign In */ }
+            RegisterIntent.GoogleSignInClicked -> {
+                // UI handles Google Sign in with GoogleButtonUiContainer. 
+                // Once successful, it will call loginWithGoogle() directly on ViewModel.
+            }
             RegisterIntent.SkipClicked -> emitEffect(RegisterEffect.NavigateToMain)
         }
     }
@@ -51,6 +54,20 @@ class RegisterViewModel(
             } catch (e: Exception) {
                 updateState { copy(isLoading = false) }
                 emitEffect(RegisterEffect.ShowError(e.message ?: "Registration failed"))
+            }
+        }
+    }
+
+    fun loginWithGoogle(idToken: String, accessToken: String?) {
+        viewModelScope.launch(Dispatchers.Default) {
+            updateState { copy(isLoading = true) }
+            try {
+                authRepository.loginWithGoogle(idToken, accessToken)
+                updateState { copy(isLoading = false) }
+                emitEffect(RegisterEffect.NavigateToMain)
+            } catch (e: Exception) {
+                updateState { copy(isLoading = false) }
+                emitEffect(RegisterEffect.ShowError(e.message ?: "Google Sign-In failed"))
             }
         }
     }

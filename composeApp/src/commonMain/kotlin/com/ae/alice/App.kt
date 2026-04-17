@@ -42,7 +42,9 @@ fun App() {
 
                 LaunchedEffect(Unit) {
                     val user = authRepository.getCurrentUser()
-                    startDestination = if (user != null) Routes.Main else Routes.Login
+                    // TEMPORARY FIX: Forcing Routes.Login for UI testing.
+                    // Change back to `if (user != null) Routes.Main else Routes.Login` for production.
+                    startDestination = Routes.Login
                 }
 
                 startDestination?.let { dest ->

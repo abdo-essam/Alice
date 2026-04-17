@@ -79,4 +79,24 @@
     <string name="profile_invite_friends_subtitle">واحصل على هدايا</string>
     <string name="share_app_title">تحميل تطبيق أليس</string>
     <string name="share_app_message">اكتشف أروع سياراتك عبر هذا التطبيق المميز!</string>
+
+    <!-- Auth -->
+    <string name="auth_welcome_back">مرحباً بعودتك</string>
+    <string name="auth_login_subtitle">سجّل الدخول للمتابعة</string>
+    <string name="auth_email_label">البريد الإلكتروني</string>
+    <string name="auth_password_label">كلمة المرور</string>
+    <string name="auth_confirm_password_label">تأكيد كلمة المرور</string>
+    <string name="auth_display_name_label">الاسم الكامل</string>
+    <string name="auth_forgot_password">نسيت كلمة المرور؟</string>
+    <string name="auth_login_btn">تسجيل الدخول</string>
+    <string name="auth_new_here">جديد هنا؟</string>
+    <string name="auth_register_now">سجّل الآن</string>
+    <string name="auth_create_account_title">إنشاء حساب</string>
+    <string name="auth_create_account_subtitle">أدخل بياناتك للبدء</string>
+    <string name="auth_create_btn">إنشاء الحساب</string>
+    <string name="auth_already_have_account">لديك حساب بالفعل؟</string>
+    <string name="auth_login_link">تسجيل الدخول</string>
+    <string name="auth_register_title">إنشاء حساب</string>
+    <string name="auth_register_btn">تسجيل</string>
+    <string name="auth_login_now">سجّل الدخول</string>
 </resources>

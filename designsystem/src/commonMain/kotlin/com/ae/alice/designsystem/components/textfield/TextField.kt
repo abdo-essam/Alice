@@ -1,4 +1,4 @@
-package com.ae.alice.designsystem.components.textField
+package com.ae.alice.designsystem.components.textfield
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions

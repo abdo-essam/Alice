@@ -26,6 +26,8 @@ kotlin {
             implementation(libs.multiplatform.settings)
             implementation(libs.multiplatform.settings.coroutines)
             implementation(libs.multiplatform.settings.no.arg)
+            implementation(libs.gitlive.firebase.auth)
+            implementation(libs.gitlive.firebase.common)
         }
     }
 }

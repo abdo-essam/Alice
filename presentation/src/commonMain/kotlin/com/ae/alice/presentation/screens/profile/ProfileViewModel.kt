@@ -36,7 +36,7 @@ class ProfileViewModel : ViewModel() {
                 ProfileIntent.EditProfile -> _effect.emit(ProfileEffect.NavigateToEditProfile)
                 ProfileIntent.ChangePassword -> _effect.emit(ProfileEffect.NavigateToChangePassword)
                 ProfileIntent.ManageAddresses -> _effect.emit(ProfileEffect.NavigateToAddresses)
-                ProfileIntent.ChangeLanguage -> { /* show language dialog */ }
+                ProfileIntent.ChangeLanguage -> _effect.emit(ProfileEffect.SwitchLanguage)
                 ProfileIntent.ChangeTheme -> { /* show theme dialog */ }
                 ProfileIntent.PrivacyPolicy -> _effect.emit(ProfileEffect.NavigateToPrivacyPolicy)
                 ProfileIntent.ContactUs -> _effect.emit(ProfileEffect.NavigateToContactUs)

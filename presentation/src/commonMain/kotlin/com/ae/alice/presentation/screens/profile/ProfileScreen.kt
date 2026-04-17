@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -46,6 +47,7 @@ import com.ae.alice.designsystem.components.appBar.AppBar
 import com.ae.alice.designsystem.components.scaffold.Scaffold
 import com.ae.alice.designsystem.components.settings.SettingItem
 import com.ae.alice.designsystem.components.text.Text
+import com.ae.alice.designsystem.locale.LocalAppLocale
 import com.ae.alice.designsystem.theme.Theme
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
@@ -66,7 +68,16 @@ fun ProfileScreen(
 ) {
     val state by viewModel.state.collectAsState()
     val scope = rememberCoroutineScope()
-    val isFeatureEnabled = false
+    val localeState = LocalAppLocale.current
+
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                is ProfileEffect.SwitchLanguage -> localeState.switchLanguage()
+                else -> {}
+            }
+        }
+    }
 
     Scaffold(
         backgroundColor = Theme.colorScheme.background.surface,
@@ -74,14 +85,7 @@ fun ProfileScreen(
             AppBar(title = stringResource(Res.string.profile_title))
         }
     ) {
-        if (!isFeatureEnabled) {
-            com.ae.alice.designsystem.components.state.EmptyLayout(
-                modifier = Modifier.fillMaxSize(),
-                title = "Coming Soon",
-                message = "Profile feature is temporarily disabled."
-            )
-        } else {
-            LazyColumn(
+        LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(horizontal = Theme.spacing._16),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -193,7 +197,6 @@ fun ProfileScreen(
                     )
                 }
             }
-        }
     }
 }
 

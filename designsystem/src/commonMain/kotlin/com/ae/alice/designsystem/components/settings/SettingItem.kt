@@ -34,8 +34,8 @@ fun SettingItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(Theme.radius.md))
-            .background(Theme.colorScheme.background.surfaceHigh)
+            .clip(RoundedCornerShape(Theme.radius.lg))
+            .background(Theme.colorScheme.primary.primary.copy(alpha = 0.08f))
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,

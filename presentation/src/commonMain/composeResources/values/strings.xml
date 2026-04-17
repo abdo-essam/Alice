@@ -71,7 +71,8 @@
     <string name="profile_version">Version</string>
     <string name="profile_invite_friends_title">Invite friends</string>
     <string name="profile_invite_friends_subtitle">And get gifts</string>
-
+    <string name="share_app_title">Download Alice</string>
+    <string name="share_app_message">Check out this amazing car discovery app!</string>
     <!-- Bottom Nav -->
     <string name="nav_home_ar">الرئيسية</string>
     <string name="nav_archive_ar">الأرشيف</string>

@@ -44,6 +44,8 @@ import alice.presentation.generated.resources.profile_privacy_policy
 import alice.presentation.generated.resources.profile_theme
 import alice.presentation.generated.resources.profile_title
 import alice.presentation.generated.resources.profile_version
+import alice.presentation.generated.resources.share_app_message
+import alice.presentation.generated.resources.share_app_title
 import com.ae.alice.designsystem.components.appBar.AppBar
 import com.ae.alice.designsystem.components.scaffold.Scaffold
 import com.ae.alice.designsystem.components.settings.SettingItem
@@ -69,6 +71,7 @@ fun ProfileScreen(
     viewModel: ProfileViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsState()
+    var showShareSheet by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val localeState = LocalAppLocale.current
     var isLanguageDialogOpen by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
@@ -105,6 +108,14 @@ fun ProfileScreen(
             }
         }
     ) {
+        if (showShareSheet) {
+            com.ae.alice.presentation.utils.ShareSheet(
+                title = stringResource(Res.string.share_app_title),
+                message = stringResource(Res.string.share_app_message),
+                shareLink = "https://play.google.com/store/apps/details?id=com.ae.alice",
+                onDismiss = { showShareSheet = false }
+            )
+        }
         LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(horizontal = Theme.spacing._16),
@@ -158,7 +169,7 @@ fun ProfileScreen(
                             modifier = Modifier.padding(top = Theme.spacing._2)
                         )
                         com.ae.alice.presentation.screens.profile.components.InviteFriendsCard(
-                            onClick = { /* TODO implement */ }
+                            onClick = { showShareSheet = true }
                         )
                     }
                 }
@@ -175,11 +186,6 @@ fun ProfileScreen(
                             title = stringResource(Res.string.profile_change_password),
                             leadingIcon = painterResource(Res.drawable.ic_password_lock),
                             onClick = { scope.launch { viewModel.processIntent(ProfileIntent.ChangePassword) } }
-                        )
-                        SettingItem(
-                            title = stringResource(Res.string.profile_addresses),
-                            leadingIcon = painterResource(Res.drawable.ic_addresses),
-                            onClick = { scope.launch { viewModel.processIntent(ProfileIntent.ManageAddresses) } }
                         )
                     }
                 }

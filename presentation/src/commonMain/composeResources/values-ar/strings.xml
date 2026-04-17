@@ -75,6 +75,8 @@
     <string name="profile_contact_us">تواصل معنا</string>
     <string name="profile_logout">تسجيل الخروج</string>
     <string name="profile_version">الإصدار</string>
-    <string name="profile_invite_friends_title">قم بدعوة أصدقائك</string>
+    <string name="profile_invite_friends_title">دعوة الأصدقاء</string>
     <string name="profile_invite_friends_subtitle">واحصل على هدايا</string>
+    <string name="share_app_title">تحميل تطبيق أليس</string>
+    <string name="share_app_message">اكتشف أروع سياراتك عبر هذا التطبيق المميز!</string>
 </resources>

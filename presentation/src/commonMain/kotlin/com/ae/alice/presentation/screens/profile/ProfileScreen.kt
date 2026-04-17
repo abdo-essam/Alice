@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,6 +50,7 @@ import com.ae.alice.designsystem.components.settings.SettingItem
 import com.ae.alice.designsystem.components.text.Text
 import com.ae.alice.designsystem.locale.LocalAppLocale
 import com.ae.alice.designsystem.theme.Theme
+import com.ae.alice.presentation.screens.profile.components.LanguageDialog
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -69,11 +71,13 @@ fun ProfileScreen(
     val state by viewModel.state.collectAsState()
     val scope = rememberCoroutineScope()
     val localeState = LocalAppLocale.current
+    var isLanguageDialogOpen by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
+    var selectedLanguage by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(localeState.language) }
 
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
             when (effect) {
-                is ProfileEffect.SwitchLanguage -> localeState.switchLanguage()
+                is ProfileEffect.SwitchLanguage -> isLanguageDialogOpen = true
                 else -> {}
             }
         }
@@ -83,6 +87,22 @@ fun ProfileScreen(
         backgroundColor = Theme.colorScheme.background.surface,
         topBar = {
             AppBar(title = stringResource(Res.string.profile_title))
+        },
+        overlays = {
+            dialog(isVisible = isLanguageDialogOpen) { isVisible ->
+                LanguageDialog(
+                    appLanguages = com.ae.alice.designsystem.locale.AppLanguage.entries,
+                    isVisible = isVisible,
+                    currentAppLanguage = localeState.language,
+                    selectedAppLanguage = selectedLanguage,
+                    onDismissRequest = { isLanguageDialogOpen = false },
+                    onConfirmLanguageSelection = {
+                        localeState.setLanguage(selectedLanguage)
+                        isLanguageDialogOpen = false
+                    },
+                    onLanguageChanged = { selectedLanguage = it }
+                )
+            }
         }
     ) {
         LazyColumn(
@@ -99,18 +119,29 @@ fun ProfileScreen(
                             .padding(vertical = Theme.spacing._16)
                     ) {
                         // Avatar placeholder
-                        Box(
-                            modifier = Modifier
-                                .size(80.dp)
-                                .clip(CircleShape)
-                                .background(Theme.colorScheme.background.surfaceHigh)
-                                .border(2.dp, Theme.colorScheme.stroke, CircleShape),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = state.fullName.take(2).uppercase(),
-                                style = Theme.typography.title.large,
-                                color = Theme.colorScheme.primary.primary
+                        Box {
+                            Box(
+                                modifier = Modifier
+                                    .size(80.dp)
+                                    .clip(CircleShape)
+                                    .background(Theme.colorScheme.background.surfaceHigh)
+                                    .border(2.dp, Theme.colorScheme.stroke, CircleShape),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = state.fullName.take(2).uppercase(),
+                                    style = Theme.typography.title.large,
+                                    color = Theme.colorScheme.primary.primary
+                                )
+                            }
+                            
+                            Box(
+                                modifier = Modifier
+                                    .align(Alignment.BottomEnd)
+                                    .padding(end = 4.dp, bottom = 4.dp)
+                                    .size(16.dp)
+                                    .border(2.dp, Theme.colorScheme.background.surface, CircleShape)
+                                    .background(Theme.colorScheme.success, CircleShape)
                             )
                         }
 
@@ -125,6 +156,9 @@ fun ProfileScreen(
                             style = Theme.typography.label.small,
                             color = Theme.colorScheme.shadeSecondary,
                             modifier = Modifier.padding(top = Theme.spacing._2)
+                        )
+                        com.ae.alice.presentation.screens.profile.components.InviteFriendsCard(
+                            onClick = { /* TODO implement */ }
                         )
                     }
                 }
@@ -156,7 +190,8 @@ fun ProfileScreen(
                         SettingItem(
                             title = stringResource(Res.string.profile_language),
                             leadingIcon = painterResource(Res.drawable.ic_language),
-                            onClick = { scope.launch { viewModel.processIntent(ProfileIntent.ChangeLanguage) } }
+                            onClick = { scope.launch { viewModel.processIntent(ProfileIntent.ChangeLanguage) } },
+                            trailingText = localeState.language.displayName
                         )
                         SettingItem(
                             title = stringResource(Res.string.profile_theme),

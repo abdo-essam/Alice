@@ -32,7 +32,6 @@ fun AppNavHost(
         startDestination = startDestination,
         modifier = modifier
     ) {
-        // ── Auth ───────────────────────────────────────────────────────────────
         composable<Routes.Login> {
             LoginScreen(
                 onNavigateToMain = {
@@ -59,7 +58,6 @@ fun AppNavHost(
             )
         }
 
-        // ── Main (with bottom nav) ─────────────────────────────────────────────
         composable<Routes.Main> {
             Scaffold(
                 bottomBar = {

@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
@@ -6,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.googleServices)
     alias(libs.plugins.firebaseAppDistribution)
+    alias(libs.plugins.buildkonfig)
 }
 
 kotlin {
@@ -46,6 +49,11 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+            
+            // Auth
+            implementation(libs.kmpauth.google)
+            implementation(libs.kmpauth.firebase)
+            implementation(libs.kmpauth.uihelper)
             
             // Lifecycle
             implementation(libs.androidx.lifecycle.viewmodelCompose)
@@ -118,4 +126,21 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+}
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.inputStream().use { localProperties.load(it) }
+}
+
+buildkonfig {
+    packageName = "com.ae.alice"
+    defaultConfigs {
+        buildConfigField(
+            com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            "WEB_CLIENT_ID",
+            localProperties.getProperty("WEB_CLIENT_ID") ?: "769520775981-7el9hpiqbcd5eq48qvq99n17lkmqfj2p.apps.googleusercontent.com"
+        )
+    }
 }

@@ -8,7 +8,9 @@ import com.ae.alice.domain.repository.BrandRepository
 import com.ae.alice.domain.repository.CarModelRepository
 import com.ae.alice.domain.repository.PlaceRepository
 import com.ae.alice.domain.repository.AppPreferencesRepository
+import com.ae.alice.domain.repository.AuthRepository
 import com.ae.alice.data.AppPreferencesRepositoryImpl
+import com.ae.alice.data.FirebaseAuthRepository
 import com.russhwolf.settings.Settings
 
 val dataModule = module {
@@ -17,4 +19,5 @@ val dataModule = module {
     single<BrandRepository> { FakeBrandRepository() }
     single<CarModelRepository> { FakeCarModelRepository() }
     single<PlaceRepository> { FakePlaceRepository() }
+    single<AuthRepository> { FirebaseAuthRepository() }
 }

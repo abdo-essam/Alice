@@ -34,6 +34,7 @@ import com.ae.alice.presentation.screens.main.components.CountryPicker
 fun MainScreen(
     selectedTab: Int,
     onBrandClick: (Brand) -> Unit,
+    onLogout: () -> Unit = {},
     viewModel: MainViewModel = org.koin.compose.viewmodel.koinViewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -140,7 +141,7 @@ fun MainScreen(
             when (selectedTab) {
                 0 -> HomeBrandsTab(onBrandClick = onBrandClick)
                 1 -> ArchiveTab()
-                2 -> ProfileTab()
+                2 -> ProfileTab(onLogout = onLogout)
             }
         }
     }

@@ -35,5 +35,6 @@ sealed interface ProfileEffect {
     data object NavigateToAddresses : ProfileEffect
     data object NavigateToPrivacyPolicy : ProfileEffect
     data object NavigateToContactUs : ProfileEffect
+    data object SwitchLanguage : ProfileEffect
     data object LoggedOut : ProfileEffect
 }

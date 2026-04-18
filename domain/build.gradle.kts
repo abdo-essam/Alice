@@ -21,6 +21,8 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.gitlive.firebase.auth)
+            implementation(libs.gitlive.firebase.common)
         }
     }
 }

@@ -1,6 +1,7 @@
 [versions]
 googleServices = "4.4.2"
 firebaseAppDistribution = "5.0.0"
+gitliveFirebase = "2.1.0"
 # Android
 agp = "8.11.2"
 android-compileSdk = "36"
@@ -127,6 +128,15 @@ squircle-shape = { module = "com.stoyanvuchev:squircle-shape", version.ref = "sq
 # Maplibre
 maplibre-compose = { module = "org.maplibre.compose:maplibre-compose", version.ref = "mapLibra" }
 
+# Firebase KMP (GitLive)
+gitlive-firebase-auth = { module = "dev.gitlive:firebase-auth", version.ref = "gitliveFirebase" }
+gitlive-firebase-common = { module = "dev.gitlive:firebase-common", version.ref = "gitliveFirebase" }
+
+# KMPAuth
+kmpauth-google = { module = "io.github.mirzemehdi:kmpauth-google", version = "2.3.1" }
+kmpauth-firebase = { module = "io.github.mirzemehdi:kmpauth-firebase", version = "2.3.1" }
+kmpauth-uihelper = { module = "io.github.mirzemehdi:kmpauth-uihelper", version = "2.3.1" }
+
 [plugins]
 googleServices = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 firebaseAppDistribution = { id = "com.google.firebase.appdistribution", version.ref = "firebaseAppDistribution" }
@@ -136,3 +146,4 @@ composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMul
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+buildkonfig = { id = "com.codingfeline.buildkonfig", version = "0.15.2" }

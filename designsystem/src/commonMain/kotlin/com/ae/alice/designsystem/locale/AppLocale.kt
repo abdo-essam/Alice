@@ -27,15 +27,21 @@ class LocaleState {
     var language by mutableStateOf(AppLanguage.ARABIC)
         internal set
 
+    init {
+        updatePlatformLanguage(language.code)
+    }
+
     fun switchLanguage() {
         language = when (language) {
             AppLanguage.ENGLISH -> AppLanguage.ARABIC
             AppLanguage.ARABIC -> AppLanguage.ENGLISH
         }
+        updatePlatformLanguage(language.code)
     }
 
     fun setLanguage(lang: AppLanguage) {
         language = lang
+        updatePlatformLanguage(language.code)
     }
 }
 
@@ -62,6 +68,7 @@ fun AppLocaleProvider(
         LocalAppLocale provides localeState,
         LocalLayoutDirection provides layoutDirection
     ) {
+        PlatformLocaleEffect(localeState.language.code)
         content()
     }
 }

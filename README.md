@@ -16,9 +16,7 @@ Alice/
 ├── presentation/        # Screens, ViewModels (MVI), UI contracts
 ├── domain/              # Pure Kotlin entities & repository interfaces
 ├── data/                # Repository implementations, fake data sources
-├── designsystem/        # Reusable UI components, theme, colors, typography
-├── network/             # Ktor client, API services
-└── common/              # Shared utilities (Result, ErrorState)
+└── designsystem/        # Reusable UI components, theme, colors, typography
 ```
 
 ### Module Dependencies
@@ -32,7 +30,6 @@ graph TD
     presentation --> designsystem
     presentation --> domain
     data --> domain
-    network --> common
 ```
 
 ## 🎨 Design System

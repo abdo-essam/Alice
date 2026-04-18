@@ -9,10 +9,14 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+import com.ae.alice.domain.repository.AuthRepository
+
 /**
  * Profile screen ViewModel.
  */
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel(
+    private val authRepository: AuthRepository
+) : ViewModel() {
 
     private val _state = MutableStateFlow(ProfileState())
     val state: StateFlow<ProfileState> = _state.asStateFlow()
@@ -36,11 +40,14 @@ class ProfileViewModel : ViewModel() {
                 ProfileIntent.EditProfile -> _effect.emit(ProfileEffect.NavigateToEditProfile)
                 ProfileIntent.ChangePassword -> _effect.emit(ProfileEffect.NavigateToChangePassword)
                 ProfileIntent.ManageAddresses -> _effect.emit(ProfileEffect.NavigateToAddresses)
-                ProfileIntent.ChangeLanguage -> { /* show language dialog */ }
+                ProfileIntent.ChangeLanguage -> _effect.emit(ProfileEffect.SwitchLanguage)
                 ProfileIntent.ChangeTheme -> { /* show theme dialog */ }
                 ProfileIntent.PrivacyPolicy -> _effect.emit(ProfileEffect.NavigateToPrivacyPolicy)
                 ProfileIntent.ContactUs -> _effect.emit(ProfileEffect.NavigateToContactUs)
-                ProfileIntent.Logout -> _effect.emit(ProfileEffect.LoggedOut)
+                ProfileIntent.Logout -> {
+                    authRepository.logout()
+                    _effect.emit(ProfileEffect.LoggedOut)
+                }
             }
         }
     }

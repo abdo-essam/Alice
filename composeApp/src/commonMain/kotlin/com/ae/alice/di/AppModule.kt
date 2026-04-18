@@ -9,6 +9,8 @@ import com.ae.alice.presentation.screens.cardetails.CarDetailsViewModel
 import com.ae.alice.presentation.screens.models.ModelsViewModel
 import com.ae.alice.presentation.screens.places.PlacesViewModel
 import com.ae.alice.presentation.screens.profile.ProfileViewModel
+import com.ae.alice.presentation.screens.auth.login.LoginViewModel
+import com.ae.alice.presentation.screens.auth.register.RegisterViewModel
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 
@@ -30,7 +32,9 @@ val appModule = module {
     viewModel { BrandsViewModel(get()) }
     viewModel { ModelsViewModel(get()) }
     viewModel { CarDetailsViewModel(get()) }
-    viewModel { PlacesViewModel(get(),get()) }
-    viewModel { ProfileViewModel() }
+    viewModel { PlacesViewModel(get(), get()) }
+    viewModel { ProfileViewModel(get()) }
     viewModel { com.ae.alice.presentation.screens.main.MainViewModel(get(), get()) }
+    viewModel { LoginViewModel(get()) }
+    viewModel { RegisterViewModel(get()) }
 }
